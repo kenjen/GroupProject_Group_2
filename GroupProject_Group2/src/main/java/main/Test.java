@@ -3,7 +3,7 @@ package main;
 public class Test {
 
 	public Test() {
-		// TODO Auto-generated constructor stub
+		System.out.println("this is a test");
 	}
 
 }
