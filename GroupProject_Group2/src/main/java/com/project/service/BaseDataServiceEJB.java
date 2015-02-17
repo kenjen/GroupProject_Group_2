@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+
 import com.project.dao.BaseDataDAO;
 import com.project.entities.BaseData;
 
@@ -11,6 +13,7 @@ import com.project.entities.BaseData;
 @Local
 public class BaseDataServiceEJB implements BaseDataService {
 	
+	@Inject
 	private BaseDataDAO baseDataDAO;
 
 	public BaseDataServiceEJB() {
