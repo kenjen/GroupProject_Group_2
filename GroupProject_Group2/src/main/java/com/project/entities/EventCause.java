@@ -2,20 +2,10 @@ package com.project.entities;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Cascade;
 @NamedQueries({@NamedQuery
 			(name = "findEventCauseByIMSI", 
-			query = "select event_Id, cause_Code from base_data bd bd.IMSI = :IMSI ")})
+			query = "select b.eventId, b.causeCode from BaseData b where b.imsi = :IMSI ")})
 
 @Entity
 @Table( name = "Event_Cause")
@@ -27,9 +17,11 @@ public class EventCause implements Serializable{
 
 	// add attributes for all the remaining properties
 	@Id
+	private Integer id;
+	
 	@Column(name="cause_Code")
 	private Integer causeCode;
-	@Id
+
 	@Column(name="event_Id") 
 	private Integer eventId;
 

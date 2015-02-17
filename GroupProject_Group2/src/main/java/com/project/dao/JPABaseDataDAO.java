@@ -13,13 +13,13 @@ import com.project.entities.BaseData;
 
 @Stateless
 @Local
-public class JPABaseDataDAO {
+public class JPABaseDataDAO implements BaseDataDAO {
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public Collection<BaseData> getAllTestTableData() {
+	public Collection<BaseData> getAllBaseData() {
 		Query query = entityManager.createNamedQuery("BaseData.getAllBaseData");
 		List<BaseData> data = query.getResultList();
 		return data;
