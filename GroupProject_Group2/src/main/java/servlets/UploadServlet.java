@@ -73,6 +73,8 @@ public class UploadServlet extends HttpServlet {
 		 * 
 		 */
 		
+		String fileParam = request.getParameter("file");
+		
 		boolean addToTable = false;
 		
 		ExcelBaseDataRead reader = new ExcelBaseDataRead();
@@ -87,7 +89,7 @@ public class UploadServlet extends HttpServlet {
 		//boolean addToTable = ExcellLoader.addExcellFileToSingleTable("/FileUploadTest/uploadFiles/upload.xls");
 		
 		
-		request.setAttribute("message", "Upload has completed successfully!");
+		request.setAttribute("message", "Upload has completed successfully! fileParam = " + fileParam);
 		getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 
