@@ -59,67 +59,65 @@ public class ExcelBaseDataRead implements Read {
 		for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
 			baseDataRecord = new BaseData();
 			Row row = hssfWorkBookSheet.getRow(currentRow);
+			boolean rowValid = true;
 			for (Cell cell : row) {
-				if (cell.getColumnIndex() == 0) {
-					baseDataRecord.setDate(cell.getDateCellValue());
+				try{
+					if (cell.getColumnIndex() == 0) {
+						baseDataRecord.setDate(cell.getDateCellValue());
+					}
+					if (cell.getColumnIndex() == 1) {
+						baseDataRecord.setEventId((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 2) {
+						baseDataRecord.setFailureClass((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 3) {
+						baseDataRecord.setTac((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 4) {
+						baseDataRecord.setMcc((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 5) {
+						baseDataRecord.setMnc((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 6) {
+						baseDataRecord.setCellId((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 7) {
+						baseDataRecord.setDuration((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 8) {
+						baseDataRecord.setCauseCode((int) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 9) {
+						baseDataRecord.setNeVersion(cell.getStringCellValue());
+					}
+					if (cell.getColumnIndex() == 10) {
+						baseDataRecord.setImsi((long) cell.getNumericCellValue());
+					}
+					if (cell.getColumnIndex() == 11) {
+						String cellVal = df.formatCellValue(cell);
+						baseDataRecord.setHier3Id(cellVal);
+					}
+					if (cell.getColumnIndex() == 12) {
+						String cellVal = df.formatCellValue(cell);
+						baseDataRecord.setHier32Id(cellVal);
+					}
+					if (cell.getColumnIndex() == 13) {
+						String cellVal = df.formatCellValue(cell);
+						baseDataRecord.setHier321Id(cellVal);
+					}
+					
+				}catch(Exception e){
+					//catches all errors while parsing the data and marks the row as invalid
+					rowValid = false;
+					break;
 				}
-				if (cell.getColumnIndex() == 1) {
-					baseDataRecord.setEventId((int) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 2) {
-					if (cell.getCellType() == Cell.CELL_TYPE_STRING)
-						baseDataRecord.setFailureClass(null);
-					else
-						baseDataRecord.setFailureClass((int) cell
-								.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 3) {
-					baseDataRecord.setTac((int) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 4) {
-					baseDataRecord.setMcc((int) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 5) {
-					baseDataRecord.setMnc((int) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 6) {
-					baseDataRecord.setCellId((int) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 7) {
-					baseDataRecord
-							.setDuration((int) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 8) {
-					if (cell.getCellType() == Cell.CELL_TYPE_STRING)
-						baseDataRecord.setCauseCode(null);
-					else
-						baseDataRecord.setCauseCode((int) cell
-								.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 9) {
-					baseDataRecord.setNeVersion(cell.getStringCellValue());
-				}
-				if (cell.getColumnIndex() == 10) {
-					baseDataRecord.setImsi((long) cell.getNumericCellValue());
-				}
-				if (cell.getColumnIndex() == 11) {
-					String cellVal = df.formatCellValue(cell);
-					baseDataRecord.setHier3Id(cellVal);
-				}
-				if (cell.getColumnIndex() == 12) {
-					String cellVal = df.formatCellValue(cell);
-					baseDataRecord.setHier32Id(cellVal);
-				}
-				if (cell.getColumnIndex() == 13) {
-					String cellVal = df.formatCellValue(cell);
-					baseDataRecord.setHier321Id(cellVal);
-				}
-				
-				if(validator.isValid(baseDataRecord)){
-					baseDatList.add(baseDataRecord);
-				}else{
-					errorBaseDatList.add(new ErrorBaseData(row));
-				}
+			}
+			if(rowValid && validator.isValid(baseDataRecord)){
+				baseDatList.add(baseDataRecord);
+			}else{
+				errorBaseDatList.add(new ErrorBaseData(row));
 			}
 		}
 		hssfInputWorkbook.close();
