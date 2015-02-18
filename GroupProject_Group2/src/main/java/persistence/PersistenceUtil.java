@@ -13,7 +13,6 @@ import entity.FailureClass;
 
 public class PersistenceUtil implements Serializable 
 {
-	
 	private static final long serialVersionUID = 1L;
 
 	protected static EntityManagerFactory emf = 
