@@ -1,5 +1,6 @@
 package com.project.rest;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,11 +21,19 @@ public class EventCauseREST {
 	private EventCauseService service;
 
 	@GET
-	@Path("{IMSI}")
+	@Path("/{IMSI}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getEventCauseCombi(@PathParam("IMSI") String imsi) {
-		@SuppressWarnings("unchecked")
-		List<Object[]> ids = (List<Object[]>) service.getFailuresIdsByIMSI(imsi);
+	public Collection getEventCauseCombi(@PathParam("IMSI") Long imsi) {
+//		List<Object[]> ids = (List<Object[]>) service.getFailuresIdsByIMSI(imsi);
+//		return ids;
+		Collection ids = service.getFailuresIdsByIMSI(imsi);
 		return ids;
 	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection getEventCause() {
+		Collection ids = service.getFailuresIds();
+		return ids;
+	}
+	
 }

@@ -21,10 +21,12 @@ public class EventCauseServiceEJB implements EventCauseService {
 	public void setDao(EventCauseDAO dao) {
 		this.dao = dao;
 	}
-
+	public Collection getFailuresIds(){
+		return	dao.getFailures();
+	}
 	
-	public Collection getFailuresIdsByIMSI(String imsi) {
-	
+	public Collection getFailuresIdsByIMSI(Long imsi) {
 		return dao.getFailuresIdsByIMSI(imsi);
 	}
+
 }
