@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import entity.FailureClass;
+import com.project.entities.FailureClass;
 
 
 
