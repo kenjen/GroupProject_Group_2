@@ -75,7 +75,6 @@ public class ErrorBaseData implements Serializable {
 		this.hier32Id = cell.toString();
 		cell = i.next();
 		this.hier321Id = cell.toString();
-		cell = i.next();
 	}
 
 	public ErrorBaseData() {
