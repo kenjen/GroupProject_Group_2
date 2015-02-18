@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.jsp.ErrorData;
+
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -13,20 +15,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Cell;
 
 import com.project.dao.BaseDataDAO;
+import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.JPABaseDataDAO;
 import com.project.entities.BaseData;
+import com.project.entities.ErrorBaseData;
 import com.project.reader.Read;
 
 public class ExcelBaseDataRead implements Read {
 
 	private String inputFile;
+	private final ExcellValidator validator = new ExcellValidator();
 
 	private int sheetNumber;
-	
+
 	private BaseDataDAO baseDataDao;
-	public void setBaseDataDao(BaseDataDAO dao){
-		this.baseDataDao = dao;
-	}
+	private ErrorBaseDataDAO errorBaseDataDao;
+	
 
 	public ExcelBaseDataRead() {
 	}
@@ -41,8 +45,8 @@ public class ExcelBaseDataRead implements Read {
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
 
-		//JPABaseDataDAO baseDataJpa = new JPABaseDataDAO();
 		List<BaseData> baseDatList = new ArrayList<BaseData>();
+		List<ErrorBaseData> errorBaseDatList = new ArrayList<ErrorBaseData>();
 		BaseData baseDataRecord = null;
 
 		HSSFWorkbook hssfWorkBook;
@@ -110,17 +114,31 @@ public class ExcelBaseDataRead implements Read {
 					String cellVal = df.formatCellValue(cell);
 					baseDataRecord.setHier321Id(cellVal);
 				}
-				baseDatList.add(baseDataRecord);
+				
+				if(validator.isValid(baseDataRecord)){
+					baseDatList.add(baseDataRecord);
+				}else{
+					errorBaseDatList.add(new ErrorBaseData(row));
+				}
 			}
 		}
 		hssfInputWorkbook.close();
 		hssfWorkBook.close();
 		baseDataDao.addAllBaseData(baseDatList);
+		errorBaseDataDao.addAllErrorBaseData(errorBaseDatList);
 	}
 
 	@Override
 	public void setSheetNumber(int sheetNumber) {
 		this.sheetNumber = sheetNumber;
+	}
+	
+	public void setBaseDataDao(BaseDataDAO dao){
+		this.baseDataDao = dao;
+	}
+	
+	public void setErrorBaseDataDao(ErrorBaseDataDAO dao){
+		this.errorBaseDataDao = dao;
 	}
 
 }

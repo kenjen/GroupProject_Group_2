@@ -1,7 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Iterator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+
 @NamedQueries({ @NamedQuery(name = "ErrorBaseData.getAllErrorBaseData", query = "select e from ErrorBaseData e"), })
 @Entity
 @Table(name = "error_base_data")
@@ -21,66 +24,66 @@ public class ErrorBaseData implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	
 	private Integer id;
-
-	@Column(name = "date")
 	private String date;
-	@Column(name = "event_id")
 	private String eventId;
-	@Column(name = "failure_class")
 	private String failureClass;
-	@Column(name = "tac")
 	// UE Type
 	private String tac;
-	@Column(name = "mnc")
 	// Market
 	private String mnc;
-	@Column(name = "mcc")
 	// Operator
 	private String mcc;
-	@Column(name = "cell_id")
 	private String cellId;
-	@Column(name = "duration")
 	private String duration;
-	@Column(name = "cause_code")
 	private String causeCode;
-	@Column(name = "ne_version")
 	private String neVersion;
-	@Column(name = "imsi")
 	private String imsi;
-	@Column(name = "hier3_id")
 	private String hier3Id;
-	@Column(name = "hier32_id")
 	private String hier32Id;
-	@Column(name = "hier321_id")
 	private String hier321Id;
 
-	public ErrorBaseData(String date, String eventId, String failureClass,
-			String tac, String mnc, String mcc, String cellId,
-			String duration, String causeCode, String neVersion, String imsi,
-			String hier3Id, String hier32Id, String hier321Id) {
-		this.date = date;
-		this.eventId = eventId;
-		this.failureClass = failureClass;
-		this.tac = tac;
-		this.mnc = mnc;
-		this.mcc = mcc;
-		this.cellId = cellId;
-		this.duration = duration;
-		this.causeCode = causeCode;
-		this.neVersion = neVersion;
-		this.imsi = imsi;
-		this.hier3Id = hier3Id;
-		this.hier32Id = hier32Id;
-		this.hier321Id = hier321Id;
+
+	public ErrorBaseData(Row row) {
+		Iterator<Cell> i = row.cellIterator();
+		Cell cell = i.next();
+		this.date = cell.toString();
+		cell = i.next();
+		this.eventId = cell.toString();
+		cell = i.next();
+		this.failureClass = cell.toString();
+		cell = i.next();
+		this.tac = cell.toString();
+		cell = i.next();
+		this.mnc = cell.toString();
+		cell = i.next();
+		this.mcc = cell.toString();
+		cell = i.next();
+		this.cellId = cell.toString();
+		cell = i.next();
+		this.duration = cell.toString();
+		cell = i.next();
+		this.causeCode = cell.toString();
+		cell = i.next();
+		this.neVersion = cell.toString();
+		cell = i.next();
+		this.imsi = cell.toString();
+		cell = i.next();
+		this.hier3Id = cell.toString();
+		cell = i.next();
+		this.hier32Id = cell.toString();
+		cell = i.next();
+		this.hier321Id = cell.toString();
+		cell = i.next();
 	}
 
 	public ErrorBaseData() {
 	}
-
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	public Integer getId() {
 		return id;
 	}
@@ -89,6 +92,7 @@ public class ErrorBaseData implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "date")
 	public String getDate() {
 		return date;
 	}
@@ -97,6 +101,7 @@ public class ErrorBaseData implements Serializable {
 		this.date = date;
 	}
 
+	@Column(name = "event_id")
 	public String getEventId() {
 		return eventId;
 	}
@@ -105,6 +110,7 @@ public class ErrorBaseData implements Serializable {
 		this.eventId = eventId;
 	}
 
+	@Column(name = "failure_class")
 	public String getFailureClass() {
 		return failureClass;
 	}
@@ -113,6 +119,7 @@ public class ErrorBaseData implements Serializable {
 		this.failureClass = failureClass;
 	}
 
+	@Column(name = "tac")
 	public String getTac() {
 		return tac;
 	}
@@ -121,6 +128,7 @@ public class ErrorBaseData implements Serializable {
 		this.tac = tac;
 	}
 
+	@Column(name = "mnc")
 	public String getMnc() {
 		return mnc;
 	}
@@ -129,6 +137,7 @@ public class ErrorBaseData implements Serializable {
 		this.mnc = mnc;
 	}
 
+	@Column(name = "mcc")
 	public String getMcc() {
 		return mcc;
 	}
@@ -137,6 +146,7 @@ public class ErrorBaseData implements Serializable {
 		this.mcc = mcc;
 	}
 
+	@Column(name = "cell_id")
 	public String getCellId() {
 		return cellId;
 	}
@@ -145,6 +155,7 @@ public class ErrorBaseData implements Serializable {
 		this.cellId = cellId;
 	}
 
+	@Column(name = "duration")
 	public String getDuration() {
 		return duration;
 	}
@@ -153,6 +164,7 @@ public class ErrorBaseData implements Serializable {
 		this.duration = duration;
 	}
 
+	@Column(name = "cause_code")
 	public String getCauseCode() {
 		return causeCode;
 	}
@@ -161,6 +173,7 @@ public class ErrorBaseData implements Serializable {
 		this.causeCode = causeCode;
 	}
 
+	@Column(name = "ne_version")
 	public String getNeVersion() {
 		return neVersion;
 	}
@@ -169,6 +182,7 @@ public class ErrorBaseData implements Serializable {
 		this.neVersion = neVersion;
 	}
 
+	@Column(name = "imsi")
 	public String getImsi() {
 		return imsi;
 	}
@@ -177,6 +191,7 @@ public class ErrorBaseData implements Serializable {
 		this.imsi = imsi;
 	}
 
+	@Column(name = "hier3_id")
 	public String getHier3Id() {
 		return hier3Id;
 	}
@@ -185,6 +200,7 @@ public class ErrorBaseData implements Serializable {
 		this.hier3Id = hier3Id;
 	}
 
+	@Column(name = "hier32_id")
 	public String getHier32Id() {
 		return hier32Id;
 	}
@@ -193,6 +209,7 @@ public class ErrorBaseData implements Serializable {
 		this.hier32Id = hier32Id;
 	}
 
+	@Column(name = "hier321_id")
 	public String getHier321Id() {
 		return hier321Id;
 	}

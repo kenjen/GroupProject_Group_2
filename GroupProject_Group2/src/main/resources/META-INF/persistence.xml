@@ -7,6 +7,7 @@
 	<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/mySQL</jta-data-source>
 		<class>com.project.entities.BaseData</class>
+		<class>com.project.entities.ErrorBaseData</class>
 		<class>com.project.entities.EventCause</class>
 		<class>com.project.entities.UE</class>
 		<class>com.project.entities.User</class>
