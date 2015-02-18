@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Cell;
 
+import com.project.dao.BaseDataDAO;
 import com.project.dao.JPABaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.reader.Read;
@@ -21,6 +22,11 @@ public class ExcelBaseDataRead implements Read {
 	private String inputFile;
 
 	private int sheetNumber;
+	
+	private BaseDataDAO baseDataDao;
+	public void setBaseDataDao(BaseDataDAO dao){
+		this.baseDataDao = dao;
+	}
 
 	public ExcelBaseDataRead() {
 	}
@@ -35,7 +41,7 @@ public class ExcelBaseDataRead implements Read {
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
 
-		JPABaseDataDAO baseDataJpa = new JPABaseDataDAO();
+		//JPABaseDataDAO baseDataJpa = new JPABaseDataDAO();
 		List<BaseData> baseDatList = new ArrayList<BaseData>();
 		BaseData baseDataRecord = null;
 
@@ -109,7 +115,7 @@ public class ExcelBaseDataRead implements Read {
 		}
 		hssfInputWorkbook.close();
 		hssfWorkBook.close();
-		baseDataJpa.addAllBaseData(baseDatList);
+		baseDataDao.addAllBaseData(baseDatList);
 	}
 
 	@Override

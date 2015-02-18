@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -15,7 +17,7 @@ import com.project.entities.BaseData;
 @Local
 public class JPABaseDataDAO implements BaseDataDAO {
 
-	@PersistenceContext
+	@PersistenceContext(unitName="GroupProject_Group2")
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
@@ -27,12 +29,14 @@ public class JPABaseDataDAO implements BaseDataDAO {
 
 	@SuppressWarnings("rawtypes")
 	public void addAllBaseData(Collection baseDataList) {
-		entityManager.getTransaction().begin();
-		for (Object o : baseDataList) {
-			entityManager.persist(o);
-		}
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		//if(entityManager!=null){
+			//entityManager.getTransaction().begin();
+			for (Object o : baseDataList) {
+				entityManager.persist(o);
+			}
+			//entityManager.getTransaction().commit();
+			//entityManager.close();
+		//}
 	}
 
 }

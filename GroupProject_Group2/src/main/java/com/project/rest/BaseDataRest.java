@@ -21,11 +21,13 @@ public class BaseDataRest {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<BaseData> getAllTestTableData() {
+	public List<BaseData> getAllBaseData() {
 		return (List) baseDataService.getAllTestTableData();
 	}
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAllBaseData(){}
+	public void addAllBaseData(){
+		
+	}
 
 }
