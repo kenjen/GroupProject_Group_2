@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.project.dao.BaseDataDAO;
+import com.project.dao.ErrorBaseDataDAO;
 import com.project.reader.excel.ExcelBaseDataRead;
 
 
@@ -32,6 +33,8 @@ public class UploadServlet extends HttpServlet {
 	
 	@EJB
 	private BaseDataDAO dao;
+	@EJB
+	private ErrorBaseDataDAO errorDao;
 	
 	/**
 	 * handles file upload
@@ -83,6 +86,7 @@ public class UploadServlet extends HttpServlet {
 		//reader.setInputFile("/uploadFiles/upload.xls");
 		if(dao!=null){
 			reader.setBaseDataDao(dao);
+			reader.setErrorBaseDataDao(errorDao);
 			reader.read();
 		}
 		reader = null;
