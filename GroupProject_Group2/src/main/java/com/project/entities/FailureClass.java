@@ -1,4 +1,4 @@
-package entity;
+package com.project.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
