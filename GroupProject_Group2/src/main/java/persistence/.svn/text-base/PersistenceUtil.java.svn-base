@@ -1,0 +1,291 @@
+package persistence;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import entity.CoinFlip;
+import entity.CoinTool;
+import entity.DeviceFractionSet;
+import entity.Device;
+import entity.DiceData;
+import entity.DiceRoll;
+import entity.DiceTool;
+import entity.ReceivedFractionSet;
+import entity.Rods;
+import entity.SpinnerSegment;
+import entity.SpinnerSpin;
+import entity.SpinnerTool;
+import entity.Team;
+import entity.Vote;
+import entity.VotingAnswer;
+import entity.VotingQuestion;
+import entity.VotingTool;
+
+public class PersistenceUtil implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	
+	protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("mobimathsPersistence"); 	
+	
+	
+	public static void persist(Object entity) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.persist(entity);
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	public static void remove(Object entity) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Object mergedEntity = em.merge(entity);
+		em.remove(mergedEntity);
+		em.getTransaction().commit();
+		em.close();
+	}
+	
+	public static Object merge(Object entity) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		entity = em.merge(entity);
+		em.getTransaction().commit();		
+		em.close();
+		return entity;
+	}
+
+	public static EntityManager createEM() {
+		return emf.createEntityManager();
+	}
+	
+	
+	
+	
+	
+	
+	public static Device findDeviceByUsername(String username){
+		
+		EntityManager em = emf.createEntityManager();
+		List<Device> devices = (List<Device>) em.createNamedQuery("Device.findByUsername").setParameter("username", username).getResultList();
+		em.close();
+		
+		if (devices.size() == 0)
+			return null;
+		else 
+			return devices.get(0);
+	}
+	
+	public static Device findDeviceByIp(String ip){
+		
+		EntityManager em = emf.createEntityManager();
+		List<Device> devices = (List<Device>) em.createNamedQuery("Device.findByIp").setParameter("ip", ip).getResultList();
+		em.close();
+		
+		if (devices.size() == 0)
+			return null;
+		else 
+			return devices.get(0);
+	}
+	
+	public static List<Device> findAllDevices(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<Device> devices = (List<Device>) em.createNamedQuery("Device.findAll").getResultList();
+		em.close();
+		
+		return devices;
+	}
+
+	public static DeviceFractionSet findDeviceFractionsById(int deviceId) {
+		
+		EntityManager em = emf.createEntityManager();
+		List<DeviceFractionSet> dfs = (List<DeviceFractionSet>) em.createNamedQuery("DeviceFractionSet.findById").setParameter("id", deviceId).getResultList();
+		em.close();
+		
+		if (dfs.size() == 0)
+			return null;
+		else 
+			return dfs.get(0);
+	}
+	
+	public static ReceivedFractionSet findRecievedFractionSetById(int deviceId) {
+			
+			EntityManager em = emf.createEntityManager();
+			List<ReceivedFractionSet> rfs = (List<ReceivedFractionSet>) em.createNamedQuery("ReceivedFractionSet.findById").setParameter("id", deviceId).getResultList();
+			em.close();
+			
+			if (rfs.size() == 0)
+				return null;
+			else 
+				return rfs.get(0);
+		}
+	
+	public static List<Rods> findAllRods(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<Rods> rodsGames = (List<Rods>) em.createNamedQuery("Rods.findAll").getResultList();
+		em.close();
+		
+		return rodsGames;
+	}
+		
+
+	
+	
+	public static List<DiceTool> findAllDiceTools(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<DiceTool> diceTools = (List<DiceTool>) em.createNamedQuery("DiceTool.findAll").getResultList();
+		em.close();
+		
+		return diceTools;
+	}
+		
+	public static List<DiceData> findAllDiceData(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<DiceData> diceData = (List<DiceData>) em.createNamedQuery("DiceData.findAll").getResultList();
+		em.close();
+		
+		return diceData;
+	}
+	
+	public static List<DiceRoll> findAllDiceRolls(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<DiceRoll> diceRolls = (List<DiceRoll>) em.createNamedQuery("DiceRoll.findAll").getResultList();
+		em.close();
+		
+		return diceRolls;
+	}
+		
+	public static List<CoinTool> findAllCoinTools(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<CoinTool> coinTools = (List<CoinTool>) em.createNamedQuery("CoinTool.findAll").getResultList();
+		em.close();
+		
+		return coinTools;
+	}
+	
+	
+	
+	public static List<CoinFlip> findAllCoinFlips(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<CoinFlip> coinFlips = (List<CoinFlip>) em.createNamedQuery("CoinFlip.findAll").getResultList();
+		em.close();
+		
+		return coinFlips;
+	}
+	
+	
+	
+	public static List<VotingTool> findAllVotingTools(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<VotingTool> votingTools = (List<VotingTool>) em.createNamedQuery("VotingTool.findAll").getResultList();
+		em.close();
+		
+		return votingTools;
+	}
+	
+//	public static List<VotingTool> findVotingToolsByDate(){
+//		
+//		EntityManager em = emf.createEntityManager();
+//		List<VotingTool> votingTools = (List<VotingTool>) em.createNamedQuery("VotingTool.findByDate").getResultList();
+//		em.close();
+//		
+//		return votingTools;
+//	}
+	
+	
+	
+	public static List<VotingAnswer> findAllVotingAnswers(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<VotingAnswer> votingAnswers = (List<VotingAnswer>) em.createNamedQuery("VotingAnswer.findAll").getResultList();
+		em.close();
+		
+		return votingAnswers;
+	}
+	
+	public static List<VotingQuestion> findAllVotingQuestions(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<VotingQuestion> votingQuestions = (List<VotingQuestion>) em.createNamedQuery("VotingQuestion.findAll").getResultList();
+		em.close();
+		
+		return votingQuestions;
+	}
+	
+	
+	public static List<Vote> findAllVotes(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<Vote> Votes = (List<Vote>) em.createNamedQuery("Vote.findAll").getResultList();
+		em.close();
+		
+		return Votes;
+	}
+	
+	public static List<Vote> findVotesbyAnswerId(int id) {
+		
+		EntityManager em = emf.createEntityManager();
+		List<Vote> votes = (List<Vote>) em.createNamedQuery("Vote.findByAnswerId").setParameter("id", id).getResultList();
+		em.close();
+		
+		return votes;
+	}
+	
+	public static List<SpinnerSegment> findAllSpinnerSegments(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<SpinnerSegment> segments = (List<SpinnerSegment>) em.createNamedQuery("SpinnerSegment.findAll").getResultList();
+		em.close();
+		
+		return segments;
+	}
+	
+	
+	public static List<SpinnerTool> findAllSpinnerTools(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<SpinnerTool> spinnerTools = (List<SpinnerTool>) em.createNamedQuery("SpinnerTool.findAll").getResultList();
+		em.close();
+		
+		return spinnerTools;
+	}
+	
+	public static List<SpinnerSegment> findSpinnerSegmentsByToolId(int id){
+	
+		EntityManager em = emf.createEntityManager();
+		List<SpinnerSegment> segments = (List<SpinnerSegment>) em.createNamedQuery("SpinnerSegment.findBySpinnerId").setParameter("id", id).getResultList();
+		em.close();
+	
+	return segments;
+	}
+
+	public static List<SpinnerSpin> findAllSpinnerSpins(){
+		
+		EntityManager em = emf.createEntityManager();
+		List<SpinnerSpin> spins = (List<SpinnerSpin>) em.createNamedQuery("SpinnerSpin.findAll").getResultList();
+		em.close();
+		return spins;
+	}
+	
+	public static List<SpinnerSpin> findSpinnerSpinBySegmentId(int id){
+		
+		EntityManager em = emf.createEntityManager();
+		List<SpinnerSpin> spins = (List<SpinnerSpin>) em.createNamedQuery("SpinnerSpin.findBySegmentId").setParameter("id", id).getResultList();
+		em.close();
+		return spins;
+	}
+	
+}
+
