@@ -39,6 +39,7 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// gets absolute path of the web application
+		
 		String appPath = request.getServletContext().getRealPath("");
 		// constructs path of the directory to save uploaded file
 		String savePath = appPath + File.separator + SAVE_DIR;
@@ -59,6 +60,19 @@ public class UploadServlet extends HttpServlet {
 			part.write(finalFilePath);
 		}
 		
+		//TODO 
+		/*
+		 * request.getParameters("file");
+		 * boolean addToTable = request.getParameters("importBoolean");
+		 * 
+		 * 
+		 * response.setContentType("text/html")
+		 * PrintWriter out = response.getWriter();
+		 * out.println("<html><body> Hello! </body></html>");
+		 * out.close();
+		 * 
+		 */
+		
 		boolean addToTable = false;
 		
 		ExcelBaseDataRead reader = new ExcelBaseDataRead();
@@ -73,9 +87,7 @@ public class UploadServlet extends HttpServlet {
 		//boolean addToTable = ExcellLoader.addExcellFileToSingleTable("/FileUploadTest/uploadFiles/upload.xls");
 		
 		
-		request.setAttribute("message", "Upload has been done successfully! addToTable() result = " + addToTable);
-		request.setAttribute("systemFilePath", finalFilePath);
-		request.setAttribute("fileExtension", fileExtension);
+		request.setAttribute("message", "Upload has completed successfully!");
 		getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 

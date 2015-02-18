@@ -5,18 +5,15 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Upload</title>
+		<title>Upload Result</title>
 	</head>
 	<body>
+	<center>
 		<h2>${requestScope.message}</h2>
-		<br/>
-		systemFilePath  =  ${requestScope.systemFilePath}
-		<br/>
-		<br/>
-		<a href="/GroupProject/uploadFiles/upload${requestScope.fileExtension}">Local location</a>
-		<br/>
-		<br/>
-		
+		<br>
+		<br>
+		<a href="/GroupProject_Group2/upload.html">Return To Upload</a>
+	</center>
 		
 		
 		
