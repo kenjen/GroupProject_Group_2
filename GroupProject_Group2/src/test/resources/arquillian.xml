@@ -8,4 +8,5 @@
 			<property name="jbossHome">C:\jee\jboss-as-7.1.1.Final</property>
 		</configuration>
 	</container>
+	
 </arquillian>
