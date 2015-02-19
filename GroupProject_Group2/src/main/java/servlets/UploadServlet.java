@@ -14,7 +14,9 @@ import javax.servlet.http.Part;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
+import com.project.dao.LookUpDataDAO;
 import com.project.reader.excel.ExcelBaseDataRead;
+import com.project.reader.excel.ExcelLookupDataRead;
 
 
 //import resources.ExcellLoader;
@@ -35,6 +37,8 @@ public class UploadServlet extends HttpServlet {
 	private BaseDataDAO dao;
 	@EJB
 	private ErrorBaseDataDAO errorDao;
+	@EJB
+	private LookUpDataDAO lookupDao;
 	
 	/**
 	 * handles file upload
@@ -80,20 +84,24 @@ public class UploadServlet extends HttpServlet {
 		
 		boolean addToTable = false;
 		
-		ExcelBaseDataRead reader = new ExcelBaseDataRead();
-		reader.setSheetNumber(0);
-		reader.setInputFile(finalFilePath);
-		//reader.setInputFile("/uploadFiles/upload.xls");
-		if(dao!=null){
-			reader.setBaseDataDao(dao);
-			reader.setErrorBaseDataDao(errorDao);
-			reader.read();
-		}
-		reader = null;
-		//boolean addToTable = ExcellLoader.addExcellFileToSingleTable("/FileUploadTest/uploadFiles/upload.xls");
+		ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
+		lookupDataReader.setInputFile(finalFilePath);
+		lookupDataReader.setLookUpDao(lookupDao);
+		lookupDataReader.read();
+		lookupDataReader = null;
 		
+		ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
+		baseDataReader.setSheetNumber(0);
+		baseDataReader.setInputFile(finalFilePath);
+		baseDataReader.setBaseDataDao(dao);
+		baseDataReader.setErrorBaseDataDao(errorDao);
+		baseDataReader.read();
+		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
+		baseDataReader = null;
 		
-		request.setAttribute("message", "Upload has completed successfully! fileParam = " + fileParam);
+		request.setAttribute("message", "Upload has completed successfully!"
+				+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data<br>" + 
+				" fileParam = " + fileParam);
 		getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 
