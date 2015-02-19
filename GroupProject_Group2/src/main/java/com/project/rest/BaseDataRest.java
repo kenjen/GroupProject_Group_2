@@ -22,7 +22,7 @@ public class BaseDataRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<BaseData> getAllBaseData() {
-		return (List) baseDataService.getAllTestTableData();
+		return (List) baseDataService.getAllBaseData();
 	}
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)

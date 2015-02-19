@@ -7,9 +7,11 @@ import com.project.entities.BaseData;
 
 @Local
 public interface BaseDataService {
-	Collection<BaseData> getAllTestTableData();
+	Collection<BaseData> getAllBaseData();
 	
 	@SuppressWarnings("rawtypes")
 	void addAllBaseData(Collection baseDataList);
+
+	Collection<BaseData> getAllTestTableData();
 
 }

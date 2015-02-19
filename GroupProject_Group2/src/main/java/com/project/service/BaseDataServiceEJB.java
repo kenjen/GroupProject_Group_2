@@ -30,4 +30,9 @@ public class BaseDataServiceEJB implements BaseDataService {
 		baseDataDAO.addAllBaseData(baseDataList);
 	}
 
+	@Override
+	public Collection<BaseData> getAllBaseData() {
+		return baseDataDAO.getAllBaseData();
+	}
+
 }
