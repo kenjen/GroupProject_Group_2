@@ -17,8 +17,7 @@ import com.project.entities.BaseData;
 @Local
 public class JPABaseDataDAO implements BaseDataDAO {
 
-	@PersistenceContext(unitName="GroupProject_Group2")
-	private EntityManager entityManager;
+	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	public Collection<BaseData> getAllBaseData() {

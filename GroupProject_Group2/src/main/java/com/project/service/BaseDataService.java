@@ -1,13 +1,15 @@
 package com.project.service;
 import java.util.Collection;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
+import javax.jws.WebService;
 
 import com.project.entities.BaseData;
 
-@Local
+@WebService
+@Remote
 public interface BaseDataService {
-	Collection<BaseData> getAllTestTableData();
+	Collection<BaseData> getAllBaseData();
 	
 	@SuppressWarnings("rawtypes")
 	void addAllBaseData(Collection baseDataList);
