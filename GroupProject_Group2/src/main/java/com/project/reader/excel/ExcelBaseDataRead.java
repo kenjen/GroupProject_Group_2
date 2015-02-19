@@ -27,6 +27,7 @@ public class ExcelBaseDataRead implements Read {
 	private final ExcellValidator validator = new ExcellValidator();
 
 	private int sheetNumber;
+	private int invalidRowCount;
 
 	private BaseDataDAO baseDataDao;
 	private ErrorBaseDataDAO errorBaseDataDao;
@@ -42,6 +43,7 @@ public class ExcelBaseDataRead implements Read {
 
 	@Override
 	public void read() throws IOException {
+		invalidRowCount = 0;
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
 
@@ -117,6 +119,7 @@ public class ExcelBaseDataRead implements Read {
 			if(rowValid && validator.isValid(baseDataRecord)){
 				baseDatList.add(baseDataRecord);
 			}else{
+				invalidRowCount++;
 				errorBaseDatList.add(new ErrorBaseData(row));
 			}
 		}
@@ -137,6 +140,10 @@ public class ExcelBaseDataRead implements Read {
 	
 	public void setErrorBaseDataDao(ErrorBaseDataDAO dao){
 		this.errorBaseDataDao = dao;
+	}
+
+	public int getInvalidRowCount() {
+		return invalidRowCount;
 	}
 
 }

@@ -70,20 +70,24 @@ public class ExcelLookupDataRead implements Read {
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
 					eventCauseRecord = new EventCause();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
-					for (Cell cell : row) {
-						if (cell.getColumnIndex() == 0) {
-							eventCauseRecord.setCauseCode((int) cell
-									.getNumericCellValue());
+					try {
+						for (Cell cell : row) {
+							if (cell.getColumnIndex() == 0) {
+								eventCauseRecord.setCauseCode((int) cell
+										.getNumericCellValue());
+							}
+							if (cell.getColumnIndex() == 1) {
+								eventCauseRecord.setEventId((int) cell
+										.getNumericCellValue());
+							}
+							if (cell.getColumnIndex() == 2) {
+								eventCauseRecord.setDescription(cell
+										.getStringCellValue());
+							}
+							eventCauseList.add(eventCauseRecord);
 						}
-						if (cell.getColumnIndex() == 1) {
-							eventCauseRecord.setEventId((int) cell
-									.getNumericCellValue());
-						}
-						if (cell.getColumnIndex() == 2) {
-							eventCauseRecord.setDescription(cell
-									.getStringCellValue());
-						}
-						eventCauseList.add(eventCauseRecord);
+					} catch (Exception e) {
+						//TODO highlight???
 					}
 				}
 				lookUpDao.addAllEventCause(eventCauseList);
@@ -94,16 +98,20 @@ public class ExcelLookupDataRead implements Read {
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
 					failureClassRecord = new FailureClass();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
-					for (Cell cell : row) {
-						if (cell.getColumnIndex() == 0) {
-							failureClassRecord.setFailureClass((int) cell
-									.getNumericCellValue());
+					try {
+						for (Cell cell : row) {
+							if (cell.getColumnIndex() == 0) {
+								failureClassRecord.setFailureClass((int) cell
+										.getNumericCellValue());
+							}
+							if (cell.getColumnIndex() == 1) {
+								failureClassRecord.setDescription(cell
+										.getStringCellValue());
+							}
+							failureClassList.add(failureClassRecord);
 						}
-						if (cell.getColumnIndex() == 1) {
-							failureClassRecord.setDescription(cell
-									.getStringCellValue());
-						}
-						failureClassList.add(failureClassRecord);
+					} catch (Exception e) {
+						//TODO highlight???
 					}
 				}
 				lookUpDao.addAllFailureClass(failureClassList);
@@ -114,21 +122,25 @@ public class ExcelLookupDataRead implements Read {
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
 					ueRecord = new UE();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
-					for (Cell cell : row) {
-						if (cell.getColumnIndex() == 0) {
-							ueRecord.setTac((int) cell.getNumericCellValue());
+					try {
+						for (Cell cell : row) {
+							if (cell.getColumnIndex() == 0) {
+								ueRecord.setTac((int) cell.getNumericCellValue());
+							}
+							if (cell.getColumnIndex() == 1) {
+								ueRecord.setMarketingName(cell.getStringCellValue());
+							}
+							if (cell.getColumnIndex() == 2) {
+								ueRecord.setManufacturer(cell.getStringCellValue());
+							}
+							if (cell.getColumnIndex() == 3) {
+								ueRecord.setAccessCapability(cell
+										.getStringCellValue());
+							}
+							ueList.add(ueRecord);
 						}
-						if (cell.getColumnIndex() == 1) {
-							ueRecord.setMarketingName(cell.getStringCellValue());
-						}
-						if (cell.getColumnIndex() == 2) {
-							ueRecord.setManufacturer(cell.getStringCellValue());
-						}
-						if (cell.getColumnIndex() == 3) {
-							ueRecord.setAccessCapability(cell
-									.getStringCellValue());
-						}
-						ueList.add(ueRecord);
+					} catch (Exception e) {
+						//TODO highlight???
 					}
 				}
 				lookUpDao.addAllUe(ueList);
@@ -139,22 +151,26 @@ public class ExcelLookupDataRead implements Read {
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
 					mccMncRecord = new MccMnc();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
-					for (Cell cell : row) {
-						if (cell.getColumnIndex() == 0) {
-							mccMncRecord.setMcc((int) cell
-									.getNumericCellValue());
+					try {
+						for (Cell cell : row) {
+							if (cell.getColumnIndex() == 0) {
+								mccMncRecord.setMcc((int) cell
+										.getNumericCellValue());
+							}
+							if (cell.getColumnIndex() == 1) {
+								mccMncRecord.setMnc((int) cell
+										.getNumericCellValue());
+							}
+							if (cell.getColumnIndex() == 2) {
+								mccMncRecord.setCountry(cell.getStringCellValue());
+							}
+							if (cell.getColumnIndex() == 3) {
+								mccMncRecord.setOperator(cell.getStringCellValue());
+							}
+							mccMncList.add(mccMncRecord);
 						}
-						if (cell.getColumnIndex() == 1) {
-							mccMncRecord.setMnc((int) cell
-									.getNumericCellValue());
-						}
-						if (cell.getColumnIndex() == 2) {
-							mccMncRecord.setCountry(cell.getStringCellValue());
-						}
-						if (cell.getColumnIndex() == 3) {
-							mccMncRecord.setOperator(cell.getStringCellValue());
-						}
-						mccMncList.add(mccMncRecord);
+					} catch (Exception e) {
+						//TODO highlight???
 					}
 				}
 				lookUpDao.addAllMccMnc(mccMncList);
