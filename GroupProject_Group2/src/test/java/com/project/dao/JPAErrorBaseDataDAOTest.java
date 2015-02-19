@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import com.project.dao.JPABaseDataDAO;
 
 @RunWith(Arquillian.class)
-public class JPABaseDataDAOTest {
+public class JPAErrorBaseDataDAOTest {
 	
 	@Deployment
     public static JavaArchive createDeployment() {
