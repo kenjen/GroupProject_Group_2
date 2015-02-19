@@ -1,4 +1,4 @@
-package com.project.dao;
+package com.project.servlets;
 
 import static org.junit.Assert.*;
 
@@ -12,24 +12,22 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.project.dao.JPABaseDataDAO;
+import com.project.servlets.UploadServlet;
 
 @RunWith(Arquillian.class)
-public class JPAErrorBaseDataDAOTest {
+public class UploadServletTest {
 	
 	@Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-            .addClass(JPAErrorBaseDataDAO.class)
+            .addClass(UploadServlet.class)
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 	/*
-	@Inject
-	JPAErrorBaseDataDAO dao;
 	
 	@Test
-	public void testEntityManager(){
-		assertNotEquals(null, dao.entityManager);
-	}*/
-
+	public void testDoPost(){
+		
+	}
+	*/
 }
