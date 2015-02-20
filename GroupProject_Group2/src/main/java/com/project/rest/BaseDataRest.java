@@ -45,5 +45,19 @@ public class BaseDataRest {
 	public Collection<FailureClass> addFailureClassKeys() {
 		return baseDataService.addFailureClassKeys();
 	}
+	
+	@GET
+	@Path("/testallue")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<UE> getUEs() {
+		return baseDataService.getUEs();
+	}
+	
+	@GET
+	@Path("/testallfc")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<FailureClass> getFailureClasses() {
+		return baseDataService.getFailureClasses();
+	}
 
 }

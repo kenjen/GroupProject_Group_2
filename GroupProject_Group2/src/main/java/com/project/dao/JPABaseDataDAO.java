@@ -24,7 +24,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	@EJB
 	private EventCauseDAO eventCauseDAO;
 	@EJB
-	private FailureClassDAOLocal failurClassDAO;
+	private FailureClassDAOLocal failureClassDAO;
 
 
 	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
@@ -47,7 +47,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		//addFailureClassForeignKey();
 	}
 	
-	public Collection addUEForeignKey(){
+	public Collection<UE> addUEForeignKey(){
 		
 		Collection<BaseData> allBaseData = this.getAllBaseData();
 		Long l = System.nanoTime();
@@ -71,13 +71,13 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return allUE;
 	}
 	
-	public Collection addFailureClassForeignKey(){
+	public Collection<FailureClass> addFailureClassForeignKey(){
 		Collection<BaseData> allBaseData = this.getAllBaseData();
 		 Long l = System.nanoTime();
 		 Date date = new Date();
 		BaseData bd = new BaseData(date, 3, 3, 3, 3, 3, 3, 3, 3, "TEST", l, "TEST", "TEST", "TEST");
 		allBaseData.add(bd);
-		List<FailureClass> failureClasses = (List<FailureClass>) failurClassDAO.getAllFailureClasses();
+		List<FailureClass> failureClasses = (List<FailureClass>) failureClassDAO.getAllFailureClasses();
 		FailureClass sampleFC = new FailureClass(3, "test");
 		failureClasses.add(sampleFC);
 		for (BaseData o : allBaseData) {
@@ -92,6 +92,16 @@ public class JPABaseDataDAO implements BaseDataDAO {
 			}
 		}
 		return failureClasses;
+	}
+
+	@Override
+	public Collection<FailureClass> getFailureClasses() {
+		return failureClassDAO.getAllFailureClasses();
+	}
+
+	@Override
+	public Collection<UE> getUEs() {
+		return ueDAO.getAllUEs();
 	}
 
 }

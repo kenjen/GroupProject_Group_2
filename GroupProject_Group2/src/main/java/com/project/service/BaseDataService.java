@@ -17,5 +17,7 @@ public interface BaseDataService {
 	void addAllBaseData(Collection baseDataList);
 	Collection<FailureClass> addFailureClassKeys();
 	Collection<UE> addUEKeys();
+	Collection<FailureClass> getFailureClasses();
+	Collection<UE> getUEs();
 
 }

@@ -2,6 +2,7 @@ package com.project.service;
 
 import java.util.Collection;
 
+import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -19,6 +20,7 @@ import com.project.entities.UE;
 public class BaseDataServiceEJB implements BaseDataService {
 	
 	//@Inject
+	@EJB
 	private BaseDataDAO baseDataDAO;
 
 	public BaseDataServiceEJB() {
@@ -44,5 +46,17 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public Collection<UE> addUEKeys() {
 		return baseDataDAO.addUEForeignKey();
 	}
+
+	@Override
+	public Collection<FailureClass> getFailureClasses() {
+		return baseDataDAO.getFailureClasses();
+	}
+
+	@Override
+	public Collection<UE> getUEs() {
+		return baseDataDAO.getUEs();
+	}
+	
+	
 
 }
