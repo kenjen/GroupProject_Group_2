@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -43,6 +44,19 @@ public class UsersRest {
 		 service .addUser(user);
 	}
 	
+	@POST
+	@Path("/updateuser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void updateUser(User user) {
+		 service.updateUser(user);
+	}
+	
+	@DELETE
+	@Path("/deleteuser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deleteUser(User user){
+		service.deleteUser(user);
+	}
 	
 
 }

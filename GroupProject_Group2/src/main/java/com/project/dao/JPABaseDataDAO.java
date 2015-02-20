@@ -49,12 +49,12 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	
 	public Collection<UE> addUEForeignKey(){
 		
-		Collection<BaseData> allBaseData = this.getAllBaseData();
+		List<BaseData> allBaseData = (List<BaseData>) this.getAllBaseData();
 		Long l = System.nanoTime();
 		Date date = new Date();
 		BaseData sampleBD = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST", l, "TEST", "TEST", "TEST");
 		allBaseData.add(sampleBD);
-		List<UE> allUE = (List<UE>) ueDAO.getAllUEs();
+		List<UE> allUE = (List<UE>) this.getUEs();
 		UE sampleUE = new UE(4, "test", "test", "test");
 		allUE.add(sampleUE);
 		for (BaseData o : allBaseData) {
@@ -72,12 +72,12 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	}
 	
 	public Collection<FailureClass> addFailureClassForeignKey(){
-		Collection<BaseData> allBaseData = this.getAllBaseData();
+		List<BaseData> allBaseData = (List<BaseData>) this.getAllBaseData();
 		 Long l = System.nanoTime();
 		 Date date = new Date();
 		BaseData bd = new BaseData(date, 3, 3, 3, 3, 3, 3, 3, 3, "TEST", l, "TEST", "TEST", "TEST");
 		allBaseData.add(bd);
-		List<FailureClass> failureClasses = (List<FailureClass>) failureClassDAO.getAllFailureClasses();
+		List<FailureClass> failureClasses = (List<FailureClass>) this.getFailureClasses();
 		FailureClass sampleFC = new FailureClass(3, "test");
 		failureClasses.add(sampleFC);
 		for (BaseData o : allBaseData) {

@@ -56,6 +56,7 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public Collection<UE> getUEs() {
 		return baseDataDAO.getUEs();
 	}
+
 	
 	
 
