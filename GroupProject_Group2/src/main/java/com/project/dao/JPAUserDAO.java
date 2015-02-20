@@ -65,8 +65,8 @@ public class JPAUserDAO implements UserDAO{
 
 	@Override
 	public void deleteUser(User user) {
-		User updatedUser = em.find(User.class, user.getId());
-		em.remove(user);
+		User deletedUser = em.find(User.class, user.getId());
+		em.remove(deletedUser);
 		
 	}
 	
