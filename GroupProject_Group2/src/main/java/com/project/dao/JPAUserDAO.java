@@ -26,6 +26,12 @@ public class JPAUserDAO implements UserDAO{
 
 	
 	public User getUser(User user) {
+		Query q = em.createQuery("from User");
+		List<User> res = q.getResultList();
+		if(res.isEmpty()){
+			User admin = new User("admin", "admin", 0);
+			em.persist(admin);
+		}
 		Query query = em.createQuery("from User u where u.username = :username and u.password = :password");
 		query.setParameter("username", user.getUsername());
 		query.setParameter("password", user.getPassword());
