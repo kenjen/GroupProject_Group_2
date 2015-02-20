@@ -56,7 +56,8 @@ public class JPABaseDataDAO implements BaseDataDAO {
 					o.setUeFK(ue);
 				}
 				else{
-					o.setUeFK(allUE.get(allUE.size()));
+					//NB - FOR TEST ONLY
+					o.setUeFK(allUE.get(allUE.size()-1));
 				}
 			}
 		}
@@ -67,12 +68,12 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		List<FailureClass> failureClasses = (List<FailureClass>) failurClassDAO.getAllFailureClasses();
 		for (BaseData o : allBaseData) {
 			for(FailureClass fc : failureClasses){
-				if((int)o.getFailureClass() == (int)fc.getFailureClass()){
+				if((int)o.getFailureClass() == (int)fc.getFailureClass()-1){
 					o.setFaliureClassFK(fc);
 				}
 				else{
-					
-					o.setFaliureClassFK(failureClasses.get(failureClasses.size()));
+					//NB - FOR TEST ONLY
+					o.setFaliureClassFK(failureClasses.get(failureClasses.size()-1));
 				}
 			}
 		}
