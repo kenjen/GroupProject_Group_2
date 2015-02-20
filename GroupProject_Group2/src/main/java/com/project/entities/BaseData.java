@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -57,6 +59,23 @@ public class BaseData implements Serializable {
 	private String hier32Id;
 	@Column(name = "hier321_id")
 	private String hier321Id;
+	
+	@JoinColumn(name = "failure_classFK", referencedColumnName = "id", nullable = false)
+	@ManyToOne
+	private FailureClass faliureClassFK;
+
+	@JoinColumn(name = "event_causeFK", referencedColumnName = "id", nullable = false)
+	@ManyToOne
+	private EventCause eventCauseFK;
+
+	@JoinColumn(name = "ue_FK", referencedColumnName = "id", nullable = false)
+	@ManyToOne
+	private UE ueFK;
+
+	@JoinColumn(name = "mccMnc_FK", referencedColumnName = "id", nullable = false)
+	@ManyToOne
+	private MccMnc mccMncFK;
+	
 
 	public BaseData(Date date, Integer eventId, Integer failureClass,
 			Integer tac, Integer mnc, Integer mcc, Integer cellId,
@@ -199,6 +218,38 @@ public class BaseData implements Serializable {
 
 	public void setHier321Id(String hier321Id) {
 		this.hier321Id = hier321Id;
+	}
+
+	public FailureClass getFaliureClassFK() {
+		return faliureClassFK;
+	}
+
+	public void setFaliureClassFK(FailureClass faliureClassFK) {
+		this.faliureClassFK = faliureClassFK;
+	}
+
+	public EventCause getEventCauseFK() {
+		return eventCauseFK;
+	}
+
+	public void setEventCauseFK(EventCause eventCauseFK) {
+		this.eventCauseFK = eventCauseFK;
+	}
+
+	public UE getUeFK() {
+		return ueFK;
+	}
+
+	public void setUeFK(UE ueFK) {
+		this.ueFK = ueFK;
+	}
+
+	public MccMnc getMccMncFK() {
+		return mccMncFK;
+	}
+
+	public void setMccMncFK(MccMnc mccMncFK) {
+		this.mccMncFK = mccMncFK;
 	}
 
 	@Override
