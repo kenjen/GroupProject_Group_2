@@ -10,7 +10,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>UploadServlet</servlet-name>
-		<servlet-class>servlets.UploadServlet</servlet-class>
+		<servlet-class>com.project.servlets.UploadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UploadServlet</servlet-name>
