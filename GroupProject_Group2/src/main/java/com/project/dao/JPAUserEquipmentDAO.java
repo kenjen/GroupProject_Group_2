@@ -29,7 +29,7 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO{
 		em.persist(ue);
 		Query query = em.createQuery("from UE");
 		List<UE> result = query.getResultList();
-		return result.get(1);
+		return result.get(result.size());
 	}
 
 

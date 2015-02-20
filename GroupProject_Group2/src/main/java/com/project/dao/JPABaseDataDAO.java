@@ -19,6 +19,11 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	
 	@EJB
 	private UserEquipmentDAO ueDAO;
+	@EJB
+	private EventCauseDAO eventCauseDAO;
+	@EJB
+	FailureClassDAOLocal failurClassDAO;
+
 
 	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
 
@@ -36,6 +41,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
 		}
+		addUEForeignKey();
 	}
 	
 	public Collection<UE> addUEForeignKey(){
