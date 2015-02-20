@@ -24,7 +24,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	@EJB
 	private EventCauseDAO eventCauseDAO;
 	@EJB
-	FailureClassDAOLocal failurClassDAO;
+	private FailureClassDAOLocal failureClassDAO;
 
 
 	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
@@ -47,14 +47,14 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		//addFailureClassForeignKey();
 	}
 	
-	public Collection addUEForeignKey(){
+	public Collection<UE> addUEForeignKey(){
 		
-		Collection<BaseData> allBaseData = this.getAllBaseData();
+		List<BaseData> allBaseData = (List<BaseData>) this.getAllBaseData();
 		Long l = System.nanoTime();
 		Date date = new Date();
 		BaseData sampleBD = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST", l, "TEST", "TEST", "TEST");
 		allBaseData.add(sampleBD);
-		List<UE> allUE = (List<UE>) ueDAO.getAllUEs();
+		List<UE> allUE = (List<UE>) this.getUEs();
 		UE sampleUE = new UE(4, "test", "test", "test");
 		allUE.add(sampleUE);
 		for (BaseData o : allBaseData) {
@@ -68,20 +68,17 @@ public class JPABaseDataDAO implements BaseDataDAO {
 				}
 			}
 		}
-		Collection test = null;
-		test.add(allUE);
-		test.add(allBaseData);
-		return test;
+		return allUE;
 	}
 	
-	public Collection addFailureClassForeignKey(){
-		Collection<BaseData> allBaseData = this.getAllBaseData();
+	public Collection<FailureClass> addFailureClassForeignKey(){
+		List<BaseData> allBaseData = (List<BaseData>) this.getAllBaseData();
 		 Long l = System.nanoTime();
 		 Date date = new Date();
-		BaseData bd = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST", l, "TEST", "TEST", "TEST");
+		BaseData bd = new BaseData(date, 3, 3, 3, 3, 3, 3, 3, 3, "TEST", l, "TEST", "TEST", "TEST");
 		allBaseData.add(bd);
-		List<FailureClass> failureClasses = (List<FailureClass>) failurClassDAO.getAllFailureClasses();
-		FailureClass sampleFC = new FailureClass(4, "test");
+		List<FailureClass> failureClasses = (List<FailureClass>) this.getFailureClasses();
+		FailureClass sampleFC = new FailureClass(3, "test");
 		failureClasses.add(sampleFC);
 		for (BaseData o : allBaseData) {
 			for(FailureClass fc : failureClasses){
@@ -94,10 +91,17 @@ public class JPABaseDataDAO implements BaseDataDAO {
 				}
 			}
 		}
-		Collection test = null;
-		test.add(failureClasses);
-		test.add(allBaseData);
-		return test;
+		return failureClasses;
+	}
+
+	@Override
+	public Collection<FailureClass> getFailureClasses() {
+		return failureClassDAO.getAllFailureClasses();
+	}
+
+	@Override
+	public Collection<UE> getUEs() {
+		return ueDAO.getAllUEs();
 	}
 
 }

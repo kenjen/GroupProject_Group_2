@@ -1,5 +1,7 @@
 package com.project.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = "FailureClass.findAll", query = "select o from FailureClass o"),
 		@NamedQuery(name = "FailureClass.findByID", query = "select o from FailureClass o where o.id=:id"), })
 @Entity
-public class FailureClass {
+public class FailureClass implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;

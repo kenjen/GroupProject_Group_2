@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.project.entities.BaseData;
+import com.project.entities.FailureClass;
+import com.project.entities.UE;
 import com.project.service.BaseDataService;
 
 @Path("/base_data")
@@ -31,10 +33,31 @@ public class BaseDataRest {
 	}
 	
 	@GET
-	@Path("/test")
+	@Path("/testue")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection addKeys() {
-		return baseDataService.addForeignKeys();
+	public Collection<UE> addUEKeys() {
+		return baseDataService.addUEKeys();
+	}
+	
+	@GET
+	@Path("/testfc")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<FailureClass> addFailureClassKeys() {
+		return baseDataService.addFailureClassKeys();
+	}
+	
+	@GET
+	@Path("/testallue")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<UE> getUEs() {
+		return baseDataService.getUEs();
+	}
+	
+	@GET
+	@Path("/testallfc")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<FailureClass> getFailureClasses() {
+		return baseDataService.getFailureClasses();
 	}
 
 }

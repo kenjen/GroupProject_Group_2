@@ -53,6 +53,22 @@ public class JPAUserDAO implements UserDAO{
 		}
 		//return "User Not Added";
 	}
+
+
+	public void updateUser(User user) {
+		User updatedUser = em.find(User.class, user.getId());
+		updatedUser.setPassword(user.getPassword());
+		updatedUser.setUsername(user.getUsername());
+		updatedUser.setUserType(user.getUserType());
+	}
+
+
+	@Override
+	public void deleteUser(User user) {
+		User updatedUser = em.find(User.class, user.getId());
+		em.remove(user);
+		
+	}
 	
 
 }
