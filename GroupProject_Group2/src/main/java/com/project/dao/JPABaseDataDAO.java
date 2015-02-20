@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.project.entities.BaseData;
+import com.project.entities.FailureClass;
 import com.project.entities.UE;
 
 @Stateless
@@ -42,25 +43,39 @@ public class JPABaseDataDAO implements BaseDataDAO {
 			entityManager.persist(o);
 		}
 		addUEForeignKey();
+		addFailureClassForeignKey();
 	}
 	
-	public Collection<UE> addUEForeignKey(){
+	public void addUEForeignKey(){
 		
-		UE test = ueDAO.getOneUE();
 		Collection<BaseData> allBaseData = this.getAllBaseData();
-		Collection<UE> allUE = ueDAO.getAllUEs();
+		List<UE> allUE = (List<UE>) ueDAO.getAllUEs();
 		for (BaseData o : allBaseData) {
 			for(UE ue : allUE){
 				if((int)o.getTac() == (int)ue.getTac()){
 					o.setUeFK(ue);
 				}
 				else{
-					o.setUeFK(test);
+					o.setUeFK(allUE.get(allUE.size()));
 				}
 			}
 		}
-		return allUE;
-		
+	}
+	
+	public void addFailureClassForeignKey(){
+		Collection<BaseData> allBaseData = this.getAllBaseData();
+		List<FailureClass> failureClasses = (List<FailureClass>) failurClassDAO.getAllFailureClasses();
+		for (BaseData o : allBaseData) {
+			for(FailureClass fc : failureClasses){
+				if((int)o.getFailureClass() == (int)fc.getFailureClass()){
+					o.setFaliureClassFK(fc);
+				}
+				else{
+					
+					o.setFaliureClassFK(failureClasses.get(failureClasses.size()));
+				}
+			}
+		}
 	}
 
 }

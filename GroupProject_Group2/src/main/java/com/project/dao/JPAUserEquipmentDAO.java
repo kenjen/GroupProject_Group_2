@@ -24,13 +24,5 @@ public class JPAUserEquipmentDAO implements UserEquipmentDAO{
 		List<UE> result = query.getResultList();
 		return result;
 	}
-	public UE getOneUE(){
-		UE ue = new UE(44, "test", "test", "test");
-		em.persist(ue);
-		Query query = em.createQuery("from UE");
-		List<UE> result = query.getResultList();
-		return result.get(result.size());
-	}
-
 
 }

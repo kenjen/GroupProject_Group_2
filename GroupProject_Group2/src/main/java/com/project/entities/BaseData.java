@@ -72,7 +72,7 @@ public class BaseData implements Serializable {
 	@ManyToOne
 	private UE ueFK;
 
-	@JoinColumn(name = "mcc_mncFK", referencedColumnName = "id", nullable = true)
+	@JoinColumn(name = "mcc_mnc", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private MccMnc mccMncFK;
 	
