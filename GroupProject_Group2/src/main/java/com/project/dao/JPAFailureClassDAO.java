@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.project.entities.FailureClass;
-import com.project.entities.User;
 
 @Stateless
 @Local

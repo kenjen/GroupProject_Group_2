@@ -5,6 +5,8 @@ import javax.ejb.Remote;
 import javax.jws.WebService;
 
 import com.project.entities.BaseData;
+import com.project.entities.FailureClass;
+import com.project.entities.UE;
 
 @WebService
 @Remote
@@ -13,6 +15,7 @@ public interface BaseDataService {
 	
 	@SuppressWarnings("rawtypes")
 	void addAllBaseData(Collection baseDataList);
-	Collection addForeignKeys();
+	Collection<FailureClass> addFailureClassKeys();
+	Collection<UE> addUEKeys();
 
 }

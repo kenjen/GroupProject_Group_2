@@ -3,6 +3,7 @@ package com.project.dao;
 import java.util.Collection;
 
 import com.project.entities.BaseData;
+import com.project.entities.FailureClass;
 import com.project.entities.UE;
 
 public interface BaseDataDAO {
@@ -11,7 +12,7 @@ public interface BaseDataDAO {
 	
 	@SuppressWarnings("rawtypes")
 	void addAllBaseData(Collection baseDataList);
-	Collection addUEForeignKey();
-	Collection addFailureClassForeignKey();
+	Collection<UE> addUEForeignKey();
+	Collection<FailureClass> addFailureClassForeignKey();
 
 }

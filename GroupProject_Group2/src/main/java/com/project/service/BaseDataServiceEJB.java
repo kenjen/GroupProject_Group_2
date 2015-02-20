@@ -10,6 +10,8 @@ import javax.inject.Inject;
 
 import com.project.dao.BaseDataDAO;
 import com.project.entities.BaseData;
+import com.project.entities.FailureClass;
+import com.project.entities.UE;
 
 @Stateless
 @Remote(BaseDataService.class)
@@ -33,14 +35,14 @@ public class BaseDataServiceEJB implements BaseDataService {
 		baseDataDAO.addAllBaseData(baseDataList);
 	}
 
-	public Collection addForeignKeys() {
-		Collection fc= baseDataDAO.addFailureClassForeignKey();
-		Collection ue = baseDataDAO.addUEForeignKey();
-		Collection test = null;
-		test.add(fc);
-		test.add(ue);
-		return test;
-		
+	@Override
+	public Collection<FailureClass> addFailureClassKeys() {
+		return baseDataDAO.addFailureClassForeignKey();
+	}
+
+	@Override
+	public Collection<UE> addUEKeys() {
+		return baseDataDAO.addUEForeignKey();
 	}
 
 }
