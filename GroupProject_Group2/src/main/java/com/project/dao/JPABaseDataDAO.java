@@ -3,19 +3,22 @@ package com.project.dao;
 import java.util.Collection;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.project.entities.BaseData;
+import com.project.entities.UE;
 
 @Stateless
 @Local
 public class JPABaseDataDAO implements BaseDataDAO {
+	
+	@EJB
+	private UserEquipmentDAO ueDAO;
 
 	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
 
@@ -33,6 +36,25 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
 		}
+	}
+	
+	public Collection<UE> addForiegnKeys(){
+		
+		UE test = ueDAO.getOneUE();
+		Collection<BaseData> allBaseData = this.getAllBaseData();
+		Collection<UE> allUE = ueDAO.getAllUEs();
+		for (BaseData o : allBaseData) {
+			for(UE ue : allUE){
+				if((int)o.getTac() == (int)ue.getTac()){
+					o.setUeFK(ue);
+				}
+				else{
+					o.setUeFK(test);
+				}
+			}
+		}
+		return allUE;
+		
 	}
 
 }
