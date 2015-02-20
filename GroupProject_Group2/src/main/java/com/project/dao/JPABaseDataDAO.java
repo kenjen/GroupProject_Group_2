@@ -68,7 +68,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		List<FailureClass> failureClasses = (List<FailureClass>) failurClassDAO.getAllFailureClasses();
 		for (BaseData o : allBaseData) {
 			for(FailureClass fc : failureClasses){
-				if((int)o.getFailureClass() == (int)fc.getFailureClass()-1){
+				if((int)o.getFailureClass() == (int)fc.getFailureClass()){
 					o.setFaliureClassFK(fc);
 				}
 				else{
