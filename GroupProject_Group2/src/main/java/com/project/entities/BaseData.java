@@ -24,7 +24,7 @@ public class BaseData implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
 
@@ -60,19 +60,19 @@ public class BaseData implements Serializable {
 	@Column(name = "hier321_id")
 	private String hier321Id;
 	
-	@JoinColumn(name = "failure_classFK", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "failure_classFK", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private FailureClass faliureClassFK;
 
-	@JoinColumn(name = "event_causeFK", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "event_causeFK", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private EventCause eventCauseFK;
 
-	@JoinColumn(name = "ue_FK", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "ue_FK", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private UE ueFK;
 
-	@JoinColumn(name = "mccMnc_FK", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "mccMnc_FK", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private MccMnc mccMncFK;
 	
