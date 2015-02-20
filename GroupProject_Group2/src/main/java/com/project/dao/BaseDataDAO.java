@@ -11,7 +11,7 @@ public interface BaseDataDAO {
 	
 	@SuppressWarnings("rawtypes")
 	void addAllBaseData(Collection baseDataList);
-	void addUEForeignKey();
-	void addFailureClassForeignKey();
+	Collection addUEForeignKey();
+	Collection addFailureClassForeignKey();
 
 }

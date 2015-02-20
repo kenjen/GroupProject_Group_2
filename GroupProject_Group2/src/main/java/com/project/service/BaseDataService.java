@@ -13,5 +13,6 @@ public interface BaseDataService {
 	
 	@SuppressWarnings("rawtypes")
 	void addAllBaseData(Collection baseDataList);
+	Collection addForeignKeys();
 
 }

@@ -1,5 +1,6 @@
 package com.project.rest;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -26,8 +27,14 @@ public class BaseDataRest {
 	}
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAllBaseData(){
-		
+	public void addAllBaseData(){		
+	}
+	
+	@GET
+	@Path("/test")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection addKeys() {
+		return baseDataService.addForeignKeys();
 	}
 
 }

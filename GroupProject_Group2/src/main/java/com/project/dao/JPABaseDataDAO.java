@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -42,17 +43,23 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
 		}
-		addUEForeignKey();
-		addFailureClassForeignKey();
+		//addUEForeignKey();
+		//addFailureClassForeignKey();
 	}
 	
-	public void addUEForeignKey(){
+	public Collection addUEForeignKey(){
 		
 		Collection<BaseData> allBaseData = this.getAllBaseData();
+		Long l = System.nanoTime();
+		Date date = new Date();
+		BaseData sampleBD = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST", l, "TEST", "TEST", "TEST");
+		allBaseData.add(sampleBD);
 		List<UE> allUE = (List<UE>) ueDAO.getAllUEs();
+		UE sampleUE = new UE(4, "test", "test", "test");
+		allUE.add(sampleUE);
 		for (BaseData o : allBaseData) {
 			for(UE ue : allUE){
-				if((int)o.getTac() == (int)ue.getTac()){
+				if(o.getTac().intValue()==ue.getTac()){
 					o.setUeFK(ue);
 				}
 				else{
@@ -61,14 +68,24 @@ public class JPABaseDataDAO implements BaseDataDAO {
 				}
 			}
 		}
+		Collection test = null;
+		test.add(allUE);
+		test.add(allBaseData);
+		return test;
 	}
 	
-	public void addFailureClassForeignKey(){
+	public Collection addFailureClassForeignKey(){
 		Collection<BaseData> allBaseData = this.getAllBaseData();
+		 Long l = System.nanoTime();
+		 Date date = new Date();
+		BaseData bd = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST", l, "TEST", "TEST", "TEST");
+		allBaseData.add(bd);
 		List<FailureClass> failureClasses = (List<FailureClass>) failurClassDAO.getAllFailureClasses();
+		FailureClass sampleFC = new FailureClass(4, "test");
+		failureClasses.add(sampleFC);
 		for (BaseData o : allBaseData) {
 			for(FailureClass fc : failureClasses){
-				if((int)o.getFailureClass() == (int)fc.getFailureClass()){
+				if(o.getFailureClass().intValue()==fc.getFailureClass()){
 					o.setFaliureClassFK(fc);
 				}
 				else{
@@ -77,6 +94,10 @@ public class JPABaseDataDAO implements BaseDataDAO {
 				}
 			}
 		}
+		Collection test = null;
+		test.add(failureClasses);
+		test.add(allBaseData);
+		return test;
 	}
 
 }

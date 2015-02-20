@@ -33,4 +33,14 @@ public class BaseDataServiceEJB implements BaseDataService {
 		baseDataDAO.addAllBaseData(baseDataList);
 	}
 
+	public Collection addForeignKeys() {
+		Collection fc= baseDataDAO.addFailureClassForeignKey();
+		Collection ue = baseDataDAO.addUEForeignKey();
+		Collection test = null;
+		test.add(fc);
+		test.add(ue);
+		return test;
+		
+	}
+
 }
