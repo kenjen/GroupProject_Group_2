@@ -76,6 +76,7 @@ button[type] {
 						success : function(data, textStatus, jQxhr) {
 							if(data != null){
 								$('#response pre').html(JSON.stringify(data));
+								window.location.replace("/GroupProject_Group2/Welcome.html");
 							}
 							else{
 								document.write('<p>Erronr</p><a href ="login.html">Continue</a>');
