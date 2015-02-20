@@ -20,6 +20,30 @@ import com.project.entities.UE;
 import com.project.reader.Read;
 
 public class ExcelLookupDataRead implements Read {
+	
+	private static List<EventCause> eventCauseList = new ArrayList<EventCause>();
+	EventCause eventCauseRecord = null;
+
+	private static List<FailureClass> failureClassList = new ArrayList<FailureClass>();
+	FailureClass failureClassRecord = null;
+
+	private static List<UE> ueList = new ArrayList<UE>();
+	UE ueRecord = null;
+
+	private static List<MccMnc> mccMncList = new ArrayList<MccMnc>();
+	MccMnc mccMncRecord = null;
+	
+	public static EventCause getEventCause(int causeCode, int eventId){
+		for(EventCause ec : eventCauseList){
+			if(ec.getCauseCode() == causeCode && ec.getEventId()==eventId){
+				return ec;
+			}
+		}
+		EventCause blankEc = new EventCause(-1, -1, "Empty");
+		blankEc.setId(-1);
+		return blankEc;
+	}
+	
 
 	private String inputFile;
 
@@ -46,17 +70,17 @@ public class ExcelLookupDataRead implements Read {
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
 
-		List<EventCause> eventCauseList = new ArrayList<EventCause>();
-		EventCause eventCauseRecord = null;
-
-		List<FailureClass> failureClassList = new ArrayList<FailureClass>();
-		FailureClass failureClassRecord = null;
-
-		List<UE> ueList = new ArrayList<UE>();
-		UE ueRecord = null;
-
-		List<MccMnc> mccMncList = new ArrayList<MccMnc>();
-		MccMnc mccMncRecord = null;
+//		List<EventCause> eventCauseList = new ArrayList<EventCause>();
+//		EventCause eventCauseRecord = null;
+//
+//		List<FailureClass> failureClassList = new ArrayList<FailureClass>();
+//		FailureClass failureClassRecord = null;
+//
+//		List<UE> ueList = new ArrayList<UE>();
+//		UE ueRecord = null;
+//
+//		List<MccMnc> mccMncList = new ArrayList<MccMnc>();
+//		MccMnc mccMncRecord = null;
 
 		HSSFWorkbook hssfWorkBook = new HSSFWorkbook(hssfInputWorkbook);
 
