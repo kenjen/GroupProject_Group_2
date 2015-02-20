@@ -38,7 +38,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		}
 	}
 	
-	public Collection<UE> addForiegnKeys(){
+	public Collection<UE> addUEForiegnKey(){
 		
 		UE test = ueDAO.getOneUE();
 		Collection<BaseData> allBaseData = this.getAllBaseData();
