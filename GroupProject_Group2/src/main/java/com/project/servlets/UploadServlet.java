@@ -60,11 +60,15 @@ public class UploadServlet extends HttpServlet {
 		
 		String finalFilePath = "";
 		String fileExtension = "*";
+		boolean correctFileFound = false;
 		for (Part part : request.getParts()) {
 			String fileName = extractFileName(part);
 			fileExtension = getFileExtension(fileName);
-			finalFilePath = savePath + File.separator +"upload" + fileExtension;
-			part.write(finalFilePath);
+			if(fileExtension.equals(".xls")){
+				correctFileFound = true;
+				finalFilePath = savePath + File.separator +"upload" + fileExtension;
+				part.write(finalFilePath);
+			}
 		}
 		
 		//TODO 
@@ -79,30 +83,32 @@ public class UploadServlet extends HttpServlet {
 		 * out.close();
 		 * 
 		 */
-		
-		String fileParam = request.getParameter("file");
-		
-		boolean addToTable = false;
-		
-		ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
-		lookupDataReader.setInputFile(finalFilePath);
-		lookupDataReader.setLookUpDao(lookupDao);
-		lookupDataReader.read();
-		lookupDataReader = null;
-		
-		ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
-		baseDataReader.setSheetNumber(0);
-		baseDataReader.setInputFile(finalFilePath);
-		baseDataReader.setBaseDataDao(dao);
-		baseDataReader.setErrorBaseDataDao(errorDao);
-		baseDataReader.read();
-		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-		baseDataReader = null;
-		
-		request.setAttribute("message", "Upload has completed successfully!"
-				+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data<br>" + 
-				" fileParam = " + fileParam);
-		getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+		if(correctFileFound){
+			String fileParam = request.getParameter("file");
+			
+			ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
+			lookupDataReader.setInputFile(finalFilePath);
+			lookupDataReader.setLookUpDao(lookupDao);
+			lookupDataReader.read();
+			lookupDataReader = null;
+			
+			ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
+			baseDataReader.setSheetNumber(0);
+			baseDataReader.setInputFile(finalFilePath);
+			baseDataReader.setBaseDataDao(dao);
+			baseDataReader.setErrorBaseDataDao(errorDao);
+			baseDataReader.read();
+			int numOfInvalidRows = baseDataReader.getInvalidRowCount();
+			baseDataReader = null;
+			
+			request.setAttribute("message", "Upload has completed successfully!"
+					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data<br>" + 
+					" fileParam = " + fileParam);
+			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+		}else{
+			request.setAttribute("message", "Upload failed as incorrect file entered<br>Must end in .xls");
+			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+		}
 	}
 
 	/**

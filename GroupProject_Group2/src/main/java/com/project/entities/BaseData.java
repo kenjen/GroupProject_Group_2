@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({ @NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"), })
 @Entity
@@ -30,8 +32,10 @@ public class BaseData implements Serializable {
 
 	@Column(name = "date")
 	private Date date;
-	@Column(name = "event_id")
+	
+	@Transient
 	private Integer eventId;
+	
 	@Column(name = "failure_class")
 	private Integer failureClass;
 	@Column(name = "tac")
@@ -47,8 +51,10 @@ public class BaseData implements Serializable {
 	private Integer cellId;
 	@Column(name = "duration")
 	private Integer duration;
-	@Column(name = "cause_code")
+	
+	@Transient
 	private Integer causeCode;
+	
 	@Column(name = "ne_version")
 	private String neVersion;
 	@Column(name = "imsi")

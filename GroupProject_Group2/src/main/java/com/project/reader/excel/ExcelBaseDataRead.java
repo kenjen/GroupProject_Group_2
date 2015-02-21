@@ -19,6 +19,8 @@ import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.JPABaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.entities.ErrorBaseData;
+import com.project.entities.EventCause;
+import com.project.entities.FailureClass;
 import com.project.reader.Read;
 
 public class ExcelBaseDataRead implements Read {
@@ -72,6 +74,7 @@ public class ExcelBaseDataRead implements Read {
 					}
 					if (cell.getColumnIndex() == 2) {
 						baseDataRecord.setFailureClass((int) cell.getNumericCellValue());
+						
 					}
 					if (cell.getColumnIndex() == 3) {
 						baseDataRecord.setTac((int) cell.getNumericCellValue());
@@ -116,6 +119,7 @@ public class ExcelBaseDataRead implements Read {
 					break;
 				}
 			}
+			setAllLinks(baseDataRecord);
 			if(rowValid && validator.isValid(baseDataRecord)){
 				baseDatList.add(baseDataRecord);
 			}else{
@@ -127,6 +131,14 @@ public class ExcelBaseDataRead implements Read {
 		hssfWorkBook.close();
 		baseDataDao.addAllBaseData(baseDatList);
 		errorBaseDataDao.addAllErrorBaseData(errorBaseDatList);
+	}
+	
+	private void setAllLinks(BaseData bd){
+		if(bd.getCauseCode() != null && bd.getEventId() != null){
+			EventCause ec = ExcelLookupDataRead.getEventCause(bd.getCauseCode(), bd.getEventId());
+			bd.setEventCauseFK(ec);
+		}
+		//TODO add other table link methods
 	}
 
 	@Override
