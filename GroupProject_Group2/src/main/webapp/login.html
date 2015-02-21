@@ -83,22 +83,26 @@
 								if (data != null) {
 									$('#response pre').html(JSON.stringify(data));
 									createCookie('usercookie', JSON.stringify(data), 0);
+									var key = 'userType';
 								//alert("userType:  " + data[key]);
-									if (data[key] == 0) {
+
+								
+									if (data[key]==0) {
 										window.location.replace("/GroupProject_Group2/Welcome.html");
 									} 
-									if(data[key] == 1) {
+									else if(data[key]==1) {
 										window.location.replace("/GroupProject_Group2/net_manager_index.html");
 									}
-									if(data[key] == 2) {
+									else if(data[key]==2) {
 										window.location.replace("/GroupProject_Group2/support_eng_index.html");
 									}
-									if(data[key] == 3) {
+									else if(data[key]==3) {
 										window.location.replace("/GroupProject_Group2/index.html");
 									}
 									else {
-										window.location.replace("/GroupProject_Group2/index.html");
+										window.location.replace('<p>Error</p><a href ="/GroupProject_Group2/">Continue</a>');
 									}
+									
 
 								}
 							},
