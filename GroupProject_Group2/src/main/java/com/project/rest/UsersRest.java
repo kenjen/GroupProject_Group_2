@@ -40,8 +40,9 @@ public class UsersRest {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addUser(User user){
-		 service.addUser(user);
+	@Produces(MediaType.APPLICATION_JSON)
+	public User addUser(User user){
+		 return service.addUser(user);
 	}
 	
 	@POST

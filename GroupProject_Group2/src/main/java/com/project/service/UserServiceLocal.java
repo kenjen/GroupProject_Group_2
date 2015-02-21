@@ -11,7 +11,7 @@ public interface UserServiceLocal {
 	
 	Collection<User> getUsers();
 	User getUser(User user);
-	void addUser(User user);
+	User addUser(User user);
 	void updateUser(User user);
 	void deleteUser(User user);
 

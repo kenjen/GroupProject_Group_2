@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="login.js"></script>
+	</head>
+	<body>
+		<form id="removeUser" name="removeUser">
+			Username<br><input type="text" name="username" id="username"><br>
+			Password<br><input type="text" name="password" id="password"><br>
+			User Type<br><input type="text" name="userType" id="userType"><br><br>
+			<input type="submit" value="Remove User" />
+		</form><br>
+		<p id="result"></p><br>
+		<form action="/GroupProject_Group2/userEditing.html">
+			<input type="submit" value="Return" />
+		</form>
+		
+		<script
+			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+			(function($) {
+				function processFormAdd(e) {
+					var button = $('#username').val()
+					$.ajax({
+						url : 'http://localhost:8080/GroupProject_Group2/rest/users/deleteUser/',
+						dataType : 'json',
+						type : 'delete',
+						contentType : 'application/json',
+						
+						data : JSON.stringify({
+							"username" : $('#username').val(),
+							"password" : $('#password').val(),
+							"userType" : $('#userType').val()
+						}),
+						processData : false,
+						success : function(data, textStatus, jQxhr) {
+							if(data != null){
+								var elem = document.getElementById("result")
+								elem.innerHTML="User Removed Succesfuly";
+								elem.style.color = 'black';
+							}
+							else{
+								var elem = document.getElementById("result")
+								elem.innerHTML="User Removal Failed";
+								elem.style.color = 'red';
+							}
+						},
+						error : function(jqXhr, textStatus, errorThrown) {
+							document.write('<p>Error</p><a href ="userEditing.html">Continue</a>');
+							console.log(errorThrown);
+							
+						}
+					});
+					e.preventDefault();
+				}
+				$('#addUser').submit(processFormAdd);
+			})(jQuery);
+		</script>
+		
+		
+	</body>
+</html>

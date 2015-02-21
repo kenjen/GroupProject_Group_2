@@ -60,7 +60,7 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="return submitIMSI()" method="post">Name: <input type="number" name="imsi">
+	<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="submitIMSI()" method="post">Name: <input type="number" name="imsi">
 <input type="submit" value="Submit">
 </form>
     <script>
@@ -72,17 +72,17 @@ $(document).ready(function() {
     var causeId;
     var eventId;
     
-    if (x == null || x == "") {
+    if (imsi == null || imsi == "") {
         alert("Please insert IMSI");
         return false;
     }
-     else if(x!= 15 ){
+     else if(imsi!= 15 ){
      	alert("IMSI must be 15 digits length!");
      	return false;
      }
      
      for(var i = 0; i < imsiList.length; i++){
-     		if(imsiList[i] == x){
+     		if(imsiList[i] == imsi){
      			causeId == response.
      		}
      	}

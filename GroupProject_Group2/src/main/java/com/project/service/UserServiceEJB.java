@@ -25,8 +25,8 @@ public class UserServiceEJB implements UserServiceLocal{
 		return dao.getUser(user);
 	}
 	
-	public void addUser(User user){
-		 dao.addUser(user);
+	public User addUser(User user){
+		 return dao.addUser(user);
 	}
 	
 	public void updateUser(User user){

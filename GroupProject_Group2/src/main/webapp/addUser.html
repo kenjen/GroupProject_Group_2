@@ -10,9 +10,11 @@
 			Username<br><input type="text" name="username" id="username"><br>
 			Password<br><input type="text" name="password" id="password"><br>
 			User Type<br><input type="text" name="userType" id="userType"><br><br>
-			<input type="submit" value="Add User" />
-			<!-- <input type="submit" id="deleteUser" value="Delete User" />
-			<input type="submit" id="getUser" value="Display Users" /> -->
+			<input type="submit" id="add" value="Add User" />
+		</form><br>
+		<p id="result"></p>
+		<form action="/GroupProject_Group2/userEditing.html">
+			<input type="submit" value="Return" />
 		</form>
 		
 		<script
@@ -20,6 +22,7 @@
 		<script>
 			(function($) {
 				function processFormAdd(e) {
+					var button = $('#username').val()
 					$.ajax({
 						url : 'http://localhost:8080/GroupProject_Group2/rest/users/',
 						dataType : 'json',
@@ -33,15 +36,19 @@
 						}),
 						processData : false,
 						success : function(data, textStatus, jQxhr) {
-							/*if(data != null){
-								$('#response pre').html(JSON.stringify(data));
+							if(data != null){
+								var elem = document.getElementById("result")
+								elem.innerHTML="User Added Succesfuly";
+								elem.style.color = 'black';
 							}
 							else{
-								document.write('<p>Error</p><a href ="Welcome.html">Continue</a>');
-							}*/
+								var elem = document.getElementById("result")
+								elem.innerHTML="User Creation Failed";
+								elem.style.color = 'red';
+							}
 						},
 						error : function(jqXhr, textStatus, errorThrown) {
-							document.write('<p>Error</p><a href ="login.html">Continue</a>');
+							document.write('<p>Error</p><a href ="userEditing.html">Continue</a>');
 							console.log(errorThrown);
 							
 						}
