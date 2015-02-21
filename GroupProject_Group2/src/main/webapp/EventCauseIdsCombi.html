@@ -20,9 +20,6 @@
 	</head>
 
 	<body>
-		<button onclick="eraseCookie('usercookie')">
-			Logout
-		</button>
 		<table data-toggle="table" data-url="rest/base_data/{IMSI}" data-height="299" data-card-view="true" >
 			<thead>
 				<tr>
@@ -56,16 +53,6 @@
 				window.location.replace("/GroupProject_Group2/");
 			}
 
-			function createCookie(name, value, days) {
-				if (days) {
-					var date = new Date();
-					date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-					var expires = "; expires=" + date.toGMTString();
-				} else
-					var expires = "";
-				document.cookie = name + "=" + value + expires + "; path=/";
-			}
-
 			function readCookie(name) {
 				var nameEQ = name + "=";
 				var ca = document.cookie.split(';');
@@ -79,11 +66,6 @@
 					}
 				}
 				return null;
-			}
-
-			function eraseCookie(name) {
-				createCookie(name, "", -1);
-				window.location.replace("/GroupProject_Group2/");
 			}
 
 		</script>
