@@ -47,6 +47,11 @@ public class JPAUserDAO implements UserDAO{
 	public User addUser(User user){
 		Query query = em.createQuery("from User");
 		List<User> users = query.getResultList();
+		if(user.getUserType()>3){
+			user.setUserType(3);
+		}else if(user.getUserType()<0){
+			user.setUserType(0);
+		}
 		if (!users.contains(user)){
 			em.persist(user);
 			//return "User Added";
