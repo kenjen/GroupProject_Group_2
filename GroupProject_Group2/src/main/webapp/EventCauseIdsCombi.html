@@ -1,57 +1,91 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
 
-	<title>EventCauseCombi</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="resources/syntax/shCore.css">
-	<link rel="stylesheet" type="text/css" href="resources/demo.css">
-	<link rel="stylesheet" href="media/css/bootstrap-table.css">
-	<style type="text/css" class="init">
+		<title>EventCauseCombi</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="resources/syntax/shCore.css">
+		<link rel="stylesheet" type="text/css" href="resources/demo.css">
+		<link rel="stylesheet" href="media/css/bootstrap-table.css">
+		<style type="text/css" class="init">
+		</style>
+		<script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="resources/syntax/shCore.js"></script>
+		<script type="text/javascript" language="javascript" src="resources/demo.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		<script src="media/js/bootstrap-table.js"></script>
+		<script type="text/javascript" language="javascript" class="init"></script>
+	</head>
 
-	</style>
-	<script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
-	<script type="text/javascript" language="javascript" src="resources/syntax/shCore.js"></script>
-	<script type="text/javascript" language="javascript" src="resources/demo.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script src="media/js/bootstrap-table.js"></script>
-	<script type="text/javascript" language="javascript" class="init">
+	<body>
+		<button onclick="eraseCookie('usercookie')">
+			Logout
+		</button>
+		<table data-toggle="table" data-url="rest/base_data/{IMSI}" data-height="299" data-card-view="true" >
+			<thead>
+				<tr>
+					<!--<th data-field="id">Id</th>
+					<th data-field="causeCode">Cause Code</th>
+					<th data-field="cellId">Cell Id</th>
+					<th data-field="date">Date</th>
+					<th data-field="duration">Duration</th>
+					<th data-field="eventId">Event Id</th>
+					<th data-field="failureClass">Failure Class</th>
+					<th data-field="hier321Id">Hier321_Id</th>
+					<th data-field="hier32Id">Hier32_Id</th>
+					<th data-field="hier3Id">Hier3_Id</th>
+					<th data-field="imsi">Imsi</th>
+					<th data-field="mcc">Mcc</th>
+					<th data-field="mnc">MNC</th>
+					<th data-field="neVersion">Ne Version</th>
+					<th data-field="tac">Tac</th>-->
+					<th data-field="causeCode">Cause Code</th>
+					<th data-field="eventId">Event Id</th>
+				</tr>
+			</thead>
+		</table>
+		<script></script>
+		</script>
+		<script>
+			var x = readCookie('usercookie')
+			if (x) {
+				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
+			} else {
+				window.location.replace("/GroupProject_Group2/");
+			}
 
+			function createCookie(name, value, days) {
+				if (days) {
+					var date = new Date();
+					date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+					var expires = "; expires=" + date.toGMTString();
+				} else
+					var expires = "";
+				document.cookie = name + "=" + value + expires + "; path=/";
+			}
 
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						//alert("found cookie on click: " + c.substring(nameEQ.length, c.length));
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
 
-	</script>
-</head>
+			function eraseCookie(name) {
+				createCookie(name, "", -1);
+				window.location.replace("/GroupProject_Group2/");
+			}
 
-<body>
-
-<table data-toggle="table" data-url="rest/base_data/{IMSI}" data-height="299" data-card-view="true" >
-    <thead>
-    <tr>
-        <!--<th data-field="id">Id</th>
-        <th data-field="causeCode">Cause Code</th>
-        <th data-field="cellId">Cell Id</th>
-        <th data-field="date">Date</th>
-        <th data-field="duration">Duration</th>
-        <th data-field="eventId">Event Id</th>
-        <th data-field="failureClass">Failure Class</th>
-        <th data-field="hier321Id">Hier321_Id</th>
-        <th data-field="hier32Id">Hier32_Id</th>
-        <th data-field="hier3Id">Hier3_Id</th>
-        <th data-field="imsi">Imsi</th>
-        <th data-field="mcc">Mcc</th>
-        <th data-field="mnc">MNC</th>
-        <th data-field="neVersion">Ne Version</th>
-        <th data-field="tac">Tac</th>-->
-         <th data-field="causeCode">Cause Code</th>
-         <th data-field="eventId">Event Id</th>
-    </tr>
-    </thead>
-</table>
-<script>
-  
-</script>
-</script>
-</body>
+		</script>
+	</body>
 </html>

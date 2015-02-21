@@ -1,103 +1,142 @@
 <html>
-<head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<head>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-<script type="text/javascript">
+		<script type="text/javascript">
+			function handlePost() {
+				getAllCDsUsingJQuery();
+			}
 
+			var response;
+			var request;
 
+			function getAllFailures() {
+				request = new XMLHttpRequest();
+				request.open("get", "rest/base_data", true);
+				request.onreadystatechange = handleResponse;
+				request.send();
 
-function handlePost() {
-	getAllCDsUsingJQuery();
-}
+			}
 
-var response;
-var request;
+			function handleResponse() {
 
-function getAllFailures() {
-	request = new XMLHttpRequest();
-	request.open("get", "rest/base_data", true);
-	request.onreadystatechange = handleResponse;
-	request.send();
+				if (request.readyState == 4) {
+					response = JSON.parse(request.responseText);
+				}
 
-}
-
-function handleResponse() {
-
-	if (request.readyState == 4) {
-		response = JSON.parse(request.responseText);
-	}
-
+			}
 
 
-}
+			$(document).ready(function() {
+				postNewUser();
 
-$(document).ready(function() {
-	postNewUser();
+			});
 
-});
+			//window.onload = postNewUser;
 
-//window.onload = postNewUser;
+		</script>
 
-</script>
+		<title>Customer Service Page</title>
 
-<title>Customer Service Page</title>
-    
-    <style>
-        body{
-            text-align: center;
-            font-family: arial;
-        }
+		<style>
+			body {
+				text-align: center;
+				font-family: arial;
+			}
 
-        .button{
-            margin:20px;
-            font-size:16px;
-            font-weight: bold;
-            padding:5px 10px;
-        }
-    </style>
+			.button {
+				margin: 20px;
+				font-size: 16px;
+				font-weight: bold;
+				padding: 5px 10px;
+			}
+		</style>
 
+	</head>
+	<body>
+		<button onclick="eraseCookie('usercookie')">
+			Logout
+		</button>
+		<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="return submitIMSI()" method="post">
+			Name:
+			<input type="number" name="imsi">
+			<input type="submit" value="Submit">
+		</form>
+		<script>
+			function submitIMSI() {
+				var imsi = document.forms["imsiLookUp"]["imsi"].value;
+				var imsiList = response.imsi; boolean
+				exists = true;
 
-</head>
-<body>
-	<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="return submitIMSI()" method="post">Name: <input type="number" name="imsi">
-<input type="submit" value="Submit">
-</form>
-    <script>
-    function submitIMSI() {
-    var imsi = document.forms["imsiLookUp"]["imsi"].value;
-    var imsiList = response.imsi;
-    boolean exists = true;
-    
-    var causeId;
-    var eventId;
-    
-    if (x == null || x == "") {
-        alert("Please insert IMSI");
-        return false;
-    }
-     else if(x!= 15 ){
-     	alert("IMSI must be 15 digits length!");
-     	return false;
-     }
-     
-     for(var i = 0; i < imsiList.length; i++){
-     		if(imsiList[i] == x){
-     			causeId == response.
-     		}
-     	}
-     	causeId response.eventId
-     }
-     	
-     }
-     
-}
-    </script>
+				var causeId;
+				var eventId;
 
-</body>
-<body>
-<h1>Customer Service Representative Page</h1>
-<button onclick="myFunction()"></button>
-<p id="artist"></p>
-</body>
+				if (x == null || x == "") {
+					alert("Please insert IMSI");
+					return false;
+				} else if (x != 15) {
+					alert("IMSI must be 15 digits length!");
+					return false;
+				}
+
+				for (var i = 0; i < imsiList.length; i++) {
+					if (imsiList[i] == x) {
+						causeId == response.
+					}
+				}causeId
+				response.eventId
+			}
+
+			}
+
+			}
+		</script>
+
+		<script>
+			var x = readCookie('usercookie')
+			if (x) {
+				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
+			} else {
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+			function createCookie(name, value, days) {
+				if (days) {
+					var date = new Date();
+					date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+					var expires = "; expires=" + date.toGMTString();
+				} else
+					var expires = "";
+				document.cookie = name + "=" + value + expires + "; path=/";
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						//alert("found cookie on click: " + c.substring(nameEQ.length, c.length));
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+
+			function eraseCookie(name) {
+				createCookie(name, "", -1);
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+		</script>
+
+	</body>
+	<body>
+		<h1>Customer Service Representative Page</h1>
+		<button onclick="myFunction()"></button>
+		<p id="artist"></p>
+	</body>
 </html>
