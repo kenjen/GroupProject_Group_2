@@ -8,7 +8,7 @@
 		<center>
 			<h1>File Upload</h1>
 			<form method="post" action="UploadServlet" enctype="multipart/form-data">
-				Select file to upload: 
+				Select file to upload:
 				<br>
 				<input type="file" name="file" size="60" accept=".xls" style="background-color: gray;"/>
 				<br>
@@ -16,5 +16,30 @@
 				<input type="submit" value="Upload" />
 			</form>
 		</center>
+
+		<script>
+			var x = readCookie('usercookie')
+			if (x) {
+				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
+			} else {
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						//alert("found cookie on click: " + c.substring(nameEQ.length, c.length));
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+
+		</script>
 	</body>
 </html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="login.js"></script>
+	</head>
+	<body>
+		</button>
+		<form id="addUser" name="addUser">
+			Username
+			<br>
+			<input type="text" name="username" id="username">
+			<br>
+			Password
+			<br>
+			<input type="text" name="password" id="password">
+			<br>
+			User Type
+			<br>
+			<input type="text" name="userType" id="userType">
+			<br>
+			<br>
+			<input type="submit" value="Add User" />
+			<!-- <input type="submit" id="deleteUser" value="Delete User" />
+			<input type="submit" id="getUser" value="Display Users" /> -->
+		</form>
+
+		<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+			(function($) {
+				function processFormAdd(e) {
+					$.ajax({
+						url : 'http://localhost:8080/GroupProject_Group2/rest/users/',
+						dataType : 'json',
+						type : 'put',
+						contentType : 'application/json',
+
+						data : JSON.stringify({
+							"username" : $('#username').val(),
+							"password" : $('#password').val(),
+							"userType" : $('#userType').val()
+						}),
+						processData : false,
+						success : function(data, textStatus, jQxhr) {
+							/*if(data != null){
+							 $('#response pre').html(JSON.stringify(data));
+							 }
+							 else{
+							 document.write('<p>Error</p><a href ="Welcome.html">Continue</a>');
+							 }*/
+						},
+						error : function(jqXhr, textStatus, errorThrown) {
+							document.write('<p>Error</p><a href ="login.html">Continue</a>');
+							console.log(errorThrown);
+
+						}
+					});
+					e.preventDefault();
+				}
+
+
+				$('#addUser').submit(processFormAdd);
+			})(jQuery);
+		</script>
+
+		<script>
+			var x = readCookie('usercookie')
+			if (x) {
+				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
+			} else {
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						//alert("found cookie on click: " + c.substring(nameEQ.length, c.length));
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+
+		</script>
+	</body>
+</html>

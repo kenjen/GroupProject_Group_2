@@ -44,22 +44,34 @@ public class JPAUserDAO implements UserDAO{
 		return result.get(0);
 	}
 	
-	public void addUser(User user){
+	public User addUser(User user){
 		Query query = em.createQuery("from User");
 		List<User> users = query.getResultList();
 		if (!users.contains(user)){
 			em.persist(user);
 			//return "User Added";
 		}
+		return user;
 		//return "User Not Added";
 	}
 
 
 	public void updateUser(User user) {
-		User updatedUser = em.find(User.class, user.getId());
+		/*User updatedUser = em.find(User.class, user.getId());
 		updatedUser.setPassword(user.getPassword());
 		updatedUser.setUsername(user.getUsername());
-		updatedUser.setUserType(user.getUserType());
+		updatedUser.setUserType(user.getUserType());*/
+		Query query = em.createQuery("from User");
+		List<User> users = query.getResultList();
+		for(User u : users){
+			if(u.getId().equals(user.getId())){
+				u.setPassword(user.getPassword());
+				u.setUsername(user.getUsername());
+				u.setUserType(user.getUserType());
+				em.merge(u);
+				break;
+			}
+		}
 	}
 
 
