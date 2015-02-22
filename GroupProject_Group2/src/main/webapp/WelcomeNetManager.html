@@ -14,23 +14,8 @@
 		</button>
 
 		<center>
-			This is the main page
 			<br>
-			<br>
-			<a href="/GroupProject_Group2/rest/base_data">Show All</a>
-			<br>
-			<br>
-			<iframe src="/GroupProject_Group2/upload.html" frameborder=0 height="400" width="400">
-				This feature is not supported in your browser.
-				<br>
-				Please update or change browser
-			</iframe>
-
-			<iframe src="/GroupProject_Group2/userEditing.html" frameborder=0 height="400" width="400">
-				This feature is not supported in your browser.
-				<br>
-				Please update or change browser
-			</iframe>
+			<h1>Network Manager Console</h1>
 			<br>
 			<br>
 			<iframe src="/GroupProject_Group2/index.html" frameborder=0 height="400" width="100%">
@@ -47,6 +32,11 @@
 			var x = readCookie('usercookie')
 			if (x) {
 				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
+				//alert("user type = " + x.charAt(x.length-2))
+				var userType = x.charAt(x.length-2)
+				if(userType!=1){
+					window.location.replace("/GroupProject_Group2/");
+				}
 			} else {
 				window.location.replace("/GroupProject_Group2/");
 			}

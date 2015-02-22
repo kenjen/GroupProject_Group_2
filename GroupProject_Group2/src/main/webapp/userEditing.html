@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 	</head>
-	<body>
+	<center><body>
 		<form action="/GroupProject_Group2/addUser.html">
 			<input type="submit" value="Add User" /><br><br>
 		</form>
@@ -13,5 +13,16 @@
 		<form action="/GroupProject_Group2/removeUser.html">
 			<input type="submit" value="Remove User" /><br><br>
 		</form>
-	</body>
+	</body></center>
+	<script type="text/javascript">
+	window.onload = function() {
+	    try {
+	        if(window.self == window.top){
+	        	window.location.replace("/GroupProject_Group2/");
+		    }
+	    } catch (e) {
+	       
+	    }
+	}
+    </script>
 </html>

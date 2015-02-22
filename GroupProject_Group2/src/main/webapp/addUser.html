@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="login.js"></script>
 	</head>
-	<body>
+	<center><body>
 		<form id="addUser" name="addUser">
 			Username<br><input type="text" name="username" id="username"><br>
 			Password<br><input type="text" name="password" id="password"><br>
@@ -60,5 +60,16 @@
 		</script>
 		
 		
-	</body>
+	</body></center>
+	<script type="text/javascript">
+	window.onload = function() {
+	    try {
+	        if(window.self == window.top){
+	        	window.location.replace("/GroupProject_Group2/");
+		    }
+	    } catch (e) {
+	       
+	    }
+	}
+    </script>
 </html>

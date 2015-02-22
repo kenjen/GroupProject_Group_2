@@ -3,6 +3,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script>
+			window.onload = function(){
+				var x = readCookie('usercookie')
+				//alert("script! x = " + x)
+				if (x) {
+					var userType = x.charAt(x.length-2)
+					if(userType==0){
+						window.location.replace("/GroupProject_Group2/WelcomeSysAdmin.html");
+					}else if(userType==1){
+						window.location.replace("/GroupProject_Group2/WelcomeNetManager.html");
+					}else if(userType==2){
+						window.location.replace("/GroupProject_Group2/WelcomeSupportEng.html");
+					}else if(userType==3){
+						window.location.replace("/GroupProject_Group2/WelcomeCustRep.html");
+					} 
+				}
+			}
+		</script>
 		<title>Login</title>
 		<link rel="stylesheet" type="text/css" media="screen, projection"
 		href="http://www.blueprintcss.org/blueprint/screen.css" />
@@ -15,6 +33,7 @@
 		<script type="text/javascript"
 		src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="login.js"></script>
+		
 		<style type="text/css">
 			#loginContent {
 				width: 350px;
@@ -63,10 +82,13 @@
 					</p>
 				</fieldset>
 			</form>
-
+			
+			
+			
 			<script
 			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<script>
+			
 				(function($) {
 					function processForm(e) {
 						$.ajax({
@@ -93,15 +115,15 @@
 									//alert("userType:  " + data[key]);
 
 									if (data[key] == 0) {
-										window.location.replace("/GroupProject_Group2/Welcome.html");
+										window.location.replace("/GroupProject_Group2/WelcomeSysAdmin.html");
 									} else if (data[key] == 1) {
-										window.location.replace("/GroupProject_Group2/net_manager_index.html");
+										window.location.replace("/GroupProject_Group2/WelcomeNetManager.html");
 									} else if (data[key] == 2) {
-										window.location.replace("/GroupProject_Group2/support_eng_index.html");
+										window.location.replace("/GroupProject_Group2/WelcomeSupportEng.html");
 									} else if (data[key] == 3) {
-										window.location.replace("/GroupProject_Group2/index.html");
+										window.location.replace("/GroupProject_Group2/WelcomeCustRep.html");
 									} else {
-										window.location.replace('<p>Error</p><a href ="/GroupProject_Group2/">Continue</a>');
+										window.location.replace("/GroupProject_Group2/");
 									}
 
 								}
