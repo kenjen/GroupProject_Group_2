@@ -26,8 +26,8 @@
 
 		</script>
 
-		<title>Customer Service Page</title>
-
+		<title>Lookup</title>
+		
 		<style>
 			body {
 				text-align: center;
@@ -44,7 +44,8 @@
 
 	</head>
 	<body>
-		<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="return submitIMSI()" method="post">
+		<h3>Enter Imsi for Event/Cause combo</h3>
+		<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="submitIMSI()" method="post">
 			Name:
 			<input type="number" name="imsi">
 			<input type="submit" value="Submit">
@@ -58,10 +59,10 @@
 				var causeId;
 				var eventId;
 
-				if (x == null || x == "") {
-					alert("Please insert IMSI");
-					return false;
-				} else if (x != 15) {
+				if (imsi == null || imsi == "") {
+					//alert("Please insert IMSI");
+					//return false;
+				} else if (imsi != 15) {
 					alert("IMSI must be 15 digits length!");
 					return false;
 				}
