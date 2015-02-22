@@ -2,11 +2,7 @@
 	<head>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
 		<script type="text/javascript">
-			function handlePost() {
-				getAllCDsUsingJQuery();
-			}
 
 			var response;
 			var request;
@@ -16,24 +12,17 @@
 				request.open("get", "rest/base_data", true);
 				request.onreadystatechange = handleResponse;
 				request.send();
-
 			}
 
 			function handleResponse() {
-
 				if (request.readyState == 4) {
 					response = JSON.parse(request.responseText);
 				}
-
 			}
-
 
 			$(document).ready(function() {
 				postNewUser();
-
 			});
-
-			//window.onload = postNewUser;
 
 		</script>
 
@@ -84,10 +73,6 @@
 				}causeId
 				response.eventId
 			}
-
-			}
-
-			}
 		</script>
 
 		<script>
@@ -116,7 +101,7 @@
 
 		</script>
 		
-				<script>
+		<script>
 			var x = readCookie('usercookie')
 			if (x) {
 				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
@@ -138,47 +123,6 @@
 				}
 				return null;
 			}
-
-</head>
-<body>
-	<form name="imsiLookUp" action="EventCauseIdsCombi.html" onsubmit="submitIMSI()" method="post">Name: <input type="number" name="imsi">
-<input type="submit" value="Submit">
-</form>
-    <script>
-    function submitIMSI() {
-    var imsi = document.forms["imsiLookUp"]["imsi"].value;
-    var imsiList = response.imsi;
-    boolean exists = true;
-    
-    var causeId;
-    var eventId;
-    
-    if (imsi == null || imsi == "") {
-        alert("Please insert IMSI");
-        return false;
-    }
-     else if(imsi!= 15 ){
-     	alert("IMSI must be 15 digits length!");
-     	return false;
-     }
-     
-     for(var i = 0; i < imsiList.length; i++){
-     		if(imsiList[i] == imsi){
-     			causeId == response.
-     		}
-     	}
-     	causeId response.eventId
-     }
-     	
-     }
-     
-}
-    </script>
-
-	</body>
-	<body>
-		<h1>Customer Service Representative Page</h1>
-		<button onclick="myFunction()"></button>
-		<p id="artist"></p>
+		</script>
 	</body>
 </html>
