@@ -38,8 +38,8 @@ public class JPABaseDataDAO implements BaseDataDAO {
 
 	@SuppressWarnings("rawtypes")
 	public void addAllBaseData(Collection baseDataList) {
-		entityManager.createNativeQuery("truncate table base_data").executeUpdate();
-		entityManager.createNativeQuery("alter table base_data AUTO_INCREMENT = 1").executeUpdate();
+		/*entityManager.createNativeQuery("truncate table base_data").executeUpdate();
+		entityManager.createNativeQuery("alter table base_data AUTO_INCREMENT = 1").executeUpdate();*/
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
 		}
