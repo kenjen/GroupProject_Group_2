@@ -67,6 +67,11 @@ public class ExcelLookupDataRead implements Read {
 
 	@Override
 	public void read() throws IOException {
+		eventCauseRecord = null;
+		failureClassRecord = null;
+		ueRecord = null;
+		mccMncRecord = null;
+		
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
 

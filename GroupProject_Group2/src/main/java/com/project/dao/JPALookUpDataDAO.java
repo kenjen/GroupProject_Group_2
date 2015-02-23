@@ -18,28 +18,44 @@ public class JPALookUpDataDAO implements LookUpDataDAO {
 	@Override
 	public void addAllEventCause(Collection eventCauseList) {
 		for (Object o : eventCauseList) {
-			entityManager.persist(o);
+			try{
+				entityManager.persist(o);
+			}catch(Exception e){
+				//object already in database
+			}
 		}
 	}
 
 	@Override
 	public void addAllFailureClass(Collection failureCauseList) {
 		for (Object o : failureCauseList) {
-			entityManager.persist(o);
+			try{
+				entityManager.persist(o);
+			}catch(Exception e){
+				//object already in database
+			}
 		}
 	}
 
 	@Override
 	public void addAllUe(Collection ueList) {
 		for (Object o : ueList) {
-			entityManager.persist(o);
+			try{
+				entityManager.persist(o);
+			}catch(Exception e){
+				//object already in database
+			}
 		}
 	}
 
 	@Override
 	public void addAllMccMnc(Collection mccMncList) {
 		for (Object o : mccMncList) {
-			entityManager.persist(o);
+			try{
+				entityManager.persist(o);
+			}catch(Exception e){
+				//object already in database
+			}
 		}
 	}
 

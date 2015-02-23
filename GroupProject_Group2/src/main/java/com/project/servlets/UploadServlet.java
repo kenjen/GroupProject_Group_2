@@ -2,7 +2,7 @@ package com.project.servlets;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.sql.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
+import com.project.dao.FileDAO;
 import com.project.dao.LookUpDataDAO;
 import com.project.reader.excel.ExcelBaseDataRead;
 import com.project.reader.excel.ExcelLookupDataRead;
@@ -39,6 +40,8 @@ public class UploadServlet extends HttpServlet {
 	private ErrorBaseDataDAO errorDao;
 	@EJB
 	private LookUpDataDAO lookupDao;
+	@EJB
+	private FileDAO fileDao;
 	
 	/**
 	 * handles file upload
@@ -59,17 +62,25 @@ public class UploadServlet extends HttpServlet {
 		}
 		
 		String finalFilePath = "";
-		String fileExtension = "*";
+		String finalFileName = "";
+		String fileExtension = "";
 		boolean correctFileFound = false;
 		for (Part part : request.getParts()) {
 			String fileName = extractFileName(part);
 			fileExtension = getFileExtension(fileName);
 			if(fileExtension.equals(".xls")){
 				correctFileFound = true;
-				finalFilePath = savePath + File.separator +"upload" + fileExtension;
+				
+				long timeInMili = System.currentTimeMillis();
+				Date t = new Date(timeInMili);
+				timeInMili = timeInMili >> 4;
+				finalFileName = t + "_" + timeInMili + fileExtension;
+				finalFilePath = savePath + File.separator + finalFileName;
 				part.write(finalFilePath);
 			}
 		}
+		
+		fileDao.addUploadedFilePath(finalFileName, finalFilePath);
 		
 		//TODO 
 		/*
@@ -83,7 +94,44 @@ public class UploadServlet extends HttpServlet {
 		 * out.close();
 		 * 
 		 */
+		
+		
 		if(correctFileFound){
+			/*String fileParam = request.getParameter("file");
+			
+			ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
+			lookupDataReader.setInputFile(finalFilePath);
+			lookupDataReader.setLookUpDao(lookupDao);
+			lookupDataReader.read();
+			lookupDataReader = null;
+			
+			ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
+			baseDataReader.setSheetNumber(0);
+			baseDataReader.setInputFile(finalFilePath);
+			baseDataReader.setBaseDataDao(dao);
+			baseDataReader.setErrorBaseDataDao(errorDao);
+			baseDataReader.read();
+			int numOfInvalidRows = baseDataReader.getInvalidRowCount();
+			baseDataReader = null;*/
+			
+			request.setAttribute("message", "Upload to server completed successfully!");
+			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+		}else{
+			request.setAttribute("message", "Upload to server failed<br>Must end in .xls");
+			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+		}
+	}
+	
+	
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+		boolean correctFileFound = false;
+		String finalFilePath = null;
+		
+		finalFilePath = request.getParameter("fileSelection");
+		
+		//if(correctFileFound){
 			String fileParam = request.getParameter("file");
 			
 			ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
@@ -101,14 +149,14 @@ public class UploadServlet extends HttpServlet {
 			int numOfInvalidRows = baseDataReader.getInvalidRowCount();
 			baseDataReader = null;
 			
-			request.setAttribute("message", "Upload has completed successfully!"
-					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data<br>" + 
-					" fileParam = " + fileParam);
+			request.setAttribute("message", "Transfer to database completed successfully!"
+						+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data<br>"
+						+ "filepath = " + finalFilePath);
 			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-		}else{
+		/*}else{
 			request.setAttribute("message", "Upload failed as incorrect file entered<br>Must end in .xls");
 			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-		}
+		}*/
 	}
 
 	/**

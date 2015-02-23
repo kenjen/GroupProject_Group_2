@@ -1,22 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<title>File Upload</title>
 	</head>
-	<body>
+	<body ng-controller="fileLoader">
 		<center>
 			<h1>File Upload</h1>
 			<form method="post" action="UploadServlet" enctype="multipart/form-data">
-				Select file to upload:
-				<br>
+				Select file to upload to server:
 				<input type="file" name="file" size="60" accept=".xls" style="background-color: gray;"/>
 				<br>
+				<input type="submit" value="Upload To Server" />
+			</form>
+			<br>
+			<br>
+			<form method="get" action="UploadServlet" enctype="multipart/form-data">
+				Select uploaded file to send to database:
 				<br>
-				<input type="submit" value="Upload" />
+					<select name="fileSelection" id="fileSelection">
+						<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
+					</select>
+					<!-- <div ng-repeat="file in files">
+						<p>{{file}}<p>
+					</div> -->
+				<br>
+				<input type="submit" value="Transfer To Database" />
 			</form>
 		</center>
-
+		
+		<script>
+			function fileLoader($scope, $http) {
+			    $http.get('http://localhost:8080/GroupProject_Group2/rest/file').
+		        success(function(data) {
+		            $scope.files = data;
+		        });
+			}
+		</script>
+		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		
 		<script>
 			var x = readCookie('usercookie')
 			if (x) {

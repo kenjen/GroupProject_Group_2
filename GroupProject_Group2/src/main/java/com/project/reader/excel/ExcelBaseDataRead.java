@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.ErrorData;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -16,11 +14,9 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
-import com.project.dao.JPABaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.entities.ErrorBaseData;
 import com.project.entities.EventCause;
-import com.project.entities.FailureClass;
 import com.project.reader.Read;
 
 public class ExcelBaseDataRead implements Read {
