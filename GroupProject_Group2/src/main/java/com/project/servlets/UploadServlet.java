@@ -69,7 +69,8 @@ public class UploadServlet extends HttpServlet {
 		String finalFileName = "";
 		String fileExtension = "";
 		boolean correctFileFound = false;
-		for (Part part : request.getParts()) {
+		Part part = request.getPart("file");
+		//for (Part part : request.getParts()) {
 			String fileName = extractFileName(part);
 			fileExtension = getFileExtension(fileName);
 			if(fileExtension.equals(".xls")){
@@ -82,17 +83,18 @@ public class UploadServlet extends HttpServlet {
 				finalFilePath = savePath + File.separator + finalFileName;
 				part.write(finalFilePath);
 			}
-		}
+		//}
 		
 		fileDao.addUploadedFilePath(finalFileName, finalFilePath);
 		
 		if(correctFileFound){
 			request.setAttribute("message", "Upload to server completed successfully!");
-			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+			//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 		}else{
 			request.setAttribute("message", "Upload to server failed<br>Must end in .xls");
-			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+			//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 		}
+		request.getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 	
 	

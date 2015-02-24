@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -13,6 +15,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -22,7 +25,9 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
+import com.project.dao.FileDAO;
 import com.project.reader.excel.ExcelBaseDataRead;
 import com.project.reader.excel.ExcelLookupDataRead;
 
@@ -38,6 +43,32 @@ public class UploadServletTest extends Mockito{
 	
 	@Inject
 	private UploadServlet servlet;
+	
+	@Test
+	public void testDoPost() throws IOException, ServletException{
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpServletResponse response = mock(HttpServletResponse.class);
+		ServletContext context = mock(ServletContext.class);
+		RequestDispatcher dispatcher = mock(RequestDispatcher.class);
+		
+		FileDAO dao = mock(FileDAO.class);
+		Part part = mock(Part.class);
+		
+		when(request.getServletContext()).thenReturn(context);
+		when(context.getRealPath("")).thenReturn("C:" + File.separator + "file" + File.separator + "path");
+		when(request.getPart("file")).thenReturn(part);
+		when(part.getHeader("content-disposition")).thenReturn("some useless data ; filename=:excell.xls");
+		when(dao.addUploadedFilePath(anyString(), anyString())).thenReturn(true);
+		when(request.getRequestDispatcher("/message.jsp")).thenReturn(dispatcher);
+		
+		servlet.doPost(request, response);
+		
+		//TODO test not entering loop so next thre tests failing
+		verify(part, times(1)).write(anyString());
+		verify(request, times(1)).setAttribute("message", "Upload to server completed successfully!");
+		verify(request, times(0)).setAttribute("message", "Upload to server failed<br>Must end in .xls");
+		verify(dao, times(1)).addUploadedFilePath(anyString(), anyString());
+	}
 	
 	@Test
 	public void testDoGet() throws ServletException, IOException{

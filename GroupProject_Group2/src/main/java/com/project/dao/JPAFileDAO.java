@@ -26,9 +26,10 @@ public class JPAFileDAO implements FileDAO{
 	}
 
 	@Override
-	public void addUploadedFilePath(String name, String path) {
+	public boolean addUploadedFilePath(String name, String path) {
 		FileInfo f = new FileInfo(name, path);
 		em.persist(f);
+		return true;
 	}
 
 	
