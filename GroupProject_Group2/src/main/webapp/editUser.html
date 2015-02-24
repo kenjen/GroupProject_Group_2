@@ -5,73 +5,90 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="login.js"></script>
 	</head>
-	<center><body>
-		<form id="editUser" name="editUser">
-			User Id<br><input type="text" name="id" id="id" required><br>
-			Username<br><input type="text" name="username" id="username" required><br>
-			Password<br><input type="text" name="password" id="password" required><br>
-			User Type<br><input type="text" name="userType" id="userType" required><br><br>
-			<input type="submit" id="edit" value="Edit User" />
-		</form><br>
-		<p id="result"></p>
-		<form action="/GroupProject_Group2/userEditing.html">
-			<input type="submit" value="Return" />
-		</form>
-		
-		<script
+	<center>
+		<body>
+			<form id="editUser" name="editUser">
+				User Id
+				<br>
+				<input type="text" name="id" id="id" required>
+				<br>
+				Username
+				<br>
+				<input type="text" name="username" id="username" required>
+				<br>
+				Password
+				<br>
+				<input type="text" name="password" id="password" required>
+				<br>
+				<br>
+				<br>
+				<select id="userType">
+					<option>System Administrator</option>
+					<option>Network Management Engineer</option>
+					<option>Support Engineer</option>
+					<option>Customer Service Rep</option>
+				</select>
+				<br>
+				<br>
+				<input type="submit" id="edit" value="Edit User" />
+			</form>
+			<br>
+			<p id="result"></p>
+			<form action="/GroupProject_Group2/userEditing.html">
+				<input type="submit" value="Return" />
+			</form>
+
+			<script
 			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script>
-			(function($) {
-				function processFormEdit(e) {
-					var button = $('#username').val()
-					$.ajax({
-						url : '/GroupProject_Group2/rest/users/updateuser/',
-						dataType : 'json',
-						type : 'post',
-						contentType : 'application/json',
-						
-						data : JSON.stringify({
-							"id" : $('#id').val(),
-							"username" : $('#username').val(),
-							"password" : $('#password').val(),
-							"userType" : $('#userType').val()
-						}),
-						processData : false,
-						success : function(data, textStatus, jQxhr) {
-							if(data != null){
+			<script>
+				(function($) {
+					function processFormEdit(e) {
+						var button = $('#username').val()
+						var type = document.getElementById("userType").selectedIndex;
+						$.ajax({
+							url : '/GroupProject_Group2/rest/users/updateuser/',
+							dataType : 'json',
+							type : 'post',
+							contentType : 'application/json',
+
+							data : JSON.stringify({
+								"id" : $('#id').val(),
+								"username" : $('#username').val(),
+								"password" : $('#password').val(),
+								"userType" : type
+							}),
+							processData : false,
+							success : function(data, textStatus, jQxhr) {
 								var elem = document.getElementById("result")
-								elem.innerHTML="User Edited Succesfuly";
+								elem.innerHTML = "User Edited Succesfuly";
 								elem.style.color = 'black';
-							}
-							else{
+
+							},
+							error : function(jqXhr, textStatus, errorThrown) {
 								var elem = document.getElementById("result")
-								elem.innerHTML="User Creation Failed";
+								elem.innerHTML = "Edit User Failed";
 								elem.style.color = 'red';
 							}
-						},
-						error : function(jqXhr, textStatus, errorThrown) {
-							document.write('<p>Error</p><a href ="userEditing.html">Continue</a>');
-							console.log(errorThrown);
-							
-						}
-					});
-					e.preventDefault();
-				}
-				$('#editUser').submit(processFormEdit);
-			})(jQuery);
-		</script>
-		
-		
-	</body></center>
+						});
+						e.preventDefault();
+					}
+
+
+					$('#editUser').submit(processFormEdit);
+				})(jQuery);
+			</script>
+
+		</body>
+	</center>
 	<script type="text/javascript">
-	window.onload = function() {
-	    try {
-	        if(window.self == window.top){
-	        	window.location.replace("/GroupProject_Group2/");
-		    }
-	    } catch (e) {
-	       
-	    }
-	}
-    </script>
+		window.onload = function() {
+			try {
+				if (window.self == window.top) {
+					window.location.replace("/GroupProject_Group2/");
+				}
+			} catch (e) {
+
+			}
+		}
+	</script>
 </html>
