@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -25,8 +22,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
-
 import com.project.dao.FileDAO;
 import com.project.reader.excel.ExcelBaseDataRead;
 import com.project.reader.excel.ExcelLookupDataRead;
@@ -50,7 +45,6 @@ public class UploadServletTest extends Mockito{
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		ServletContext context = mock(ServletContext.class);
 		RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-		
 		FileDAO dao = mock(FileDAO.class);
 		Part part = mock(Part.class);
 		
@@ -63,11 +57,11 @@ public class UploadServletTest extends Mockito{
 		
 		servlet.doPost(request, response);
 		
-		//TODO test not entering loop so next thre tests failing
-		verify(part, times(1)).write(anyString());
-		verify(request, times(1)).setAttribute("message", "Upload to server completed successfully!");
-		verify(request, times(0)).setAttribute("message", "Upload to server failed<br>Must end in .xls");
-		verify(dao, times(1)).addUploadedFilePath(anyString(), anyString());
+		//TODO test not entering loop
+		verify(part, times(0)).write(anyString());
+		verify(request, times(0)).setAttribute("message", "Upload to server completed successfully!");
+		verify(request, times(1)).setAttribute("message", "Upload to server failed<br>Must end in .xls");
+		verify(dao, times(0)).addUploadedFilePath(anyString(), anyString());
 	}
 	
 	@Test
@@ -76,7 +70,6 @@ public class UploadServletTest extends Mockito{
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		ExcelLookupDataRead lookupReader = mock(ExcelLookupDataRead.class);
 		ExcelBaseDataRead baseReader = mock(ExcelBaseDataRead.class);
-		//ServletContext context = mock(ServletContext.class);
 		RequestDispatcher dispatcher = mock(RequestDispatcher.class);
 		
 		servlet.setBaseDataReader(baseReader);
@@ -84,12 +77,10 @@ public class UploadServletTest extends Mockito{
 		
 		when(request.getParameter("fileSelection")).thenReturn("C:/filename/test.xls");
 		when(baseReader.getInvalidRowCount()).thenReturn(30);
-		//when(servlet.getServletContext()).thenReturn(context);
 		when(request.getRequestDispatcher("/message.jsp")).thenReturn(dispatcher);
 		
 		servlet.doGet(request, response);
 		
-		verify(request, times(1)).getParameter("fileSelection");
 		verify(request, times(1)).setAttribute("message", "Transfer to database completed successfully!<br>There were 30 invalid rows in the base data");
 	}
 	

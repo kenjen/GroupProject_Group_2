@@ -80,17 +80,16 @@ public class UploadServlet extends HttpServlet {
 			fileExtension = getFileExtension(fileName);
 			if(fileExtension.equals(".xls")){
 				correctFileFound = true;
-				
 				long timeInMili = System.currentTimeMillis();
 				Date t = new Date(timeInMili);
 				timeInMili = timeInMili >> 4;
 				finalFileName = t + "_" + timeInMili + fileExtension;
 				finalFilePath = savePath + File.separator + finalFileName;
 				part.write(finalFilePath);
+				fileDao.addUploadedFilePath(finalFileName, finalFilePath);
 			}
 		//}
 		
-		fileDao.addUploadedFilePath(finalFileName, finalFilePath);
 		
 		if(correctFileFound){
 			request.setAttribute("message", "Upload to server completed successfully!");
@@ -108,13 +107,9 @@ public class UploadServlet extends HttpServlet {
 		
 		String finalFilePath = null;
 		
-		finalFilePath = request.getParameter("fileSelection");
-		if(lookupDataReader!=null){
 		lookupDataReader.setInputFile(finalFilePath);
 		lookupDataReader.setLookUpDao(lookupDao);
 		lookupDataReader.read();
-		//lookupDataReader = null;
-		}
 		
 		baseDataReader.setSheetNumber(0);
 		baseDataReader.setInputFile(finalFilePath);
@@ -122,7 +117,6 @@ public class UploadServlet extends HttpServlet {
 		baseDataReader.setErrorBaseDataDao(errorDao);
 		baseDataReader.read();
 		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-		//baseDataReader = null;
 		
 		request.setAttribute("message", "Transfer to database completed successfully!"
 					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data");
