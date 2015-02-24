@@ -32,7 +32,7 @@
 		
 		<script>
 			function fileLoader($scope, $http) {
-			    $http.get('http://localhost:8080/GroupProject_Group2/rest/file').
+			    $http.get('/GroupProject_Group2/rest/file').
 		        success(function(data) {
 		            $scope.files = data;
 		        });

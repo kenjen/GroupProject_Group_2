@@ -171,6 +171,20 @@
 					</fileNames>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>7.6.Final</version>
+				<configuration>
+                      <hostname>147.252.91.34</hostname>
+                      <port>9999</port>
+ 
+                      <name>group2</name>
+ 
+                      <password>group2</password>
+                </configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

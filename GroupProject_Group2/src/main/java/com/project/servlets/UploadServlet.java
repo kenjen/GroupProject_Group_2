@@ -3,6 +3,7 @@ package com.project.servlets;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,6 +17,8 @@ import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.FileDAO;
 import com.project.dao.LookUpDataDAO;
+import com.project.reader.ReadBase;
+import com.project.reader.ReadLookup;
 import com.project.reader.excel.ExcelBaseDataRead;
 import com.project.reader.excel.ExcelLookupDataRead;
 
@@ -43,8 +46,10 @@ public class UploadServlet extends HttpServlet {
 	@EJB
 	private FileDAO fileDao;
 	
-	ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
-	ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
+	@EJB
+	ReadLookup lookupDataReader;
+	@EJB
+	ReadBase baseDataReader;
 	
 	
 	/**
@@ -104,11 +109,12 @@ public class UploadServlet extends HttpServlet {
 		String finalFilePath = null;
 		
 		finalFilePath = request.getParameter("fileSelection");
-		
+		if(lookupDataReader!=null){
 		lookupDataReader.setInputFile(finalFilePath);
 		lookupDataReader.setLookUpDao(lookupDao);
 		lookupDataReader.read();
-		lookupDataReader = null;
+		//lookupDataReader = null;
+		}
 		
 		baseDataReader.setSheetNumber(0);
 		baseDataReader.setInputFile(finalFilePath);
@@ -116,7 +122,7 @@ public class UploadServlet extends HttpServlet {
 		baseDataReader.setErrorBaseDataDao(errorDao);
 		baseDataReader.read();
 		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-		baseDataReader = null;
+		//baseDataReader = null;
 		
 		request.setAttribute("message", "Transfer to database completed successfully!"
 					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data");
@@ -149,17 +155,10 @@ public class UploadServlet extends HttpServlet {
 		return fileName.substring(location);
 	}
 
-
-	public ExcelLookupDataRead getLookupDataReader() {
-		return lookupDataReader;
-	}
-	public void setLookupDataReader(ExcelLookupDataRead lookupDataReader) {
+	public void setLookupDataReader(ReadLookup lookupDataReader) {
 		this.lookupDataReader = lookupDataReader;
 	}
-	public ExcelBaseDataRead getBaseDataReader() {
-		return baseDataReader;
-	}
-	public void setBaseDataReader(ExcelBaseDataRead baseDataReader) {
+	public void setBaseDataReader(ReadBase baseDataReader) {
 		this.baseDataReader = baseDataReader;
 	}
 }

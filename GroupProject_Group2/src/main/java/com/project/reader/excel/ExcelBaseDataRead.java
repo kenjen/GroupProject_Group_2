@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -17,9 +20,11 @@ import com.project.dao.ErrorBaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.entities.ErrorBaseData;
 import com.project.entities.EventCause;
-import com.project.reader.Read;
+import com.project.reader.ReadBase;
 
-public class ExcelBaseDataRead implements Read {
+@Stateless
+@Local
+public class ExcelBaseDataRead implements ReadBase {
 
 	private String inputFile;
 	private final ExcellValidator validator = new ExcellValidator();
