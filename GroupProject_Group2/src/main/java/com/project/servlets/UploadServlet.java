@@ -46,11 +46,15 @@ public class UploadServlet extends HttpServlet {
 	@EJB
 	private FileDAO fileDao;
 	
+	/*
 	@EJB
 	ReadLookup lookupDataReader;
 	@EJB
 	ReadBase baseDataReader;
-	
+	*/
+
+	ReadLookup lookupDataReader = new ExcelLookupDataRead();
+	ReadBase baseDataReader = new ExcelBaseDataRead();
 	
 	/**
 	 * handles file upload
@@ -105,7 +109,7 @@ public class UploadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String finalFilePath = null;
+		String finalFilePath = request.getParameter("fileSelection");
 		
 		lookupDataReader.setInputFile(finalFilePath);
 		lookupDataReader.setLookUpDao(lookupDao);

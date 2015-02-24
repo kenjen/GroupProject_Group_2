@@ -77,8 +77,7 @@ public class ExcelLookupDataRead implements ReadLookup {
 		ueRecord = null;
 		mccMncRecord = null;
 		
-		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
-				inputFile));
+		FileInputStream hssfInputWorkbook = new FileInputStream(new File(inputFile));
 
 //		List<EventCause> eventCauseList = new ArrayList<EventCause>();
 //		EventCause eventCauseRecord = null;
