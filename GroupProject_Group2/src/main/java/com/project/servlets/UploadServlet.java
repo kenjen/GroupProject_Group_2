@@ -43,6 +43,10 @@ public class UploadServlet extends HttpServlet {
 	@EJB
 	private FileDAO fileDao;
 	
+	ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
+	ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
+	
+	
 	/**
 	 * handles file upload
 	 */
@@ -82,38 +86,7 @@ public class UploadServlet extends HttpServlet {
 		
 		fileDao.addUploadedFilePath(finalFileName, finalFilePath);
 		
-		//TODO 
-		/*
-		 * request.getParameters("file");
-		 * boolean addToTable = request.getParameters("importBoolean");
-		 * 
-		 * 
-		 * response.setContentType("text/html")
-		 * PrintWriter out = response.getWriter();
-		 * out.println("<html><body> Hello! </body></html>");
-		 * out.close();
-		 * 
-		 */
-		
-		
 		if(correctFileFound){
-			/*String fileParam = request.getParameter("file");
-			
-			ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
-			lookupDataReader.setInputFile(finalFilePath);
-			lookupDataReader.setLookUpDao(lookupDao);
-			lookupDataReader.read();
-			lookupDataReader = null;
-			
-			ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
-			baseDataReader.setSheetNumber(0);
-			baseDataReader.setInputFile(finalFilePath);
-			baseDataReader.setBaseDataDao(dao);
-			baseDataReader.setErrorBaseDataDao(errorDao);
-			baseDataReader.read();
-			int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-			baseDataReader = null;*/
-			
 			request.setAttribute("message", "Upload to server completed successfully!");
 			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 		}else{
@@ -126,37 +99,27 @@ public class UploadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		boolean correctFileFound = false;
 		String finalFilePath = null;
 		
 		finalFilePath = request.getParameter("fileSelection");
 		
-		//if(correctFileFound){
-			String fileParam = request.getParameter("file");
-			
-			ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
-			lookupDataReader.setInputFile(finalFilePath);
-			lookupDataReader.setLookUpDao(lookupDao);
-			lookupDataReader.read();
-			lookupDataReader = null;
-			
-			ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
-			baseDataReader.setSheetNumber(0);
-			baseDataReader.setInputFile(finalFilePath);
-			baseDataReader.setBaseDataDao(dao);
-			baseDataReader.setErrorBaseDataDao(errorDao);
-			baseDataReader.read();
-			int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-			baseDataReader = null;
-			
-			request.setAttribute("message", "Transfer to database completed successfully!"
-						+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data<br>"
-						+ "filepath = " + finalFilePath);
-			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-		/*}else{
-			request.setAttribute("message", "Upload failed as incorrect file entered<br>Must end in .xls");
-			getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-		}*/
+		lookupDataReader.setInputFile(finalFilePath);
+		lookupDataReader.setLookUpDao(lookupDao);
+		lookupDataReader.read();
+		lookupDataReader = null;
+		
+		baseDataReader.setSheetNumber(0);
+		baseDataReader.setInputFile(finalFilePath);
+		baseDataReader.setBaseDataDao(dao);
+		baseDataReader.setErrorBaseDataDao(errorDao);
+		baseDataReader.read();
+		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
+		baseDataReader = null;
+		
+		request.setAttribute("message", "Transfer to database completed successfully!"
+					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data");
+		request.getRequestDispatcher("/message.jsp").forward(request, response);
+		//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 
 	/**
@@ -182,5 +145,19 @@ public class UploadServlet extends HttpServlet {
 			}
 		}
 		return fileName.substring(location);
+	}
+
+
+	public ExcelLookupDataRead getLookupDataReader() {
+		return lookupDataReader;
+	}
+	public void setLookupDataReader(ExcelLookupDataRead lookupDataReader) {
+		this.lookupDataReader = lookupDataReader;
+	}
+	public ExcelBaseDataRead getBaseDataReader() {
+		return baseDataReader;
+	}
+	public void setBaseDataReader(ExcelBaseDataRead baseDataReader) {
+		this.baseDataReader = baseDataReader;
 	}
 }
