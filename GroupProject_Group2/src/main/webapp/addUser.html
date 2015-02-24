@@ -9,7 +9,13 @@
 		<form id="addUser" name="addUser">
 			Username<br><input type="text" name="username" id="username" required><br>
 			Password<br><input type="text" name="password" id="password" required><br>
-			User Type<br><input type="text" name="userType" id="userType" required><br><br>
+			<!-- User Type<br><input type="text" name="userType" id="userType" required><br><br> -->
+			<select id="userType">
+				<option value="sys_admin">System Administrator</option>
+				<option value="cust_rep">Customer Service Rep</option>
+				<option value="sup_eng">Support Engineer</option>
+				<option value="net_man">Network Management Engineer</option>
+			</select><br>
 			<input type="submit" id="add" value="Add User" />
 		</form><br>
 		<p id="result"></p>
@@ -20,15 +26,16 @@
 		<script
 			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script>
+			var type = document.getElementById("userType").selectedIndex;
 			(function($) {
 				function processFormAdd(e) {
-					var button = $('#username').val()
+					var button = $('#username').val();
+					alert("type = "+type);
 					$.ajax({
-						url : 'http://localhost:8080/GroupProject_Group2/rest/users/',
+						url : '/GroupProject_Group2/rest/users/',
 						dataType : 'json',
 						type : 'put',
 						contentType : 'application/json',
-						
 						data : JSON.stringify({
 							"username" : $('#username').val(),
 							"password" : $('#password').val(),
