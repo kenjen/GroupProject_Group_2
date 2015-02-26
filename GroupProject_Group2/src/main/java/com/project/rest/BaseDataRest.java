@@ -1,7 +1,11 @@
 package com.project.rest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -88,6 +92,22 @@ public class BaseDataRest {
 			 }
 		 }
 		 return ec;
+	}
+	
+	@GET
+	@Path("/imsibetweendates/{dates}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Long> getImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
+		if(dates.length()==0){
+			Collection<Long> emptyCollection = Collections.emptyList();
+			return emptyCollection;
+		}
+		String s = dates.substring(0, 19);
+		String e = dates.substring(19);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date start = sdf.parse(s);
+		Date end = sdf.parse(e);
+		return baseDataService.getImsiByDateRange(start, end);
 	}
 
 }

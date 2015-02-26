@@ -1,8 +1,7 @@
 package com.project.dao;
 
 import java.util.Collection;
-
-import javax.ejb.Local;
+import java.util.Date;
 
 import com.project.entities.BaseData;
 import com.project.entities.FailureClass;
@@ -18,5 +17,5 @@ public interface BaseDataDAO {
 	Collection<FailureClass> addFailureClassForeignKey();
 	Collection<FailureClass> getFailureClasses();
 	Collection<UE> getUEs();
-
+	Collection<Long> getImsiByDateRange(Date startDate, Date endDate);
 }

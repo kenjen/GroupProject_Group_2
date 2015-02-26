@@ -1,5 +1,6 @@
 package com.project.service;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.Remote;
 import javax.jws.WebService;
@@ -19,5 +20,5 @@ public interface BaseDataService {
 	Collection<UE> addUEKeys();
 	Collection<FailureClass> getFailureClasses();
 	Collection<UE> getUEs();
-
+	Collection<Long> getImsiByDateRange(Date startDate, Date endDate);
 }

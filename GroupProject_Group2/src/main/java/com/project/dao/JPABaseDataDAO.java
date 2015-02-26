@@ -104,4 +104,13 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return ueDAO.getAllUEs();
 	}
 
+	@Override
+	public Collection<Long> getImsiByDateRange(Date startDate, Date endDate) {
+		Query query = entityManager.createNamedQuery("BaseData.getImsiBetweenDates");
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		Collection<Long> data = query.getResultList();
+		return data;
+	}
+
 }

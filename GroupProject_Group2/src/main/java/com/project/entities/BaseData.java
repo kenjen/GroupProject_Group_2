@@ -16,7 +16,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
-@NamedQueries({ @NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"), })
+@NamedQueries({ 
+	@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
+	
+	@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.imsi from BaseData b where b.date Between :startDate AND :endDate")
+})
+
 @Entity
 @Table(name = "base_data")
 public class BaseData implements Serializable {

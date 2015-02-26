@@ -1,6 +1,7 @@
 package com.project.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -57,7 +58,8 @@ public class BaseDataServiceEJB implements BaseDataService {
 		return baseDataDAO.getUEs();
 	}
 
-	
-	
-
+	@Override
+	public Collection<Long> getImsiByDateRange(Date startDate, Date endDate) {
+		return baseDataDAO.getImsiByDateRange(startDate, endDate);
+	}
 }

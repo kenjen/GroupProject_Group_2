@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<title>Base Data Errors</title>
+		<style>
+			#errorViewer {
+    			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+			    width: 100%;
+			    border-collapse: collapse;
+			}
+			
+			#errorViewer td, #errorViewer th {
+			    font-size: 0.8em;
+			    text-align: center;
+			    border: 1px solid #005EA7;
+			    padding: 3px 7px 2px 7px;
+			}
+			
+			#errorViewer th {
+			    font-size: 1em;
+			    padding-top: 5px;
+			    padding-bottom: 4px;
+			    background-color: #005EA7;
+			    color: #ffffff;
+			}
+			
+			#errorViewer tr.alt td {
+			    color: #000000;
+			    background-color: #b5e8f6;
+			}
+		</style>
+		
+	</head>
+	<body ng-controller="errorLoader">
+		
+		<form id='form'>
+			Select dates to filter imsi by:<br>
+			Start Date<br>
+			<input type="datetime-local" id="startDate" name="startDate" value="2013-02-20T09:00:00"/><br>
+			End Date<br>
+			<input type="datetime-local" id="endDate" name="endDate" value="2013-02-20T13:00:00"/><br>
+			<input type='button' onClick='refreshTable();' value="Imsi by date" />
+		</form>
+		
+		<table id="errorViewer">
+			<tr>
+				<!-- <th>Id</th>
+				<th>Cause Code</th>
+				<th>Cell Id</th>
+				<th>Date</th>
+				<th>Duration</th>
+				<th>Event Id</th>
+				<th>Failure Class</th> -->
+				<th id="imsi">IMSI</th>
+				<!-- <th>MCC</th>
+				<th>MNC</th>
+				<th>NE Version</th>
+				<th>TAC</th>
+				<th>Hier3 Id</th>
+				<th>Hier32 Id</th>
+				<th>Hier321 Id</th> -->
+			</tr>
+			
+			<tr ng-repeat="record in records">
+				<td>{{record.toString()}}</td>
+				<!-- 
+				<td>{{record.cellId}}</td>
+				<td>{{record.cellId}}</td>
+				<td>{{record.cellId}}</td>
+				<td>{{record.date}}</td>
+				<td>{{record.duration}}</td>
+				<td>{{record.eventId}}</td>
+				<td>{{record.failureClass}}</td>
+				<td id="imsi">{{record.imsi}}</td>
+				<td>{{record.mcc}}</td>
+				<td>{{record.mnc}}</td>
+				<td>{{record.neVersion}}</td>
+				<td>{{record.tac}}</td>
+				<td>{{record.hier3Id}}</td>
+				<td>{{record.hier32Id}}</td>
+				<td>{{record.hier321Id}}</td> -->
+			</tr>
+		</table>
+		
+		<script>
+			function errorLoader($scope, $http) {
+			    $http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + window.name).
+		        success(function(data) {
+		            $scope.records = data;
+		        });
+			}
+		</script>
+		
+		<script type="text/javascript">
+			function refreshTable(){
+				var startString = document.getElementById('startDate').value;
+				var endStringA = document.getElementById('endDate').value;
+				var endStringB = document.getElementById('endDate').value;
+				if(endStringA.length == 16){
+					endStringB = endStringA.concat(":00");
+				}
+				window.name = startString.concat(endStringB);
+				location.reload();
+			}
+		</script>
+		
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		
+		<script>
+			var x = readCookie('usercookie')
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+		</script>
+	</body>
+</html>
