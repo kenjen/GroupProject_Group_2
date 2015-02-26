@@ -92,7 +92,7 @@
 				(function($) {
 					function processForm(e) {
 						$.ajax({
-							url : 'http://localhost:8080/GroupProject_Group2/rest/users/getuser',
+							url : '/GroupProject_Group2/rest/users/getuser',
 							dataType : 'json',
 							type : 'post',
 							contentType : 'application/json',
@@ -129,6 +129,8 @@
 								}
 							},
 							error : function(jqXhr, textStatus, errorThrown) {
+								//TODO remove
+								createCookie('usercookie', JSON.stringify(data), 7);
 								document.write('<p>Error</p><a href ="login.html">Continue</a>');
 								console.log(errorThrown);
 

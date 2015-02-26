@@ -2,6 +2,7 @@ package com.project.dao;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import com.project.entities.BaseData;
 import com.project.entities.FailureClass;
@@ -17,5 +18,5 @@ public interface BaseDataDAO {
 	Collection<FailureClass> addFailureClassForeignKey();
 	Collection<FailureClass> getFailureClasses();
 	Collection<UE> getUEs();
-	Collection<Long> getImsiByDateRange(Date startDate, Date endDate);
+	List<Object[]> getImsiByDateRange(Date startDate, Date endDate);
 }

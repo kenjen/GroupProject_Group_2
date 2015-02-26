@@ -97,13 +97,13 @@ public class BaseDataRest {
 	@GET
 	@Path("/imsibetweendates/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Long> getImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
+	public List<Object[]> getImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
 		if(dates.length()==0){
-			Collection<Long> emptyCollection = Collections.emptyList();
+			List<Object[]> emptyCollection = Collections.emptyList();
 			return emptyCollection;
 		}
-		String s = dates.substring(0, 19);
-		String e = dates.substring(19);
+		String s = dates.substring(4, 23);
+		String e = dates.substring(23);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Date start = sdf.parse(s);
 		Date end = sdf.parse(e);

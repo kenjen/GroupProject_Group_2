@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-		<title>Base Data Errors</title>
+		<title>Query Viewer</title>
 		<style>
 			#errorViewer {
     			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -30,11 +30,63 @@
 			    color: #000000;
 			    background-color: #b5e8f6;
 			}
+			
+			.id{
+				display: none;
+			}
+			.causeCode{
+				display: ;
+			}
+			.cellId{
+				display: ;
+			}
+			.date{
+				display: ;
+			}
+			.duration{
+				display: ;
+			}
+			.eventId{
+				display: ;
+			}
+			.failureClass{
+				display: ;
+			}
+			.imsi{
+				display: ;
+			}
+			.mcc{
+				display: ;
+			}
+			.mnc{
+				display: ;
+			}
+			.neVersion{
+				display: ;
+			}
+			.tac{
+				display: ;
+			}
+			.hier3{
+				display: ;
+			}
+			.hier32{
+				display: ;
+			}
+			.hier321{
+				display: ;
+			}
 		</style>
+		<!-- 
+		<script>
+				var story5 = '<tr><th>Date</th><th>Imsi</th></tr><tr ng-repeat="record in records"><td>{{record.date}}</td><td>{{record.imsi}}</td></tr>'
+		</script>
+		
+		onload="alterTableStructure()"
+		-->
 		
 	</head>
-	<body ng-controller="errorLoader">
-		
+	<body ng-controller="errorLoader" onload="hideEmptyCols()">
 		<form id='form'>
 			Select dates to filter imsi by:<br>
 			Start Date<br>
@@ -46,50 +98,52 @@
 		
 		<table id="errorViewer">
 			<tr>
-				<!-- <th>Id</th>
-				<th>Cause Code</th>
-				<th>Cell Id</th>
-				<th>Date</th>
-				<th>Duration</th>
-				<th>Event Id</th>
-				<th>Failure Class</th> -->
-				<th id="imsi">IMSI</th>
-				<!-- <th>MCC</th>
-				<th>MNC</th>
-				<th>NE Version</th>
-				<th>TAC</th>
-				<th>Hier3 Id</th>
-				<th>Hier32 Id</th>
-				<th>Hier321 Id</th> -->
+				<th class="id">Id</th>
+				<th class="causeCode">Cause Code</th>
+				<th class="cellId">Cell Id</th>
+				<th class="date">Date</th>
+				<th class="duration">Duration</th>
+				<th class="eventId">Event Id</th>
+				<th class="failureClass">Failure Class</th>
+				<th class="imsi">IMSI</th>
+				<th class="mcc">MCC</th>
+				<th class="mnc">MNC</th>
+				<th class="neVersion">NE Version</th>
+				<th class="tac">TAC</th>
+				<th class="hier3">Hier3 Id</th>
+				<th class="hier32">Hier32 Id</th>
+				<th class="hier321">Hier321 Id</th>
 			</tr>
 			
 			<tr ng-repeat="record in records">
-				<td>{{record.toString()}}</td>
-				<!-- 
-				<td>{{record.cellId}}</td>
-				<td>{{record.cellId}}</td>
-				<td>{{record.cellId}}</td>
-				<td>{{record.date}}</td>
-				<td>{{record.duration}}</td>
-				<td>{{record.eventId}}</td>
-				<td>{{record.failureClass}}</td>
-				<td id="imsi">{{record.imsi}}</td>
-				<td>{{record.mcc}}</td>
-				<td>{{record.mnc}}</td>
-				<td>{{record.neVersion}}</td>
-				<td>{{record.tac}}</td>
-				<td>{{record.hier3Id}}</td>
-				<td>{{record.hier32Id}}</td>
-				<td>{{record.hier321Id}}</td> -->
+				<td class="id">{{record.id}}</td>
+				<td class="causeCode">{{record.causeCode}}</td>
+				<td class="cellId">{{record.cellId}}</td>
+				<td class="date">{{record[0]}}</td>
+				<td class="duration">{{record.duration}}</td>
+				<td class="eventId">{{record.eventId}}</td>
+				<td class="failureClass">{{record.failureClass}}</td>
+				<td class="imsi">{{record[1]}}</td>
+				<td class="mcc">{{record.mcc}}</td>
+				<td class="mnc">{{record.mnc}}</td>
+				<td class="neVersion">{{record.neVersion}}</td>
+				<td class="tac">{{record.tac}}</td>
+				<td class="hier3">{{record.hier3Id}}</td>
+				<td class="hier32">{{record.hier32Id}}</td>
+				<td class="hier321">{{record.hier321Id}}</td>
 			</tr>
 		</table>
 		
 		<script>
 			function errorLoader($scope, $http) {
-			    $http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + window.name).
-		        success(function(data) {
-		            $scope.records = data;
-		        });
+				var wName = window.name;
+				var qType = wName.substring(0, 3);
+				if(qType == "ib2w"){
+				    $http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + window.name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+				}
 			}
 		</script>
 		
@@ -101,8 +155,31 @@
 				if(endStringA.length == 16){
 					endStringB = endStringA.concat(":00");
 				}
-				window.name = startString.concat(endStringB);
+				var stringNoCode = startString.concat(endStringB);
+				var code = "ib2d";
+				window.name = code.concat(stringNoCode);
+				alert(window.name);
 				location.reload();
+			}
+		</script>
+		
+		<!-- <script type="text/javascript">
+			$(document).ready(function(){
+				hideEmptyCols();
+			});
+
+			function hideEmptyCols(){
+
+			}
+		</script> -->
+		
+		<script type="text/javascript">
+			function alterTableStructure(){
+				var col = document.getElementById("id")
+				col.style.display = "none";
+				document.getElementById("idH").style.display = "none";
+				document.getElementById("causeCode").style.display = "none";
+				document.getElementById("causeCodeH").style.display = "none";
 			}
 		</script>
 		
