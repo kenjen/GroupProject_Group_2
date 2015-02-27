@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="login.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 	</head>
 	<center>
-		<body>
+		<body ng-controller="userLoader">
 			<form id="editUser" name="editUser">
-				User Id
+				User
 				<br>
-				<input type="text" name="id" id="id" required>
+				<select>
+					<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
+				</select>
 				<br>
 				Username
 				<br>
@@ -19,7 +22,6 @@
 				Password
 				<br>
 				<input type="text" name="password" id="password" required>
-				<br>
 				<br>
 				<br>
 				<select id="userType">
@@ -37,6 +39,14 @@
 			<form action="/GroupProject_Group2/userEditing.html">
 				<input type="submit" value="Return" />
 			</form>
+
+			<script>
+				function userLoader($scope, $http) {
+					$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
+						$scope.users = data;
+					});
+				}
+			</script>
 
 			<script
 			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -62,7 +72,6 @@
 								var elem = document.getElementById("result")
 								elem.innerHTML = "User Edited Succesfuly";
 								elem.style.color = 'black';
-
 							},
 							error : function(jqXhr, textStatus, errorThrown) {
 								var elem = document.getElementById("result")
@@ -76,6 +85,7 @@
 
 					$('#editUser').submit(processFormEdit);
 				})(jQuery);
+
 			</script>
 
 		</body>

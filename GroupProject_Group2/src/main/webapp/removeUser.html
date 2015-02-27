@@ -1,69 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="login.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 	</head>
-	<center><body>
-		<form id="removeUser" name="removeUser">
-			Username<br><input type="text" name="username" id="username" required><br>
-			Password<br><input type="text" name="password" id="password" required><br>
-			User Type<br><input type="text" name="userType" id="userType" required><br><br>
-			<input type="submit" value="Remove User" />
-		</form><br>
-		<p id="result"></p><br>
-		<form action="/GroupProject_Group2/userEditing.html">
-			<input type="submit" value="Return" />
-		</form>
-		
-		<script
-			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script>
-			(function($) {
-				function processFormAdd(e) {
-					var button = $('#username').val()
-					$.ajax({
-						url : '/GroupProject_Group2/rest/users/deleteUser/',
-						dataType : 'json',
-						type : 'delete',
-						contentType : 'application/json',
-						
-						data : JSON.stringify({
-							"username" : $('#username').val(),
-							"password" : $('#password').val(),
-							"userType" : $('#userType').val()
-						}),
-						processData : false,
-						success : function(data, textStatus, jQxhr) {
-								var elem = document.getElementById("result")
-								elem.innerHTML="User Removed Succesfuly";
-								elem.style.color = 'black';
-						},
-						error : function(jqXhr, textStatus, errorThrown) {
-								var elem = document.getElementById("result")
-								elem.innerHTML="User Removal Failed";
-								elem.style.color = 'red';
-							
-						}
+	<center>
+		<body ng-controller="userLoader">
+			<form id="removeUser" name="removeUser">
+				User
+				<br>
+				<select id="id">
+					<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
+				</select>
+				<br>
+				</br>
+				<input type="submit" value="Remove User" />
+			</form>
+			<br>
+			<p id="result"></p>
+
+			<script>
+				function userLoader($scope, $http) {
+					$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
+						$scope.users = data;
 					});
-					e.preventDefault();
 				}
-				$('#addUser').submit(processFormAdd);
-			})(jQuery);
-		</script>
-		
-		
-	</body></center>
+			</script>
+			<script
+			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script>
+								(function($) {
+				function processFormAdd(e) {
+				//var button = $('#username').val()
+				var userId = document.getElementById("id").value;
+				$.ajax({
+				url : '/GroupProject_Group2/rest/users/deleteuser/',
+				dataType : 'json',
+				type : 'delete',
+				contentType : 'application/json',
+
+				data : JSON.stringify({
+				"id" : userId
+				}),
+				processData : false,
+				success : function(data, textStatus, jQxhr) {
+				/*
+				var elem = document.getElementById("result")
+				elem.innerHTML = "User Removed Succesfuly";
+				elem.style.color = 'black';
+				*/
+				document.write("<center><body><br><p>User Removed Succesfuly</p><br><form action='/GroupProject_Group2/userEditing.html'><input type='submit' value='Return' /></form></body></center>");
+				},
+				error : function(jqXhr, textStatus, errorThrown) {
+				var elem = document.getElementById("result")
+				elem.innerHTML = "User Removal Failed";
+				elem.style.color = 'red';
+
+				}
+				});
+				e.preventDefault();
+				}
+
+				$('#removeUser').submit(processFormAdd);
+				})(jQuery);
+			</script>
+
+		</body>
+	</center>
 	<script type="text/javascript">
-	window.onload = function() {
-	    try {
-	        if(window.self == window.top){
-	        	window.location.replace("/GroupProject_Group2/");
-		    }
-	    } catch (e) {
-	       
-	    }
-	}
-    </script>
+		window.onload = function() {
+			try {
+				if (window.self == window.top) {
+					window.location.replace("/GroupProject_Group2/");
+				}
+			} catch (e) {
+
+			}
+		}
+	</script>
 </html>

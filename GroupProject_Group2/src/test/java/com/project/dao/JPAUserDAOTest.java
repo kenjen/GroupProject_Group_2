@@ -81,12 +81,6 @@ public class JPAUserDAOTest {
 	public void endTransaction() throws Exception {
 		tx.commit();
 	}
-	
-	@Test
-	public void testThatWeCanUserDirectly() {
-		List<User> userList = (List<User>) userDao.getAllUsers();
-		assertEquals(1, userList.size());
-	}
 
 	@Test
 	public void testAddUser() {
