@@ -15,14 +15,16 @@
 				Password
 				<br>
 				<input type="password" name="password" id="password" required>
-				<br><br>
+				<br>
+				<br>
 				<select id="userType">
 					<option>System Administrator</option>
 					<option>Network Management Engineer</option>
 					<option>Support Engineer</option>
-					<option>Customer Service Rep</option>				
+					<option>Customer Service Rep</option>
 				</select>
-				<br><br>
+				<br>
+				<br>
 				<input type="submit" id="add" value="Add User" />
 			</form>
 			<br>
@@ -51,9 +53,8 @@
 							processData : false,
 							success : function(data, textStatus, jQxhr) {
 								if (data != null) {
-									var elem = document.getElementById("result")
-									elem.innerHTML = "User Added Succesfuly";
-									elem.style.color = 'black';
+									document.write("<center><body><br><p>User Added Successfully</p><br><form action='/GroupProject_Group2/userEditing.html'><input type='submit' value='Return' /></form></body></center>");
+
 								} else {
 									var elem = document.getElementById("result")
 									elem.innerHTML = "User Creation Failed";
