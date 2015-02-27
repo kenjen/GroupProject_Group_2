@@ -21,11 +21,7 @@
 				if (item) {
 					if (item.className == 'hidden') {
 						item.className = 'unhidden';
-						//clickedButton.value = 'hide'
-					} else {
-						//item.className = 'hidden';
-						//clickedButton.value = 'unhide'
-					}
+					} 
 				}
 			}
 
@@ -34,7 +30,7 @@
 	</head>
 	<center>
 		<body ng-controller="userLoader">
-			<form id="selectUser" name="selectUser">
+			<form id="selectUser" name="selectUser" class="unhidden">
 				User
 				<select id="userId">
 					<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
@@ -68,9 +64,14 @@
 							}),
 							processData : false,
 							success : function(data, textStatus, jQxhr) {
-								//var elem = document.getElementById("result")
-								//elem.innerHTML = "User Edited Succesfuly";
-								//elem.style.color = 'black';
+								var username_elem = document.getElementById("username");
+								var password_elem = document.getElementById("password");
+								var elem = document.getElementById("selectUser");
+								elem.className = 'hidden';
+								var type = data.userType;
+								document.getElementById("userType").selectedIndex = type;
+								username_elem.value = data.username;
+								password_elem.value = data.password;
 							},
 							error : function(jqXhr, textStatus, errorThrown) {
 								var elem = document.getElementById("result")
