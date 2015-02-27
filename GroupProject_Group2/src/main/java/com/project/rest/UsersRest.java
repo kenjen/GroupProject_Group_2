@@ -14,14 +14,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.project.entities.User;
-import com.project.service.UserServiceLocal;
+import com.project.service.UserService;
 
 @Path("/users")
 @Stateless
 public class UsersRest {
 
 	@EJB
-	private UserServiceLocal service;
+	private UserService service;
 
 	@GET
 	@Path("/getallusers")
@@ -37,6 +37,15 @@ public class UsersRest {
 	public User getUser(User user) {
 		return service.getUser(user);
 	}
+	
+	@POST
+	@Path("/getuserbyid")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getUserById(User user) {
+		return service.getUserById(user);
+	}
+	
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
