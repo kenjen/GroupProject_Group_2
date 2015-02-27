@@ -8,9 +8,7 @@
 			var name = window.name;
 			var code = name.substring(0, 4);
 		</script>
-		<!-- <div id="cssLink">
-			<link href="media/css/query-table.css" rel="stylesheet" type="text/css">
-		</div> -->
+		<link href="media/css/query-table.css" rel="stylesheet" type="text/css">
 		
 	</head>
 	<body ng-controller="errorLoader" onload="alterTableStructure()">
@@ -26,9 +24,9 @@
 		<table id="errorViewer" class="myTable">
 			<tr>
 				<th class="id" id="id">Id</th>
-				<th class="causeCode" class="causeCode">Cause Code</th>
-				<th class="cellId" class="cellclass">Cell class</th>
-				<th class="date" class="date">Date</th>
+				<th class="causeCode">Cause Code</th>
+				<th class="cellId">Cell class</th>
+				<th class="date">Date</th>
 				<th class="duration">Duration</th>
 				<th class="eventId">Event class</th>
 				<th class="failureClass">Failure Class</th>

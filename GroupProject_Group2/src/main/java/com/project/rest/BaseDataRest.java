@@ -101,8 +101,9 @@ public class BaseDataRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String[]> getImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
 		if(dates.length()==0){
-			List<String[]> emptyCollection = Collections.emptyList();
-			return emptyCollection;
+			/*List<String[]> emptyCollection = Collections.emptyList();
+			return emptyCollection;*/
+			return null;
 		}
 		String s = dates.substring(4, 23);
 		String e = dates.substring(23);

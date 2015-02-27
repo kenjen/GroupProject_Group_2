@@ -45,7 +45,7 @@
 }
 
 .date {
-	display: table-cell;
+	display: none;
 }
 
 .duration {
@@ -61,7 +61,7 @@
 }
 
 .imsi {
-	display: table-cell;
+	display: none;
 }
 
 .mcc {
