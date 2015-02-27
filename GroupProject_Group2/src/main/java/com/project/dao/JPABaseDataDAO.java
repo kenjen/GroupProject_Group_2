@@ -113,16 +113,6 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
 		List<Object[]> data = query.getResultList();
-		//Collection<String> collection = new ArrayList<String>();
-		
-		/*for(Object[] obj : data){
-			String d = (obj[0].toString()).substring(0, 17);
-			String i = Long.toString((long) obj[1]);
-			
-			String str = "{\"date\":" + d + ",\"imsi\":" + i + "}";
-			collection.add(str);
-		}
-		return collection;*/
 		return data;
 	}
 

@@ -4,89 +4,16 @@
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<title>Query Viewer</title>
-		<style>
-			#errorViewer {
-    			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-			    width: 100%;
-			    border-collapse: collapse;
-			}
-			
-			#errorViewer td, #errorViewer th {
-			    font-size: 0.8em;
-			    text-align: center;
-			    border: 1px solid #005EA7;
-			    padding: 3px 7px 2px 7px;
-			}
-			
-			#errorViewer th {
-			    font-size: 1em;
-			    padding-top: 5px;
-			    padding-bottom: 4px;
-			    background-color: #005EA7;
-			    color: #ffffff;
-			}
-			
-			#errorViewer tr.alt td {
-			    color: #000000;
-			    background-color: #b5e8f6;
-			}
-			
-			.id{
-				display: none;
-			}
-			.causeCode{
-				display: ;
-			}
-			.cellId{
-				display: ;
-			}
-			.date{
-				display: ;
-			}
-			.duration{
-				display: ;
-			}
-			.eventId{
-				display: ;
-			}
-			.failureClass{
-				display: ;
-			}
-			.imsi{
-				display: ;
-			}
-			.mcc{
-				display: ;
-			}
-			.mnc{
-				display: ;
-			}
-			.neVersion{
-				display: ;
-			}
-			.tac{
-				display: ;
-			}
-			.hier3{
-				display: ;
-			}
-			.hier32{
-				display: ;
-			}
-			.hier321{
-				display: ;
-			}
-		</style>
-		<!-- 
-		<script>
-				var story5 = '<tr><th>Date</th><th>Imsi</th></tr><tr ng-repeat="record in records"><td>{{record.date}}</td><td>{{record.imsi}}</td></tr>'
+		<script type="text/javascript" id="me">
+			var name = window.name;
+			var code = name.substring(0, 4);
 		</script>
-		
-		onload="alterTableStructure()"
-		-->
+		<!-- <div id="cssLink">
+			<link href="media/css/query-table.css" rel="stylesheet" type="text/css">
+		</div> -->
 		
 	</head>
-	<body ng-controller="errorLoader" onload="hideEmptyCols()">
+	<body ng-controller="errorLoader" onload="alterTableStructure()">
 		<form id='form'>
 			Select dates to filter imsi by:<br>
 			Start Date<br>
@@ -96,54 +23,63 @@
 			<input type='button' onClick='refreshTable();' value="Imsi by date" />
 		</form>
 		
-		<table id="errorViewer">
+		<table id="errorViewer" class="myTable">
 			<tr>
-				<th class="id">Id</th>
-				<th class="causeCode">Cause Code</th>
-				<th class="cellId">Cell Id</th>
-				<th class="date">Date</th>
+				<th class="id" id="id">Id</th>
+				<th class="causeCode" class="causeCode">Cause Code</th>
+				<th class="cellId" class="cellclass">Cell class</th>
+				<th class="date" class="date">Date</th>
 				<th class="duration">Duration</th>
-				<th class="eventId">Event Id</th>
+				<th class="eventId">Event class</th>
 				<th class="failureClass">Failure Class</th>
 				<th class="imsi">IMSI</th>
 				<th class="mcc">MCC</th>
 				<th class="mnc">MNC</th>
 				<th class="neVersion">NE Version</th>
 				<th class="tac">TAC</th>
-				<th class="hier3">Hier3 Id</th>
-				<th class="hier32">Hier32 Id</th>
-				<th class="hier321">Hier321 Id</th>
+				<th class="hier3">Hier3 class</th>
+				<th class="hier32">Hier32 class</th>
+				<th class="hier321">Hier321 class</th>
 			</tr>
 			
 			<tr ng-repeat="record in records">
-				<td class="id">{{record.id}}</td>
-				<td class="causeCode">{{record.causeCode}}</td>
-				<td class="cellId">{{record.cellId}}</td>
-				<td class="date">{{record[0]}}</td>
-				<td class="duration">{{record.duration}}</td>
-				<td class="eventId">{{record.eventId}}</td>
-				<td class="failureClass">{{record.failureClass}}</td>
-				<td class="imsi">{{record[1]}}</td>
-				<td class="mcc">{{record.mcc}}</td>
-				<td class="mnc">{{record.mnc}}</td>
-				<td class="neVersion">{{record.neVersion}}</td>
-				<td class="tac">{{record.tac}}</td>
-				<td class="hier3">{{record.hier3Id}}</td>
-				<td class="hier32">{{record.hier32Id}}</td>
-				<td class="hier321">{{record.hier321Id}}</td>
+				<td class="id">{{record[0]}}</td>
+				<td class="causeCode">{{record[1]}}</td>
+				<td class="cellId">{{record[2]}}</td>
+				<td class="date">{{record[3]}}</td>
+				<td class="duration">{{record[4]}}</td>
+				<td class="eventId">{{record[5]}}</td>
+				<td class="failureClass">{{record[6]}}</td>
+				<td class="imsi">{{record[7]}}</td>
+				<td class="mcc">{{record[8]}}</td>
+				<td class="mnc">{{record[9]}}</td>
+				<td class="neVersion">{{record[10]}}</td>
+				<td class="tac">{{record[11]}}</td>
+				<td class="hier3">{{record[12]}}</td>
+				<td class="hier32">{{record[13]}}</td>
+				<td class="hier321">{{record[14]}}</td>
 			</tr>
 		</table>
 		
 		<script>
 			function errorLoader($scope, $http) {
 				var wName = window.name;
-				var qType = wName.substring(0, 3);
-				if(qType == "ib2w"){
+				var qType = wName.substring(0, 4);
+				if(qType == "ib2d"){
 				    $http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + window.name).
 			        success(function(data) {
 			            $scope.records = data;
 			        });
+					setAllHidden();
+					$('.date').css('display', 'table-cell');
+					$('.imsi').css('display', 'table-cell');
+				}else{
+					
 				}
+			}
+
+			function setAllHidden(){
+				
 			}
 		</script>
 		
@@ -158,28 +94,19 @@
 				var stringNoCode = startString.concat(endStringB);
 				var code = "ib2d";
 				window.name = code.concat(stringNoCode);
-				alert(window.name);
+				alert("*" + window.name + "*");
 				location.reload();
 			}
 		</script>
 		
-		<!-- <script type="text/javascript">
-			$(document).ready(function(){
-				hideEmptyCols();
-			});
-
-			function hideEmptyCols(){
-
-			}
-		</script> -->
-		
 		<script type="text/javascript">
 			function alterTableStructure(){
-				var col = document.getElementById("id")
-				col.style.display = "none";
-				document.getElementById("idH").style.display = "none";
-				document.getElementById("causeCode").style.display = "none";
-				document.getElementById("causeCodeH").style.display = "none";
+				/* document.getElementById("date").classList.add('hidden');
+				document.getElementById("dateH").classList.add("hidden");
+				element=document.getElementsByClassName("hidden")[0];
+			    element.className="displayed";
+			    document.getElementById("imsi").style.display = "hidden"; */
+				/* document.getElementById("imsi").classList.remove('hidden'); */
 			}
 		</script>
 		
