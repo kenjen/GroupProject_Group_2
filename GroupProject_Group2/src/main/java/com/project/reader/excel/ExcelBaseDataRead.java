@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.ErrorData;
-
+import javax.inject.Inject;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -16,24 +15,25 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
-import com.project.dao.JPABaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.entities.ErrorBaseData;
 import com.project.entities.EventCause;
 import com.project.entities.FailureClass;
+import com.project.entities.MccMnc;
+import com.project.entities.UE;
 import com.project.reader.Read;
 
 public class ExcelBaseDataRead implements Read {
 
 	private String inputFile;
-	private final ExcellValidator validator = new ExcellValidator();
+	@Inject
+	private ExcellValidator validator;
 
 	private int sheetNumber;
 	private int invalidRowCount;
 
 	private BaseDataDAO baseDataDao;
 	private ErrorBaseDataDAO errorBaseDataDao;
-	
 
 	public ExcelBaseDataRead() {
 	}
@@ -65,16 +65,18 @@ public class ExcelBaseDataRead implements Read {
 			Row row = hssfWorkBookSheet.getRow(currentRow);
 			boolean rowValid = true;
 			for (Cell cell : row) {
-				try{
+				try {
 					if (cell.getColumnIndex() == 0) {
 						baseDataRecord.setDate(cell.getDateCellValue());
 					}
 					if (cell.getColumnIndex() == 1) {
-						baseDataRecord.setEventId((int) cell.getNumericCellValue());
+						baseDataRecord.setEventId((int) cell
+								.getNumericCellValue());
 					}
 					if (cell.getColumnIndex() == 2) {
-						baseDataRecord.setFailureClass((int) cell.getNumericCellValue());
-						
+						baseDataRecord.setFailureClass((int) cell
+								.getNumericCellValue());
+
 					}
 					if (cell.getColumnIndex() == 3) {
 						baseDataRecord.setTac((int) cell.getNumericCellValue());
@@ -86,19 +88,23 @@ public class ExcelBaseDataRead implements Read {
 						baseDataRecord.setMnc((int) cell.getNumericCellValue());
 					}
 					if (cell.getColumnIndex() == 6) {
-						baseDataRecord.setCellId((int) cell.getNumericCellValue());
+						baseDataRecord.setCellId((int) cell
+								.getNumericCellValue());
 					}
 					if (cell.getColumnIndex() == 7) {
-						baseDataRecord.setDuration((int) cell.getNumericCellValue());
+						baseDataRecord.setDuration((int) cell
+								.getNumericCellValue());
 					}
 					if (cell.getColumnIndex() == 8) {
-						baseDataRecord.setCauseCode((int) cell.getNumericCellValue());
+						baseDataRecord.setCauseCode((int) cell
+								.getNumericCellValue());
 					}
 					if (cell.getColumnIndex() == 9) {
 						baseDataRecord.setNeVersion(cell.getStringCellValue());
 					}
 					if (cell.getColumnIndex() == 10) {
-						baseDataRecord.setImsi((long) cell.getNumericCellValue());
+						baseDataRecord.setImsi((long) cell
+								.getNumericCellValue());
 					}
 					if (cell.getColumnIndex() == 11) {
 						String cellVal = df.formatCellValue(cell);
@@ -112,17 +118,23 @@ public class ExcelBaseDataRead implements Read {
 						String cellVal = df.formatCellValue(cell);
 						baseDataRecord.setHier321Id(cellVal);
 					}
-					
-				}catch(Exception e){
-					//catches all errors while parsing the data and marks the row as invalid
+
+				} catch (Exception e) {
+					// catches all errors while parsing the data and marks the
+					// row as invalid
+					// data parsed is in error (Excel error)
 					rowValid = false;
 					break;
 				}
 			}
+			/*
+			 * PASS RELATIONAL COLUMN DATA TO LOOKUP TABLES TO OBTAIN AN OBJECT
+			 * REPRESENTING THE RELATIONSHIP BASED ON THE COLUMN(S) PASSED
+			 */
 			setAllLinks(baseDataRecord);
-			if(rowValid && validator.isValid(baseDataRecord)){
+			if (rowValid && validator.isValid(baseDataRecord)) {
 				baseDatList.add(baseDataRecord);
-			}else{
+			} else {
 				invalidRowCount++;
 				errorBaseDatList.add(new ErrorBaseData(row));
 			}
@@ -132,25 +144,44 @@ public class ExcelBaseDataRead implements Read {
 		baseDataDao.addAllBaseData(baseDatList);
 		errorBaseDataDao.addAllErrorBaseData(errorBaseDatList);
 	}
-	
-	private void setAllLinks(BaseData bd){
-		if(bd.getCauseCode() != null && bd.getEventId() != null){
-			EventCause ec = ExcelLookupDataRead.getEventCause(bd.getCauseCode(), bd.getEventId());
+
+	/*
+	 * WE RETURN AN OBJECT REPRESENTING THE LOOKUP TABLE FROM THE VALUES PASSED
+	 */
+	private void setAllLinks(BaseData bd) {
+		if (bd.getCauseCode() != null && bd.getEventId() != null) {
+			EventCause ec = ExcelLookupDataRead.getEventCause(
+					bd.getCauseCode(), bd.getEventId());
 			bd.setEventCauseFK(ec);
 		}
-		//TODO add other table link methods
+
+		if (bd.getFailureClass() != null) {
+			FailureClass fc = ExcelLookupDataRead.getFailureClass(bd
+					.getFailureClass());
+			bd.setFaliureClassFK(fc);
+		}
+
+		if (bd.getTac() != null) {
+			UE ue = ExcelLookupDataRead.getUe(bd.getTac());
+			bd.setUeFK(ue);
+		}
+
+		if (bd.getMcc() != null && bd.getMnc() != null) {
+			MccMnc mc = ExcelLookupDataRead.getMccMnc(bd.getMcc(), bd.getMnc());
+			bd.setMccMncFK(mc);
+		}
 	}
 
 	@Override
 	public void setSheetNumber(int sheetNumber) {
 		this.sheetNumber = sheetNumber;
 	}
-	
-	public void setBaseDataDao(BaseDataDAO dao){
+
+	public void setBaseDataDao(BaseDataDAO dao) {
 		this.baseDataDao = dao;
 	}
-	
-	public void setErrorBaseDataDao(ErrorBaseDataDAO dao){
+
+	public void setErrorBaseDataDao(ErrorBaseDataDAO dao) {
 		this.errorBaseDataDao = dao;
 	}
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,11 @@ import com.project.reader.excel.ExcelLookupDataRead;
 public class UploadServlet extends HttpServlet {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Name of the directory where uploaded files will be saved, relative to
 	 * the web application directory.
 	 */
@@ -39,6 +45,10 @@ public class UploadServlet extends HttpServlet {
 	private ErrorBaseDataDAO errorDao;
 	@EJB
 	private LookUpDataDAO lookupDao;
+	@Inject
+	private ExcelBaseDataRead baseDataReader;
+	@Inject
+	private ExcelLookupDataRead lookupDataReader;
 	
 	/**
 	 * handles file upload
@@ -46,6 +56,7 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// gets absolute path of the web application
+		
 		
 		String appPath = request.getServletContext().getRealPath("");
 		// constructs path of the directory to save uploaded file
@@ -85,14 +96,14 @@ public class UploadServlet extends HttpServlet {
 		 */
 		if(correctFileFound){
 			String fileParam = request.getParameter("file");
-			
-			ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
+			//changed to inject
+			//ExcelLookupDataRead lookupDataReader = new ExcelLookupDataRead();
 			lookupDataReader.setInputFile(finalFilePath);
 			lookupDataReader.setLookUpDao(lookupDao);
 			lookupDataReader.read();
 			lookupDataReader = null;
 			
-			ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
+			//ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
 			baseDataReader.setSheetNumber(0);
 			baseDataReader.setInputFile(finalFilePath);
 			baseDataReader.setBaseDataDao(dao);

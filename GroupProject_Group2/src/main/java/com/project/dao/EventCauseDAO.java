@@ -6,8 +6,11 @@ import javax.ejb.Local;
 
 import com.project.entities.EventCause;
 
-@Local
+
 public interface EventCauseDAO {
-	public Collection getFailuresIdsByIMSI(Long imsi);
-	public Collection getFailures();
+	Collection getFailuresIdsByIMSI(Long imsi);
+
+	Collection getFailures();
+
+	Collection getAllEventCause();
 }
