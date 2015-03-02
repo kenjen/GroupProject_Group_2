@@ -5,6 +5,8 @@
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://www.shawnolson.net/scripts/public_smo_scripts.js"></script>
+		
 		<title>Query Viewer</title>
 		<script type="text/javascript" id="me">
 			var name = window.top.name;
@@ -15,61 +17,61 @@
 	</head>
 	<body ng-controller="errorLoader">
 		<table id="errorViewer" class="myTable">
-			<tr>
-				<th class="id">Id</th>
-				<th class="causeCode">Cause Code</th>
-				<th class="cellId">Cell class</th>
-				<th class="date">Date</th>
-				<th class="duration">Duration</th>
-				<th class="eventId">Event class</th>
-				<th class="failureClass">Failure Class</th>
-				<th class="imsi">IMSI</th>
-				<th class="mcc">MCC</th>
-				<th class="mnc">MNC</th>
-				<th class="neVersion">NE Version</th>
-				<th class="tac">TAC</th>
-				<th class="hier3">Hier3 class</th>
-				<th class="hier32">Hier32 class</th>
-				<th class="hier321">Hier321 class</th>
-			</tr>
-			
-			
-			<tr>
-				<td>Blank on purpose</td>
-			</tr>
-			
-			<tr ng-repeat="record in records">
-				<td class="id">{{record[0]}}</td>
-				<td class="causeCode">{{record[1]}}</td>
-				<td class="cellId">{{record[2]}}</td>
-				<td class="date">{{record}}</td>
-				<td class="duration">{{record[4]}}</td>
-				<td class="eventId">{{record[5]}}</td>
-				<td class="failureClass">{{record[6]}}</td>
-				<td class="imsi">{{record[7]}}</td>
-				<td class="mcc">{{record[8]}}</td>
-				<td class="mnc">{{record[9]}}</td>
-				<td class="neVersion">{{record[10]}}</td>
-				<td class="tac">{{record[11]}}</td>
-				<td class="hier3">{{record[12]}}</td>
-				<td class="hier32">{{record[13]}}</td>
-				<td class="hier321">{{record[14]}}</td>
-			</tr>
+			<thead>
+				<tr>
+					<th class="id">Id</th>
+					<th class="causeCode">Cause Code</th>
+					<th class="cellId">Cell class</th>
+					<th class="date">Date</th>
+					<th class="duration">Duration</th>
+					<th class="eventId">Event class</th>
+					<th class="failureClass">Failure Class</th>
+					<th class="imsi">IMSI</th>
+					<th class="mcc">MCC</th>
+					<th class="mnc">MNC</th>
+					<th class="neVersion">NE Version</th>
+					<th class="tac">TAC</th>
+					<th class="hier3">Hier3 class</th>
+					<th class="hier32">Hier32 class</th>
+					<th class="hier321">Hier321 class</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="record in records">
+					<td class="id">{{record[0]}}</td>
+					<td class="causeCode">{{record[1]}}</td>
+					<td class="cellId">{{record[2]}}</td>
+					<td class="date">{{record[3]}}</td>
+					<td class="duration">{{record[4]}}</td>
+					<td class="eventId">{{record[5]}}</td>
+					<td class="failureClass">{{record[6]}}</td>
+					<td class="imsi">{{record[7]}}</td>
+					<td class="mcc">{{record[8]}}</td>
+					<td class="mnc">{{record[9]}}</td>
+					<td class="neVersion">{{record[10]}}</td>
+					<td class="tac">{{record[11]}}</td>
+					<td class="hier3">{{record[12]}}</td>
+					<td class="hier32">{{record[13]}}</td>
+					<td class="hier321">{{record[14]}}</td>
+				</tr>
+			</tbody>
 		</table>
 		
 		<script>
 			function errorLoader($scope, $http) {
-				alert(name);
+				/* alert(name); */
 				if(code == "ib2d"){
-					$('.date').css('display', 'table-cell');
-					$('.imsi').css('display', 'table-cell');
+					changecss('.date','display','table-cell');
+					changecss('.imsi','display','table-cell');
+					
 				    $http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + name).
 			        success(function(data) {
 			            $scope.records = data;
 			        });
-				}/*else{
-					$('.id').css('display', 'table-cell');
-				}*/
+				}else if(code == "cmbd"){
+					changecss('.id','display','table-cell');
+					changecss('.tac','display','table-cell');
+				}
 			}
 		</script>
 		
