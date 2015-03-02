@@ -11,10 +11,9 @@
 				tableFrame.style.height = tableFrame.contentWindow.document.body.scrollHeight + 'px';
 			}
 		</script>
-		
 	</head>
+	
 	<body ng-controller="queryReferenceLoader">
-		
 		<br><br>
 		<form enctype="multipart/form-data"  style="text-align:center">
 			Select querytype:
@@ -57,17 +56,37 @@
 				var choice = document.getElementById('querySelection').value;
 				var formFrame = document.getElementById('formFrame');
 				if(choice==1){
-					window.name = "ecfi"
-					//formFrame.src = "/GroupProject_Group2/queries/imsibydate.html";
+					window.name = "c01"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
 				}else if(choice==2){
-					window.name = "ib2d"
+					window.name = "c02"
 					formFrame.src = "/GroupProject_Group2/queries/imsibydate.html";
-				}else{
-					window.name = "cmbd"
+				}else if(choice==3){
+					window.name = "c03"
 					formFrame.src = "/GroupProject_Group2/queries/countmodelfailuresbydate.html";
+				}else if(choice==4){
+					window.name = "c04"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
+				}else if(choice==5){
+					window.name = "c05"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
+				}else if(choice==6){
+					window.name = "c06"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
+				}else if(choice==7){
+					window.name = "c07"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
+				}else if(choice==8){
+					window.name = "c08"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
+				}else if(choice==9){
+					window.name = "c09"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
+				}else if(choice==10){
+					window.name = "c10"
+					formFrame.src = "/GroupProject_Group2/queries/todoform.html";
 				}
 			}
 		</script>
-		
 	</body>
 </html>

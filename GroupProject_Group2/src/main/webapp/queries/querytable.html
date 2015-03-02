@@ -10,7 +10,7 @@
 		<title>Query Viewer</title>
 		<script type="text/javascript" id="me">
 			var name = window.top.name;
-			var code = name.substring(0, 4);
+			var code = name.substring(0, 3);
 		</script>
 		<link href="/GroupProject_Group2/media/css/query-table.css" rel="stylesheet" type="text/css">
 		
@@ -24,7 +24,7 @@
 					<th class="cellId">Cell class</th>
 					<th class="date">Date</th>
 					<th class="duration">Duration</th>
-					<th class="eventId">Event class</th>
+					<th class="eventId">Event Id</th>
 					<th class="failureClass">Failure Class</th>
 					<th class="imsi">IMSI</th>
 					<th class="mcc">MCC</th>
@@ -34,6 +34,15 @@
 					<th class="hier3">Hier3 class</th>
 					<th class="hier32">Hier32 class</th>
 					<th class="hier321">Hier321 class</th>
+					<th class="count">Count</th>
+					<th class="country">Country</th>
+					<th class="operator">Operator</th>
+					<th class="marketingName">Marketing Name</th>
+					<th class="manufacturer">Manufacturer</th>
+					<th class="accessCapability">Access Capability</th>
+					<th class="description">Description</th>
+					<th class="noCode">Query Result Table</th>
+						
 				</tr>
 			</thead>
 			<tbody>
@@ -53,14 +62,27 @@
 					<td class="hier3">{{record[12]}}</td>
 					<td class="hier32">{{record[13]}}</td>
 					<td class="hier321">{{record[14]}}</td>
+					<td class="count">{{record[15]}}</td>
+					<td class="country">{{record[16]}}</td>
+					<td class="operator">{{record[17]}}</td>
+					<td class="marketingName">{{record[18]}}</td>
+					<td class="manufacturer">{{record[19]}}</td>
+					<td class="accessCapability">{{record[20]}}</td>
+					<td class="description">{{record[21]}}</td>
 				</tr>
 			</tbody>
 		</table>
 		
 		<script>
 			function errorLoader($scope, $http) {
-				/* alert(name); */
-				if(code == "ib2d"){
+				alert("code = " + code);
+				if(code == "c01"){
+					changecss('.imsi','display','table-cell');
+					changecss('.eventId','display','table-cell');
+					changecss('.causeCode','display','table-cell');
+
+				    window.top.name = "";
+				}else if(code == "c02"){
 					changecss('.date','display','table-cell');
 					changecss('.imsi','display','table-cell');
 					
@@ -68,13 +90,19 @@
 			        success(function(data) {
 			            $scope.records = data;
 			        });
-				}else if(code == "cmbd"){
-					changecss('.id','display','table-cell');
+			        
+				    window.top.name = "";
+				}else if(code == "c03"){
+					changecss('.count','display','table-cell');
 					changecss('.tac','display','table-cell');
+					changecss('.marketingName','display','table-cell');
+
+				    window.top.name = "";
+				}else{
+					changecss('.noCode','display','table-cell');
 				}
 			}
 		</script>
-		
 		
 		<script>
 			var x = readCookie('usercookie')

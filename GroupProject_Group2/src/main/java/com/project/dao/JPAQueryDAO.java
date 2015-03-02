@@ -22,10 +22,22 @@ public class JPAQueryDAO implements QueryDAO{
 	public void createQueries() {
 		em.createNativeQuery("truncate table queries").executeUpdate();
 		ArrayList<Query> list = new ArrayList<Query>();
-		list.add(new Query(1, 3, "EventId, CauseCode from IMSI"));
-		list.add(new Query(2, 2, "IMSI by Date Range"));
-		list.add(new Query(3, 1, "Network Engineer Query"));
-		list.add(new Query(4, 0, "Sys Admin Query"));
+		/*
+		 * 0 = sysadin
+		 * 1 = network engineer
+		 * 2 = suport engineer
+		 * 3 = customer rep
+		 */
+		list.add(new Query(1, 3, "EventId, CauseCode for IMSI"));
+		list.add(new Query(2, 2, "List IMSI by Date Range"));
+		list.add(new Query(3, 2, "Count failures For Model Of Phone"));
+		list.add(new Query(4, 1, "Count failures and duration for each IMSI by Date"));
+		list.add(new Query(5, 1, "Unique EventId/CauseCode and Count Occurances For Model Of Phone"));
+		list.add(new Query(6, 3, "Count failures for IMSI by Date"));
+		list.add(new Query(7, 1, "Top 10 Market/Operator/CellId Combinations by Date"));
+		list.add(new Query(8, 3, "Unique Cause Codes for IMSI"));
+		list.add(new Query(9, 1, "Top 10 IMSI by Date"));
+		list.add(new Query(10, 2, "IMSI for Failure Cause Class"));
 		for(Object o : list){
 			em.merge(o);
 		}

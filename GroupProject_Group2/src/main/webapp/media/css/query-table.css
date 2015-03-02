@@ -24,14 +24,6 @@
 	background-color: #b5e8f6;
 }
 
-/* .hidden{
-	display: none;
-}
-			
-.displayed{
-	display: table-cell
-} */
-
 .id {
 	display: none;
 }
@@ -91,3 +83,36 @@
 .hier321 {
 	display: none;
 }
+
+.count {
+	display: none;
+}
+
+.country {
+	display: none;
+}
+
+.operator {
+	display: none;
+}
+
+.marketingName {
+	display: none;
+}
+
+.manufacturer {
+	display: none;
+}
+
+.accessCapability {
+	display: none;
+}
+
+.description {
+	display: none;
+}
+
+.noCode {
+	display: none;
+}
+
