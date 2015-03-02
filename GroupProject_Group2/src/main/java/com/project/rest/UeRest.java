@@ -1,6 +1,5 @@
 package com.project.rest;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.project.entities.UE;
 import com.project.service.UeService;
 
 @Path("/ue")
@@ -22,6 +22,13 @@ public class UeRest {
 	
 	@EJB
 	private UeService ueService;
+	
+	@GET
+	@Path("/getAllModels")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<UE> getAllPhoneModels(){
+		return ueService.getAllModels();
+	}
 	
 	@GET
 	@Path("/callfailures/{input}")
