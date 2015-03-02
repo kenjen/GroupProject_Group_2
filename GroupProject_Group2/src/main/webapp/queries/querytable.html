@@ -75,7 +75,6 @@
 		
 		<script>
 			function errorLoader($scope, $http) {
-				alert("code = " + code);
 				if(code == "c01"){
 					changecss('.imsi','display','table-cell');
 					changecss('.eventId','display','table-cell');
@@ -97,6 +96,65 @@
 					changecss('.tac','display','table-cell');
 					changecss('.marketingName','display','table-cell');
 
+					
+					
+				    window.top.name = "";
+				}else if(code == "c04"){
+					changecss('.count','display','table-cell');
+					changecss('.duration','display','table-cell');
+					changecss('.imsi','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c05"){
+					changecss('.count','display','table-cell');
+					changecss('.tac','display','table-cell');
+					changecss('.marketingName','display','table-cell');
+					changecss('.eventId','display','table-cell');
+					changecss('.causeCode','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c06"){
+					changecss('.count','display','table-cell');
+					changecss('.imsi','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c07"){
+					changecss('.count','display','table-cell');
+					changecss('.market','display','table-cell');
+					changecss('.operator','display','table-cell');
+					changecss('.cellId','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c08"){
+					changecss('.causeCode','display','table-cell');
+					changecss('.imsi','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c09"){
+					changecss('.count','display','table-cell');
+					changecss('.imsi','display','table-cell');
+					changecss('.date','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c10"){
+					changecss('.imsi','display','table-cell');
+					changecss('.failureClass','display','table-cell');
+					changecss('.description','display','table-cell');
+
+					
+					
 				    window.top.name = "";
 				}else{
 					changecss('.noCode','display','table-cell');
