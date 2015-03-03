@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+	
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="http://www.shawnolson.net/scripts/public_smo_scripts.js"></script>
+		
+		<title>Query Viewer</title>
+		<script type="text/javascript" id="me">
+			var name = window.top.name;
+			var code = name.substring(0, 3);
+		</script>
+		<link href="/GroupProject_Group2/media/css/query-table.css" rel="stylesheet" type="text/css">
+		
+	</head>
+	<body ng-controller="errorLoader">
+		<table id="errorViewer" class="myTable">
+			<thead>
+				<tr>
+					<th class="id">Id</th>
+					<th class="causeCode">Cause Code</th>
+					<th class="cellId">Cell class</th>
+					<th class="date">Date</th>
+					<th class="duration">Duration</th>
+					<th class="eventId">Event Id</th>
+					<th class="failureClass">Failure Class</th>
+					<th class="imsi">IMSI</th>
+					<th class="mcc">MCC</th>
+					<th class="mnc">MNC</th>
+					<th class="neVersion">NE Version</th>
+					<th class="tac">TAC</th>
+					<th class="hier3">Hier3 class</th>
+					<th class="hier32">Hier32 class</th>
+					<th class="hier321">Hier321 class</th>
+					<th class="count">Count</th>
+					<th class="country">Country</th>
+					<th class="operator">Operator</th>
+					<th class="marketingName">Marketing Name</th>
+					<th class="manufacturer">Manufacturer</th>
+					<th class="accessCapability">Access Capability</th>
+					<th class="description">Description</th>
+					<th class="noCode">Query Result Table</th>
+						
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="record in records">
+					<td class="id">{{record[0]}}</td>
+					<td class="causeCode">{{record[1]}}</td>
+					<td class="cellId">{{record[2]}}</td>
+					<td class="date">{{record[3]}}</td>
+					<td class="duration">{{record[4]}}</td>
+					<td class="eventId">{{record[5]}}</td>
+					<td class="failureClass">{{record[6]}}</td>
+					<td class="imsi">{{record[7]}}</td>
+					<td class="mcc">{{record[8]}}</td>
+					<td class="mnc">{{record[9]}}</td>
+					<td class="neVersion">{{record[10]}}</td>
+					<td class="tac">{{record[11]}}</td>
+					<td class="hier3">{{record[12]}}</td>
+					<td class="hier32">{{record[13]}}</td>
+					<td class="hier321">{{record[14]}}</td>
+					<td class="count">{{record[15]}}</td>
+					<td class="country">{{record[16]}}</td>
+					<td class="operator">{{record[17]}}</td>
+					<td class="marketingName">{{record[18]}}</td>
+					<td class="manufacturer">{{record[19]}}</td>
+					<td class="accessCapability">{{record[20]}}</td>
+					<td class="description">{{record[21]}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<script>
+			function errorLoader($scope, $http) {
+				if(code == "c01"){
+					changecss('.imsi','display','table-cell');
+					changecss('.eventId','display','table-cell');
+					changecss('.causeCode','display','table-cell');
+
+				    window.top.name = "";
+				}else if(code == "c02"){
+					changecss('.date','display','table-cell');
+					changecss('.imsi','display','table-cell');
+					
+				    $http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+			        
+				    window.top.name = "";
+				}else if(code == "c03"){
+					changecss('.count','display','table-cell');
+					changecss('.tac','display','table-cell');
+					changecss('.marketingName','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c04"){
+					changecss('.count','display','table-cell');
+					changecss('.duration','display','table-cell');
+					changecss('.imsi','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c05"){
+					changecss('.count','display','table-cell');
+					changecss('.tac','display','table-cell');
+					changecss('.marketingName','display','table-cell');
+					changecss('.eventId','display','table-cell');
+					changecss('.causeCode','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c06"){
+					changecss('.count','display','table-cell');
+					changecss('.imsi','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c07"){
+					changecss('.count','display','table-cell');
+					changecss('.market','display','table-cell');
+					changecss('.operator','display','table-cell');
+					changecss('.cellId','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c08"){
+					changecss('.causeCode','display','table-cell');
+					changecss('.imsi','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c09"){
+					changecss('.count','display','table-cell');
+					changecss('.imsi','display','table-cell');
+					changecss('.date','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else if(code == "c10"){
+					changecss('.imsi','display','table-cell');
+					changecss('.failureClass','display','table-cell');
+					changecss('.description','display','table-cell');
+
+					
+					
+				    window.top.name = "";
+				}else{
+					changecss('.noCode','display','table-cell');
+				}
+			}
+		</script>
+		
+		<script>
+			var x = readCookie('usercookie')
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+		</script>
+	</body>
+</html>

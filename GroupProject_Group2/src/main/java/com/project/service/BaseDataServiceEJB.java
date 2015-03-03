@@ -1,14 +1,14 @@
 package com.project.service;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.inject.Inject;
-
 import com.project.dao.BaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.entities.FailureClass;
@@ -57,7 +57,8 @@ public class BaseDataServiceEJB implements BaseDataService {
 		return baseDataDAO.getUEs();
 	}
 
-	
-	
-
+	@Override
+	public List<Object[]> getImsiByDateRange(Date startDate, Date endDate) {
+		return baseDataDAO.getImsiByDateRange(startDate, endDate);
+	}
 }

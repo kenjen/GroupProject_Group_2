@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.project.service.EventCauseService;
 
-@Path("/base_data")
+@Path("/event_cause")
 public class EventCauseREST{
 	@EJB
 	private EventCauseService service;

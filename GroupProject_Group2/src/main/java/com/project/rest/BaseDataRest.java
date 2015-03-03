@@ -1,8 +1,14 @@
 package com.project.rest;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
@@ -88,6 +94,32 @@ public class BaseDataRest {
 			 }
 		 }
 		 return ec;
+	}
+	
+	@GET
+	@Path("/imsibetweendates/{dates}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
+		if(dates.length()==0){
+			/*List<String[]> emptyCollection = Collections.emptyList();
+			return emptyCollection;*/
+			return null;
+		}
+		String s = dates.substring(3, 22);
+		String e = dates.substring(22);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date start = sdf.parse(s);
+		Date end = sdf.parse(e);
+		
+		List<Object[]> list = baseDataService.getImsiByDateRange(start, end);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			Date d = new Date( ((Timestamp)obj[0]).getTime() );
+			String[] str = {"", "", "", d.toString(), "", "", "", Objects.toString(obj[1]), "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
 	}
 
 }
