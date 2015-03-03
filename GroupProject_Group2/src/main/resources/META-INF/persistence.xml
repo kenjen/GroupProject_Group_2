@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-             version="2.0">
-    <persistence-unit name="GroupProject_Group2">
-	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<persistence-unit name="GroupProject_Group2">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/mySQL</jta-data-source>
 		<class>com.project.entities.BaseData</class>
 		<class>com.project.entities.ErrorBaseData</class>
 		<class>com.project.entities.EventCause</class>
+		<class>com.project.entities.FailureClass</class>
+		<class>com.project.entities.MccMnc</class>
 		<class>com.project.entities.UE</class>
 		<class>com.project.entities.User</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.jdbc.batch_size" value="50" />
 		</properties>
 	</persistence-unit>
 </persistence>
