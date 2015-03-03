@@ -121,5 +121,29 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
+	
+	@GET
+	@Path("/countimsibetweendates/{dates}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getCountImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
+		if(dates.length()==0){
+			return null;
+		}
+		String s = dates.substring(3, 22);
+		String e = dates.substring(22);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date start = sdf.parse(s);
+		Date end = sdf.parse(e);
+		
+		List<Object[]> list = baseDataService.getImsiByDateRange(start, end);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			Date d = new Date( ((Timestamp)obj[0]).getTime() );
+			String[] str = {"", "", "", d.toString(), "", "", "", Objects.toString(obj[1]), "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
+	}
 
 }
