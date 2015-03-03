@@ -86,8 +86,8 @@ public class ExcelLookupDataRead implements ReadLookup {
 
 	private String inputFile;
 
-	@Inject
-	private ExcellValidator validator;
+	//@Inject
+	private ExcellValidator validator = new ExcellValidator();
 
 	private LookUpDataDAO lookUpDao;
 
@@ -109,6 +109,15 @@ public class ExcelLookupDataRead implements ReadLookup {
 
 	@Override
 	public void read() throws IOException {
+		eventCauseListTop = new ArrayList<EventCause>();
+		failureClassListTop = new ArrayList<FailureClass>();
+		ueListTop = new ArrayList<UE>();
+		mccMncListTop = new ArrayList<MccMnc>();
+		
+		eventCauseRecordTop = null;
+		failureClassRecordTop = null;
+		ueRecordTop = null;
+		mccMncRecordTop = null;
 
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));

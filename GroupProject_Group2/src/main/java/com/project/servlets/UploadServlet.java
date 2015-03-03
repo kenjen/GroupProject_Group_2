@@ -58,8 +58,9 @@ public class UploadServlet extends HttpServlet {
 	@EJB
 	ReadBase baseDataReader;
 	*/
-
+	//@Inject
 	ReadLookup lookupDataReader = new ExcelLookupDataRead();
+	//@Inject
 	ReadBase baseDataReader = new ExcelBaseDataRead();
 	
 	/**

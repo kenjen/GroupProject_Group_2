@@ -30,8 +30,8 @@ import com.project.entities.UE;
 public class ExcelBaseDataRead implements ReadBase {
 
 	private String inputFile;
-	@Inject
-	private ExcellValidator validator;
+	//@Inject
+	private ExcellValidator validator = new ExcellValidator();
 
 	private int sheetNumber;
 	private int invalidRowCount;
