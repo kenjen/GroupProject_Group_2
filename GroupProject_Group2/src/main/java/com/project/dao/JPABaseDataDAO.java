@@ -1,9 +1,6 @@
 package com.project.dao;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -116,6 +113,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return ueDAO.getAllUEs();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getImsiByDateRange(Date startDate, Date endDate) {
 		Query query = entityManager.createNamedQuery("BaseData.getImsiBetweenDates");
