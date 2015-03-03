@@ -116,4 +116,13 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 
+	@Override
+	public List<Object[]> getCountImsiBetweenDates(Date startDate, Date endDate) {
+		Query query = entityManager.createNamedQuery("BaseData.getCountImsiBetweenDates");
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		List<Object[]> data = query.getResultList();
+		return data;
+	}
+
 }
