@@ -7,7 +7,7 @@ import javax.ejb.Local;
 
 @Local
 public interface EventCauseService {
-	public Collection getFailuresIdsByIMSI(Long imsi);
+	public List<Object[]> getFailuresIdsByIMSI(Long imsi);
 
 	public Collection getFailuresIds();
 }

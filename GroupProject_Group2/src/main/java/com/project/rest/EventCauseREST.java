@@ -1,6 +1,12 @@
 package com.project.rest;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,9 +24,17 @@ public class EventCauseREST{
 	@GET
 	@Path("/{IMSI}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getEventCauseCombi(@PathParam("IMSI") Long imsi) {
-		Collection idsCombi = service.getFailuresIdsByIMSI(imsi);
-		return idsCombi;
+	public List<String[]> getEventCauseCombi(@PathParam("IMSI") String input) {
+		String imsiString = input.substring(3);
+		Long imsi = Long.parseLong(imsiString);
+		List<Object[]> list = service.getFailuresIdsByIMSI(imsi);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
 	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

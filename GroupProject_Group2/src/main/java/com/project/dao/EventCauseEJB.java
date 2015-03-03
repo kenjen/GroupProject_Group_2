@@ -17,7 +17,7 @@ public class EventCauseEJB implements EventCauseDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Collection getFailuresIdsByIMSI(Long imsi) {
+	public List<Object[]> getFailuresIdsByIMSI(Long imsi) {
 		Query query = em.createNamedQuery("findEventCauseByIMSI");
 		query.setParameter("IMSI", imsi);
 		return query.getResultList();
