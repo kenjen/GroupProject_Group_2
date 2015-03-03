@@ -19,16 +19,16 @@
 
 		<script type="text/javascript">
 			function refreshTable() {
-				var startStringA = document.getElementById('startDate').value;
-				var startString = document.getElementById('startDate').value;
-				var endStringA = document.getElementById('endDate').value;
-				var endStringB = document.getElementById('endDate').value;
-				if (startStringA.length == 16) {
-					startString = startStringA.concat(":00");
-				}
-				if (endStringA.length == 16) {
-					endStringB = endStringA.concat(":00");
-				}
+			var startStringA = document.getElementById('startDate').value;
+			var startString = document.getElementById('startDate').value;
+			var endStringA = document.getElementById('endDate').value;
+			var endStringB = document.getElementById('endDate').value;
+			if(startStringA.length == 16){
+				startString = startStringA.concat(":00");
+			}
+			if(endStringA.length == 16){
+				endStringB = endStringA.concat(":00");
+			}
 				var stringNoCode = startString.concat(endStringB);
 				var code = "c04";
 				window.parent.name = code.concat(stringNoCode);
