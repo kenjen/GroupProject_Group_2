@@ -135,12 +135,11 @@ public class BaseDataRest {
 		Date start = sdf.parse(s);
 		Date end = sdf.parse(e);
 		
-		List<Object[]> list = baseDataService.getImsiByDateRange(start, end);
+		List<Object[]> list = baseDataService.getCountImsiBetweenDates(start, end);
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
-			Date d = new Date( ((Timestamp)obj[0]).getTime() );
-			String[] str = {"", "", "", d.toString(), "", "", "", Objects.toString(obj[1]), "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			String[] str = {"", "", "", "", Objects.toString(obj[1]), "", "", Objects.toString(obj[2]), "", "", "", "", "", "", "", Objects.toString(obj[0]), "", "", "", "", "", ""};
 			aList.add(str);
 		}
 		return aList;
