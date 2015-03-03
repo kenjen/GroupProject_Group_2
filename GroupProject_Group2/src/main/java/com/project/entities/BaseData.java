@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 	
 	@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate"),
 	
-	@NamedQuery(name = "BaseData.getCountImsiBetweenDates", query = "select b.count(imsi), b.sum(duration), b.imsi from BaseData b where b.date Between :startDate AND :endDate")
+	@NamedQuery(name = "BaseData.getCountImsiBetweenDates", query = "select count(b.imsi), sum(b.duration), b.imsi from BaseData b where b.date Between :startDate AND :endDate group by b.imsi")
 })
 
 @Entity
