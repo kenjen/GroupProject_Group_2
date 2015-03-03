@@ -104,7 +104,11 @@
 					changecss('.duration','display','table-cell');
 					changecss('.imsi','display','table-cell');
 
-					
+					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+			        
 					
 				    window.top.name = "";
 				}else if(code == "c05"){
