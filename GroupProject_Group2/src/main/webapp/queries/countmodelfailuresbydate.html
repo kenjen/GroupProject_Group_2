@@ -29,15 +29,17 @@
 			}
 		
 			function refreshTable(){
-				var startString = document.getElementById('startDate').value;
-				var endStringA = document.getElementById('endDate').value;
-				var endStringB = document.getElementById('endDate').value;
-				if(endStringA.length == 16){
-					endStringB = endStringA.concat(":00");
+				var startDate = document.getElementById('startDate').value;
+				var endDateA = document.getElementById('endDate').value;
+				var endDateB = document.getElementById('endDate').value;
+				var tac = document.getElementById('phoneModelSelection').value;
+				if(endDateA.length == 16){
+					endDateB = endDateA.concat(":00");
 				}
-				var stringNoCode = startString.concat(endStringB);
+				var dates = startDate.concat(endDateB);
+				var datesTac = dates.concat(tac);
 				var code = "c03";
-				window.name = code.concat(stringNoCode);
+				window.parent.name = code.concat(datesTac);
 				var tableFrame = window.top.document.getElementById('tableFrame');
 				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
 			}

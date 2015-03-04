@@ -33,7 +33,7 @@ public class UeRest {
 	@GET
 	@Path("/callfailures/{input}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String[]> getCallFailuresDateRange(@PathParam("input") String input) throws ParseException{
+	public List<String[]> countCallFailuresDateRange(@PathParam("input") String input) throws ParseException{
 		if(input.length()<4){
 			/*List<String[]> emptyCollection = Collections.emptyList();
 			return emptyCollection;*/
