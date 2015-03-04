@@ -135,4 +135,14 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 
+	@Override
+	public List<Object[]> getCountTop10ImsiBetweenDates(Date startDate,
+			Date endDate) {
+		Query query = entityManager.createNamedQuery("BaseData.getCountTop10ImsiBetweenDates");
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		List<Object[]> data = query.getResultList();
+		return data;
+	}
+
 }
