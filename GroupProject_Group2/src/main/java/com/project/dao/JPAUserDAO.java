@@ -86,6 +86,15 @@ public class JPAUserDAO implements UserDAO{
 		em.remove(deletedUser);
 		
 	}
+
+
+	@Override
+	public User getUserById(User user) {
+		Query query = em.createQuery("from User u where u.id = :id");
+		query.setParameter("id", user.getId());
+		List<User> result = query.getResultList();
+		return result.get(0);
+	}
 	
 
 }

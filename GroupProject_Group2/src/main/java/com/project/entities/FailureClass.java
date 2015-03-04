@@ -3,7 +3,6 @@ package com.project.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,36 +14,41 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = "FailureClass.findByID", query = "select o from FailureClass o where o.id=:id"), })
 @Entity
 public class FailureClass implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 
-	private int failureClass;
+	private Integer failureClass;
 	private String description;
 
 	public FailureClass() {
 
 	}
 
-	public FailureClass(int failureClass, String desc) {
+	public FailureClass(Integer failureClass, String desc) {
 		super();
 		this.failureClass = failureClass;
 		this.description = desc;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getFailureClass() {
+	public Integer getFailureClass() {
 		return failureClass;
 	}
 
-	public void setFailureClass(int failureClass) {
+	public void setFailureClass(Integer failureClass) {
 		this.failureClass = failureClass;
 	}
 

@@ -41,17 +41,18 @@ public class BaseData implements Serializable {
 	@Transient
 	private Integer eventId;
 	
-	@Column(name = "failure_class")
+	@Transient
 	private Integer failureClass;
-	@Column(name = "tac")
-	// UE Type
+	
+	@Transient
 	private Integer tac;
-	@Column(name = "mnc")
-	// Market
+	
+	@Transient
 	private Integer mnc;
-	@Column(name = "mcc")
-	// Operator
+	
+	@Transient
 	private Integer mcc;
+	
 	@Column(name = "cell_id")
 	private Integer cellId;
 	@Column(name = "duration")

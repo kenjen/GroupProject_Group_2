@@ -1,9 +1,6 @@
 package com.project.dao;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +18,7 @@ import com.project.entities.UE;
 @Stateless
 @Local
 public class JPABaseDataDAO implements BaseDataDAO {
-	
+
 	@EJB
 	private UserEquipmentDAO ueDAO;
 	@EJB
@@ -29,8 +26,8 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	@EJB
 	private FailureClassDAOLocal failureClassDAO;
 
-
-	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
+	@PersistenceContext(unitName = "GroupProject_Group2")
+	EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	public Collection<BaseData> getAllBaseData() {
@@ -41,56 +38,59 @@ public class JPABaseDataDAO implements BaseDataDAO {
 
 	@SuppressWarnings("rawtypes")
 	public void addAllBaseData(Collection baseDataList) {
-		entityManager.createNativeQuery("truncate table base_data").executeUpdate();
-		entityManager.createNativeQuery("alter table base_data AUTO_INCREMENT = 1").executeUpdate();
+		int i = 0;
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
+			if (++i % 50 == 0) {
+				entityManager.flush();
+				entityManager.clear();
+			}
 		}
-		//addUEForeignKey();
-		//addFailureClassForeignKey();
 	}
-	
-	public Collection<UE> addUEForeignKey(){
-		
+
+	public Collection<UE> addUEForeignKey() {
+
 		List<BaseData> allBaseData = (List<BaseData>) this.getAllBaseData();
 		Long l = System.nanoTime();
 		Date date = new Date();
-		BaseData sampleBD = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST", l, "TEST", "TEST", "TEST");
+		BaseData sampleBD = new BaseData(date, 4, 4, 4, 4, 4, 4, 4, 4, "TEST",
+				l, "TEST", "TEST", "TEST");
 		allBaseData.add(sampleBD);
 		List<UE> allUE = (List<UE>) this.getUEs();
 		UE sampleUE = new UE(4, "test", "test", "test");
 		allUE.add(sampleUE);
 		for (BaseData o : allBaseData) {
-			for(UE ue : allUE){
-				if(o.getTac().intValue()==ue.getTac()){
+			for (UE ue : allUE) {
+				if (o.getTac().intValue() == ue.getTac()) {
 					o.setUeFK(ue);
-				}
-				else{
-					//NB - FOR TEST ONLY
-					o.setUeFK(allUE.get(allUE.size()-1));
+				} else {
+					// NB - FOR TEST ONLY
+					o.setUeFK(allUE.get(allUE.size() - 1));
 				}
 			}
 		}
 		return allUE;
 	}
-	
-	public Collection<FailureClass> addFailureClassForeignKey(){
+
+	public Collection<FailureClass> addFailureClassForeignKey() {
 		List<BaseData> allBaseData = (List<BaseData>) this.getAllBaseData();
-		 Long l = System.nanoTime();
-		 Date date = new Date();
-		BaseData bd = new BaseData(date, 3, 3, 3, 3, 3, 3, 3, 3, "TEST", l, "TEST", "TEST", "TEST");
+		Long l = System.nanoTime();
+		Date date = new Date();
+		BaseData bd = new BaseData(date, 3, 3, 3, 3, 3, 3, 3, 3, "TEST", l,
+				"TEST", "TEST", "TEST");
 		allBaseData.add(bd);
-		List<FailureClass> failureClasses = (List<FailureClass>) this.getFailureClasses();
+		List<FailureClass> failureClasses = (List<FailureClass>) this
+				.getFailureClasses();
 		FailureClass sampleFC = new FailureClass(3, "test");
 		failureClasses.add(sampleFC);
 		for (BaseData o : allBaseData) {
-			for(FailureClass fc : failureClasses){
-				if(o.getFailureClass().intValue()==fc.getFailureClass()){
+			for (FailureClass fc : failureClasses) {
+				if (o.getFailureClass().intValue() == fc.getFailureClass()) {
 					o.setFaliureClassFK(fc);
-				}
-				else{
-					//NB - FOR TEST ONLY
-					o.setFaliureClassFK(failureClasses.get(failureClasses.size()-1));
+				} else {
+					// NB - FOR TEST ONLY
+					o.setFaliureClassFK(failureClasses.get(failureClasses
+							.size() - 1));
 				}
 			}
 		}
@@ -107,6 +107,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return ueDAO.getAllUEs();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getImsiByDateRange(Date startDate, Date endDate) {
 		Query query = entityManager.createNamedQuery("BaseData.getImsiBetweenDates");

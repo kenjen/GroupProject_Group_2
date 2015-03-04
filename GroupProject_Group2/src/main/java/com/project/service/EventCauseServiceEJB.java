@@ -1,5 +1,6 @@
 package com.project.service;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -25,7 +26,7 @@ public class EventCauseServiceEJB implements EventCauseService {
 		return	dao.getFailures();
 	}
 	
-	public Collection getFailuresIdsByIMSI(Long imsi) {
+	public List<Object[]> getFailuresIdsByIMSI(Long imsi) {
 		return dao.getFailuresIdsByIMSI(imsi);
 	}
 

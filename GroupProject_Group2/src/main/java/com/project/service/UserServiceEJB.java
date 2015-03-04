@@ -11,7 +11,7 @@ import com.project.entities.User;
 
 @Stateless
 @Local
-public class UserServiceEJB implements UserServiceLocal{
+public class UserServiceEJB implements UserService{
 	
 	@EJB
 	private UserDAO dao;
@@ -37,6 +37,10 @@ public class UserServiceEJB implements UserServiceLocal{
 	public void deleteUser(User user) {
 		dao.deleteUser(user);
 		
+	}
+
+	public User getUserById(User user) {
+		return dao.getUserById(user);
 	}
 	
 

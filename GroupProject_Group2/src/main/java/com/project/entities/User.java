@@ -13,6 +13,11 @@ import javax.persistence.Table;
 @Table(name="user")
 public class User implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -40,6 +45,10 @@ public class User implements Serializable{
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
+	}
+	
+	public User(int id) {
+		this.id=id;
 	}
 
 	public Integer getId() {
