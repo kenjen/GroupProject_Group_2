@@ -29,5 +29,9 @@ public class EventCauseServiceEJB implements EventCauseService {
 	public List<Object[]> getFailuresIdsByIMSI(Long imsi) {
 		return dao.getFailuresIdsByIMSI(imsi);
 	}
+	
+	public List<Object[]> countUniqueEventCauseByModel(String phoneModel) {
+		return dao.countUniqueEventCauseByModel(phoneModel);
+	}
 
 }

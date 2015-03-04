@@ -36,6 +36,22 @@ public class EventCauseREST{
 		}
 		return aList;
 	}
+	
+	@GET
+	@Path("/{phoneModel}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> countUniqueEventCauseByModel(@PathParam("phoneModel")String input) {
+		String phoneModel = input.substring(3);
+		List<Object[]> list = service.countUniqueEventCauseByModel(phoneModel);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", Objects.toString(obj[2]), "", "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventCause() {
