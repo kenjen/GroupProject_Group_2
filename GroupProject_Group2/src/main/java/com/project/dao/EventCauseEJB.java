@@ -43,4 +43,11 @@ public class EventCauseEJB implements EventCauseDAO {
 		
 	}
 
+	@Override
+	public List<Object[]> getCauseCodeByIMSI(Long imsi) {
+		Query query = em.createNamedQuery("findUniqueCauseByIMSI");
+		query.setParameter("IMSI", imsi);
+		return query.getResultList();
+	}
+
 }

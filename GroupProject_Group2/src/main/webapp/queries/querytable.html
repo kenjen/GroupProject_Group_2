@@ -147,9 +147,13 @@
 				    window.top.name = "";
 				}else if(code == "c08"){
 					changecss('.causeCode','display','table-cell');
-					changecss('.imsi','display','table-cell');
+					//changecss('.imsi','display','table-cell');
 
-					
+					$http.get('/GroupProject_Group2/rest/event_cause/causeByImsi/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+			        
 					
 				    window.top.name = "";
 				}else if(code == "c09"){
