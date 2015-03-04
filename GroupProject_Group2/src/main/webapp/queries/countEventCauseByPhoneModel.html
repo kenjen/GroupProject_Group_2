@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		
+	</head>
+	<body ng-controller="phoneModelLoader">
+		<form id='form' style="text-align:center">
+			Choose Phone Model:
+			<select id="phoneModelSelection">
+				<option ng-repeat="model in models" value={{model.tac}}>{{model.tac}}  -  {{model.marketingName}}</option>
+			</select>
+			<br><br><br>
+			<input type='button' onClick='refreshTable();' value="Refresh" />
+		</form>
+		
+		<script type="text/javascript">
+
+			function phoneModelLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/ue/getAllModels').
+				success(function(data) {
+					$scope.models = data;
+				});
+			}
+		
+			function refreshTable(){
+				var phoneModel = document.getElementById('phoneModelSelection').value;
+				var code = "c05";
+				window.name = code.concat(phoneModel);
+				var tableFrame = window.top.document.getElementById('tableFrame');
+				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+			}
+		</script>
+	</body>
+</html>
