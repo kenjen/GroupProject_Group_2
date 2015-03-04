@@ -14,10 +14,10 @@ import com.project.entities.UE;
 import com.project.reader.Validator;
 
 public class ExcellValidator implements Validator {
-	
-	private static org.apache.log4j.Logger logger =
-            org.apache.log4j.Logger.getLogger(ExcellValidator.class);
-	
+
+	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger
+			.getLogger(ExcellValidator.class);
+
 	/*
 	 * VALID DATE FORMAT
 	 */
@@ -44,22 +44,23 @@ public class ExcellValidator implements Validator {
 		}
 		if (baseData.getDate().getTime() < 0)
 			return false; // before the Epoch
-//		if (baseData.getEventId() < 0 || baseData.getCauseCode() < 0)
-//			return false;
-		logger.info("BaseData object " + baseData.getId() + "EventCauseFK: " + baseData.getEventCauseFK());
+			// if (baseData.getEventId() < 0 || baseData.getCauseCode() < 0)
+			// return false;
+		logger.info("BaseData object " + baseData.getId() + "EventCauseFK: "
+				+ baseData.getEventCauseFK());
 		if (baseData.getEventCauseFK().getId().equals(-1))
 			return false;
-//		if (baseData.getFailureClass() < 0)
-//			return false;
+		// if (baseData.getFailureClass() < 0)
+		// return false;
 		if (baseData.getFaliureClassFK().getId().equals(-1))
 			return false;
-//		if (baseData.getTac() < 0)
-//			return false;
-		if(baseData.getUeFK().equals(-1))
+		// if (baseData.getTac() < 0)
+		// return false;
+		if (baseData.getUeFK().getId().equals(-1))
 			return false;
-//		if (baseData.getMcc() < 0 || baseData.getMnc() < 0)
-//			return false;
-		if (baseData.getMccMncFK().equals(-1))
+		// if (baseData.getMcc() < 0 || baseData.getMnc() < 0)
+		// return false;
+		if (baseData.getMccMncFK().getId().equals(-1))
 			return false;
 		if (baseData.getCellId() < 0)
 			return false;
