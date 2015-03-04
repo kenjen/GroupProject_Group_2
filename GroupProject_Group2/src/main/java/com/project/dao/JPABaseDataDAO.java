@@ -141,7 +141,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		Query query = entityManager.createNamedQuery("BaseData.getCountTop10ImsiBetweenDates");
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
-		List<Object[]> data = query.getResultList();
+		List<Object[]> data = query.setMaxResults(10).getResultList();
 		return data;
 	}
 
