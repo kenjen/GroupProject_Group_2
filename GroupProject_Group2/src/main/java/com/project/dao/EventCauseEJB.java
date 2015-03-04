@@ -35,7 +35,7 @@ public class EventCauseEJB implements EventCauseDAO {
 		return data;
 	}
 
-	@Override
+	
 	public List<Object[]> countUniqueEventCauseByModel(String phoneModel) {
 		Query query = em.createNamedQuery("countUniqueEventCauseByModel");
 		query.setParameter("phoneModel", phoneModel);

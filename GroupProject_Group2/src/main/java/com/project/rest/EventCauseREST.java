@@ -22,7 +22,7 @@ public class EventCauseREST{
 	private EventCauseService service;
 
 	@GET
-	@Path("/{IMSI}")
+	@Path("/eventCauseByImsi/{IMSI}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String[]> getEventCauseCombi(@PathParam("IMSI") String input) {
 		String imsiString = input.substring(3);
@@ -38,15 +38,15 @@ public class EventCauseREST{
 	}
 	
 	@GET
-	@Path("/{phoneModel}")
+	@Path("/countEventCauseByModel/{phoneModel}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String[]> countUniqueEventCauseByModel(@PathParam("phoneModel")String input) {
-		String phoneModel = input.substring(3);
+	public List<String[]> countUniqueEventCauseByModel(@PathParam("phoneModel") String model) {
+		String phoneModel = model.substring(3);
 		List<Object[]> list = service.countUniqueEventCauseByModel(phoneModel);
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
-			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", Objects.toString(obj[2]), "", "", "", "", "", "", ""};
+			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", Objects.toString(obj[2]), "", "", "", "", "", ""};
 			aList.add(str);
 		}
 		return aList;
