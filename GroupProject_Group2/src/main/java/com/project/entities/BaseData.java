@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 	
 	@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY count(b.imsi) DESC"),
 	
-	@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(*), m.mcc, m.mnc, b.cellId from MccMnc m BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK GROUP BY m.mcc, m.mnc, b.cellId ORDER BY count(*) DESC")
+	@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(*), m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK GROUP BY m.country, m.operator, b.cellId ORDER BY count(*) DESC")
 
 })
 
