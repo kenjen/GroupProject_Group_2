@@ -13,7 +13,7 @@ public interface EventCauseDAO {
 	List<Object[]> countUniqueEventCauseByModel(String phoneModel);
 	List<Object[]> getCauseCodeByIMSI(Long imsi);
 	Collection getFailures();
-
+	List<Object[]> getImsiByCauseClass(int failureClass);
 	Collection getAllEventCause();
 	
 }

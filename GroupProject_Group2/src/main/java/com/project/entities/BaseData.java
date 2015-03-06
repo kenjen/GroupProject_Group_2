@@ -19,8 +19,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({ 
 	@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
 	
-	@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate")
-})
+	@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate"),
+	
+	
+
+	@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.eventId, e.causeCode from EventCause e, BaseData b "
+			+ " where b.imsi = :imsi and e.id = b.eventCauseFK group by e.causeCode")
+	
+	})
 
 @Entity
 @Table(name = "base_data")
@@ -74,7 +80,7 @@ public class BaseData implements Serializable {
 	
 	@JoinColumn(name = "failureclass", referencedColumnName = "id", nullable = true)
 	@ManyToOne
-	private FailureClass faliureClassFK;
+	private FailureClass failureClassFK;
 
 	@JoinColumn(name = "event_cause", referencedColumnName = "id", nullable = true)
 	@ManyToOne
@@ -233,11 +239,11 @@ public class BaseData implements Serializable {
 	}
 
 	public FailureClass getFaliureClassFK() {
-		return faliureClassFK;
+		return failureClassFK;
 	}
 
 	public void setFaliureClassFK(FailureClass faliureClassFK) {
-		this.faliureClassFK = faliureClassFK;
+		this.failureClassFK = faliureClassFK;
 	}
 
 	public EventCause getEventCauseFK() {

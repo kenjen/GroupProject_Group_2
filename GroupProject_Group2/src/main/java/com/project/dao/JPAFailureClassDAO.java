@@ -24,5 +24,5 @@ public class JPAFailureClassDAO implements FailureClassDAOLocal{
 			return result;
 	}
 
-
+	
 }

@@ -117,4 +117,12 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 
+	@Override
+	public List<Object[]> getfindUniqueCauseByIMSI(long imsi) {
+		Query query = entityManager.createNamedQuery("BaseData.getfindUniqueCauseByIMSI");
+		query.setParameter("imsi", imsi);
+		List<Object[]> data = query.getResultList();
+		return data;
+	}
+
 }

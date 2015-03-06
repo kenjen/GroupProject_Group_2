@@ -5,27 +5,27 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		
 	</head>
-	<body>
+<!--	<body>
 		<form id='form' style="text-align:center">
 	
 		Enter Phone Model:<br>
 		<input type="text" id = "phone" name="phone"/>
 		<br><br>
 		<input type="button" onClick='refreshTable();' value="Refresh" />
-		</form>
+		</form>-->
 	
-	<script type="text/javascript">
-		//<body ng-controller="phoneModelLoader">
-		//<form id='form' style="text-align:center">
-		//	Choose Phone Model:
-		//	<select id="phoneModelSelection">
-		//		<option id="phone" ng-repeat="model in models" value={{model.tac}}>{{model.marketingName}}</option>
-		//	</select>
-			
-		//	<br><br><br>
-		//	<input type='button' onClick='refreshTable();' value="Refresh" />
-		//</form>
 
+		<body ng-controller="phoneModelLoader">
+		<form id='form' style="text-align:center">
+			Choose Phone Model:
+			<select id="phoneModelSelection">
+				<option id="phone" ng-repeat="model in models" value={{model.marketingName}}>{{model.marketingName}}</option>
+			</select>
+			
+			<br><br><br>
+			<input type='button' onClick='refreshTable();' value="Refresh" />
+		</form>
+			<script type="text/javascript">
 			function phoneModelLoader($scope, $http) {
 				$http.get('/GroupProject_Group2/rest/ue/getAllModels').
 				success(function(data) {

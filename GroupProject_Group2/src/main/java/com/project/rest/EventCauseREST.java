@@ -1,6 +1,7 @@
 package com.project.rest;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -62,12 +63,27 @@ public class EventCauseREST{
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
-			String[] str = {"", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			String[] str = {"", Objects.toString(obj[1]), "", "", "","", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 			aList.add(str);
 		}
 		return aList;
 	}
 	
+	@GET
+	@Path("/imsiByCauseClass/{failureClass}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getImsiByCauseClass(@PathParam("failureClass") String input) throws ParseException{
+		String failureClassString = input.substring(3);
+		int failureClass = Integer.parseInt(failureClassString);
+		List<Object[]> list = service.getImsiByCauseClass(failureClass);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {"", "", "", "", "","", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
+	}
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection getEventCause() {

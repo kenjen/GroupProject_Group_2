@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+
 import com.project.dao.BaseDataDAO;
 import com.project.entities.BaseData;
 import com.project.entities.FailureClass;
@@ -60,5 +61,10 @@ public class BaseDataServiceEJB implements BaseDataService {
 	@Override
 	public List<Object[]> getImsiByDateRange(Date startDate, Date endDate) {
 		return baseDataDAO.getImsiByDateRange(startDate, endDate);
+	}
+
+	@Override
+	public List<Object[]> getfindUniqueCauseByIMSI(long imsi) {
+		return baseDataDAO.getfindUniqueCauseByIMSI(imsi);
 	}
 }

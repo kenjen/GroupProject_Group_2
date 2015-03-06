@@ -22,4 +22,5 @@ public interface BaseDataService {
 	Collection<FailureClass> getFailureClasses();
 	Collection<UE> getUEs();
 	List<Object[]> getImsiByDateRange(Date startDate, Date endDate);
+	List<Object[]> getfindUniqueCauseByIMSI(long imsi);
 }
