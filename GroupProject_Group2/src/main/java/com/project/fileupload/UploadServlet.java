@@ -1,4 +1,4 @@
-package com.project.servlets;
+package com.project.fileupload;
 
 import java.io.File;
 import java.io.IOException;
