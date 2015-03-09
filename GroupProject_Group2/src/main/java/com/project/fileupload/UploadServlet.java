@@ -150,7 +150,7 @@ public class UploadServlet extends HttpServlet {
 		return "";
 	}
 	
-	private String getFileExtension(String fileName){
+	static String getFileExtension(String fileName){
 		int location = 0;
 		for(int i=fileName.length()-1; i>0; i--){
 			if(fileName.charAt(i)=='.'){

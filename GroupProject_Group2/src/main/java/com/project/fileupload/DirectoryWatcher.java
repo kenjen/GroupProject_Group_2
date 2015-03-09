@@ -1,5 +1,6 @@
 package com.project.fileupload;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,12 +51,21 @@ public class DirectoryWatcher {
 				List<WatchEvent<?>> events = watchKey.pollEvents();
 				for (WatchEvent event : events) {
 					if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-						Path filePath = (Path) event.context();
-						Path fileNameP = filePath.getFileName();
+						Path fullFilePath = (Path) event.context();
+						
+						Path fileNameP = fullFilePath.getFileName();
 						String fileNameS = fileNameP.toFile().toString();
-						Path filePathP = filePath.toAbsolutePath();
+						//String fileName = fileNameS.replaceAll(" ", "_").toLowerCase();
+						
+						Path filePathP = fullFilePath.toAbsolutePath();
 						String filePathS = filePathP.toFile().toString();
+						//String filePath = filePathS.replaceAll(" ", "_").toLowerCase();
+						
 						FileInfo file = new FileInfo(fileNameS, filePathS);
+						
+						File oldFile = new File("/upload"+file.getFilepath());
+						File newFile = new File("/upload"+file.getFilepath().replaceAll(" ", "_").toLowerCase());
+						log.info("result of renaming " + oldFile.getAbsolutePath() + "  to  " + newFile.getAbsolutePath() + "  was  " + oldFile.renameTo(newFile));
 						
 						dirWatchTransaction.addFilePath(file);
 						
