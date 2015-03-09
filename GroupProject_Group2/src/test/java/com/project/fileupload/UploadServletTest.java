@@ -55,7 +55,7 @@ public class UploadServletTest extends Mockito{
 		when(context.getRealPath("")).thenReturn("C:" + File.separator + "file" + File.separator + "path");
 		when(request.getPart("file")).thenReturn(part);
 		when(part.getHeader("content-disposition")).thenReturn("some useless data ; filename=:excell.xls");
-		when(dao.addUploadedFilePath(anyString(), anyString())).thenReturn(true);
+		when(dao.addUploadedFilePath(anyString(), anyString(), anyBoolean())).thenReturn(true);
 		when(request.getRequestDispatcher("/message.jsp")).thenReturn(dispatcher);
 		
 		servlet.doPost(request, response);
@@ -64,7 +64,7 @@ public class UploadServletTest extends Mockito{
 		verify(part, times(0)).write(anyString());
 		verify(request, times(0)).setAttribute("message", "Upload to server completed successfully!");
 		verify(request, times(1)).setAttribute("message", "Upload to server failed<br>Must end in .xls");
-		verify(dao, times(0)).addUploadedFilePath(anyString(), anyString());
+		verify(dao, times(0)).addUploadedFilePath(anyString(), anyString(), anyBoolean());
 	}
 	
 	@Test

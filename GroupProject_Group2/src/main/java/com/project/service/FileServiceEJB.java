@@ -22,5 +22,9 @@ public class FileServiceEJB implements FileService{
 	public Collection<FileInfo> getAllUploadedFilePaths() {
 		return dao.getAllUploadedFilePaths();
 	}
-	
+
+	@Override
+	public boolean addUploadedFilePath(String name, String path, boolean flush) {
+		return dao.addUploadedFilePath(name, path, flush);
+	}
 }

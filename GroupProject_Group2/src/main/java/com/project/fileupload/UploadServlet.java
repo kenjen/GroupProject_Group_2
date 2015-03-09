@@ -98,7 +98,7 @@ public class UploadServlet extends HttpServlet {
 				finalFileName = t + "_" + timeInMili + fileExtension;
 				finalFilePath = savePath + File.separator + finalFileName;
 				part.write(finalFilePath);
-				fileDao.addUploadedFilePath(finalFileName, finalFilePath);
+				fileDao.addUploadedFilePath(finalFileName, finalFilePath, false);
 			}
 		//}
 		
