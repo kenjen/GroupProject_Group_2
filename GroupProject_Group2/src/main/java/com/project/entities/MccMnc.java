@@ -38,6 +38,10 @@ public class MccMnc implements Serializable {
 	}
 
 	public MccMnc(Integer mcc, Integer mnc, String country, String operator) {
+		this.mcc = mcc;
+		this.mnc = mnc;
+		this.country = country;
+		this.operator = operator;
 	}
 
 	public Integer getId() {
