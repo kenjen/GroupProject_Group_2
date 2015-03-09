@@ -56,7 +56,6 @@ public class DirectoryWatcher {
 						Path filePathP = pathNewFile.toAbsolutePath();
 						String filePathS = filePathP.toFile().toString();
 						FileInfo file = new FileInfo(fileNameS, filePathS);
-						log.info("file created: filename = " + fileNameS + "    filepath = " + filePathS);
 						
 						dirWatchTransaction.addFilePath(file);
 						
