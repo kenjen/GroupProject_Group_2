@@ -10,4 +10,6 @@ public interface FileDAO {
 	
 	boolean addUploadedFilePath(String name, String path, boolean flush);
 
+	void removeFileFromDatabase(String fileName);
+
 }

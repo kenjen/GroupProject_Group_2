@@ -50,10 +50,10 @@ public class DirectoryWatcher {
 				List<WatchEvent<?>> events = watchKey.pollEvents();
 				for (WatchEvent event : events) {
 					if (event.kind() == StandardWatchEventKinds.ENTRY_CREATE) {
-						Path pathNewFile = (Path) event.context();
-						Path fileNameP = pathNewFile.getFileName();
+						Path filePath = (Path) event.context();
+						Path fileNameP = filePath.getFileName();
 						String fileNameS = fileNameP.toFile().toString();
-						Path filePathP = pathNewFile.toAbsolutePath();
+						Path filePathP = filePath.toAbsolutePath();
 						String filePathS = filePathP.toFile().toString();
 						FileInfo file = new FileInfo(fileNameS, filePathS);
 						
@@ -62,6 +62,9 @@ public class DirectoryWatcher {
 						log.info("file persisted: filename = " + file.getFilename() + "    filepath = " + file.getFilepath());
 					}else if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
 						Path filePath = (Path) event.context();
+						Path fileNameP = filePath.getFileName();
+						String fileNameS = fileNameP.toFile().toString();
+						dirWatchTransaction.removeFileFromDatabase(fileNameS);
 						log.info("file deleted: " + filePath);
 					}else if (event.kind() == StandardWatchEventKinds.ENTRY_MODIFY) {
 						Path filePath = (Path) event.context();

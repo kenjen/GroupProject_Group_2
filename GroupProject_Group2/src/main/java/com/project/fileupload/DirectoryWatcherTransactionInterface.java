@@ -6,4 +6,6 @@ public interface DirectoryWatcherTransactionInterface {
 
 	void addFilePath(FileInfo file);
 
+	void removeFileFromDatabase(String fileNameS);
+
 }

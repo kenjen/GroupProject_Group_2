@@ -27,4 +27,9 @@ public class FileServiceEJB implements FileService{
 	public boolean addUploadedFilePath(String name, String path, boolean flush) {
 		return dao.addUploadedFilePath(name, path, flush);
 	}
+
+	@Override
+	public void removeFileFromDatabase(String fileName) {
+		dao.removeFileFromDatabase(fileName);
+	}
 }

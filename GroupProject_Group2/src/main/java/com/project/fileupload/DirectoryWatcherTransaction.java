@@ -17,7 +17,13 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void addFilePath(FileInfo file){
-		fileService.addUploadedFilePath(file.getFilename(), "/upload/" + file.getFilepath(), true);
+		fileService.addUploadedFilePath(file.getFilename(), "/upload" + file.getFilepath(), true);
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void removeFileFromDatabase(String fileName) {
+		fileService.removeFileFromDatabase(fileName);
 	}
 
 }

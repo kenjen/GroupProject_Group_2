@@ -35,12 +35,14 @@ public class JPAFileDAO implements FileDAO{
 		FileInfo f = new FileInfo(name, path);
 		em.persist(f);
 		log.info("File Persisted: filepath = " + f.getFilepath());
-		if(flush){
-			/*em.flush();
-			em.clear();*/
-			//em.getTransaction().commit();
-			//log.info("Transaction flushed");
-		}
 		return true;
+	}
+
+	@Override
+	public void removeFileFromDatabase(String fileName) {
+		FileInfo f = new FileInfo(fileName, "");
+		Query query = em.createQuery("delete from FileInfo f where f.filename = :fileName");
+		query.setParameter("fileName", fileName);
+		query.executeUpdate();
 	}
 }
