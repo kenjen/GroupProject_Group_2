@@ -14,7 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({
 		@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
@@ -94,7 +93,7 @@ public class BaseData implements Serializable {
 	@JoinColumn(name = "ue", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private UE ueFK;
-
+	
 	@JoinColumn(name = "mcc_mnc", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private MccMnc mccMncFK;
