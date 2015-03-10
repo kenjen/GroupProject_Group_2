@@ -72,4 +72,10 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public List<Object[]> getCountSingleImsiBetweenDates(Date startDate, Date endDate, long imsi) {
 		return baseDataDAO.getCountSingleImsiBetweenDates(startDate, endDate, imsi);
 	}
+
+	@Override
+	public List<Object[]> getCountTop10ImsiBetweenDates(Date startDate,
+			Date endDate) {
+		return baseDataDAO.getCountTop10ImsiBetweenDates(startDate, endDate);
+	}
 }

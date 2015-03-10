@@ -25,9 +25,8 @@
 				$http.get('/GroupProject_Group2/rest/ue/getAllModels').
 				success(function(data) {
 					$scope.models = data;
-				});
-			}
-		
+			});
+				
 			function refreshTable(){
 				var startDate = document.getElementById('startDate').value;
 				var endDateA = document.getElementById('endDate').value;

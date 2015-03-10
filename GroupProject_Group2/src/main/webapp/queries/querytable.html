@@ -164,10 +164,12 @@
 				}else if(code == "c09"){
 					changecss('.count','display','table-cell');
 					changecss('.imsi','display','table-cell');
-					changecss('.date','display','table-cell');
 
-					
-					
+					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+								
 				    window.top.name = "";
 				}else if(code == "c10"){
 					changecss('.imsi','display','table-cell');
