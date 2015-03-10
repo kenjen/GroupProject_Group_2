@@ -84,4 +84,8 @@ public class BaseDataServiceEJB implements BaseDataService {
 			Date endDate) {
 		return baseDataDAO.getCountTop10ComboBetweenDates(startDate, endDate);
 	}
+	@Override
+	public List<Object[]> getfindUniqueCauseByIMSI(long imsi) {
+		return baseDataDAO.getfindUniqueCauseByIMSI(imsi);
+	}
 }

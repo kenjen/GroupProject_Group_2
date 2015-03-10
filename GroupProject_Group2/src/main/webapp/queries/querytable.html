@@ -130,9 +130,7 @@
 			            $scope.records = data;
 			        });
 			        
-			        
 				    window.top.name = "";
-				    
 				}else if(code == "c06"){
 					changecss('.count','display','table-cell');
 					changecss('.imsi','display','table-cell');
@@ -150,21 +148,31 @@
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
 					});
-
 					window.top.name = "";
-				} else if (code == "c08") {
-					changecss('.causeCode', 'display', 'table-cell');
-					changecss('.imsi', 'display', 'table-cell');
-
-					window.top.name = "";
-				} else if (code == "c09") {
-					changecss('.count', 'display', 'table-cell');
-					changecss('.imsi', 'display', 'table-cell');
-
+					
+				}else if(code == "c08"){
+					changecss('.causeCode','display','table-cell');
+					
+					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+					
+				    window.top.name = "";
+				}else if(code == "c09"){
+					changecss('.count','display','table-cell');
+					changecss('.imsi','display','table-cell');
+					changecss('.date','display','table-cell');
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 					});
-
+					
+					
+				    window.top.name = "";
+				}else if(code == "c10"){
+					changecss('.imsi','display','table-cell');
+					//changecss('.failureClass','display','table-cell');
+					//changecss('.description','display','table-cell');
 					window.top.name = "";
 				} else if (code == "c10") {
 					changecss('.imsi', 'display', 'table-cell');
@@ -174,6 +182,14 @@
 					window.top.name = "";
 				} else {
 					changecss('.noCode', 'display', 'table-cell');
+					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+			        					
+				    window.top.name = "";
+				}else{
+					changecss('.noCode','display','table-cell');
 				}
 			}
 		</script>

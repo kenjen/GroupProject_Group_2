@@ -16,21 +16,23 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlTransient;
 
-@NamedQueries({ 
-	@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
-	
-	@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate"),
-	
-	@NamedQuery(name = "BaseData.getCountImsiBetweenDates", query = "select count(b.imsi), sum(b.duration), b.imsi from BaseData b where b.date Between :startDate AND :endDate group by b.imsi"),
-	
-	@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate AND b.imsi = :imsi"),
-	
-	@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY count(b.imsi) DESC"),
-	
-	@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(*), m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK GROUP BY m.country, m.operator, b.cellId ORDER BY count(*) DESC")
+@NamedQueries({
+		@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
+
+		@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate"),
+
+		@NamedQuery(name = "BaseData.getCountImsiBetweenDates", query = "select count(b.imsi), sum(b.duration), b.imsi from BaseData b where b.date Between :startDate AND :endDate group by b.imsi"),
+
+		@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate AND b.imsi = :imsi"),
+
+		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY count(b.imsi) DESC"),
+
+		@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(*), m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK GROUP BY m.country, m.operator, b.cellId ORDER BY count(*) DESC"),
+
+		@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.eventId, e.causeCode from EventCause e, BaseData b "
+				+ " where b.imsi = :imsi and e.id = b.eventCauseFK group by e.causeCode")
 
 })
-
 @Entity
 @Table(name = "base_data")
 public class BaseData implements Serializable {
@@ -46,30 +48,30 @@ public class BaseData implements Serializable {
 
 	@Column(name = "date")
 	private Date date;
-	
+
 	@Transient
 	private Integer eventId;
-	
+
 	@Transient
 	private Integer failureClass;
-	
+
 	@Transient
 	private Integer tac;
-	
+
 	@Transient
 	private Integer mnc;
-	
+
 	@Transient
 	private Integer mcc;
-	
+
 	@Column(name = "cell_id")
 	private Integer cellId;
 	@Column(name = "duration")
 	private Integer duration;
-	
+
 	@Transient
 	private Integer causeCode;
-	
+
 	@Column(name = "ne_version")
 	private String neVersion;
 	@Column(name = "imsi")
@@ -80,10 +82,10 @@ public class BaseData implements Serializable {
 	private String hier32Id;
 	@Column(name = "hier321_id")
 	private String hier321Id;
-	
+
 	@JoinColumn(name = "failureclass", referencedColumnName = "id", nullable = true)
 	@ManyToOne
-	private FailureClass faliureClassFK;
+	private FailureClass failureClassFK;
 
 	@JoinColumn(name = "event_cause", referencedColumnName = "id", nullable = true)
 	@ManyToOne
@@ -96,7 +98,6 @@ public class BaseData implements Serializable {
 	@JoinColumn(name = "mcc_mnc", referencedColumnName = "id", nullable = true)
 	@ManyToOne
 	private MccMnc mccMncFK;
-	
 
 	public BaseData(Date date, Integer eventId, Integer failureClass,
 			Integer tac, Integer mnc, Integer mcc, Integer cellId,
@@ -242,11 +243,11 @@ public class BaseData implements Serializable {
 	}
 
 	public FailureClass getFaliureClassFK() {
-		return faliureClassFK;
+		return failureClassFK;
 	}
 
 	public void setFaliureClassFK(FailureClass faliureClassFK) {
-		this.faliureClassFK = faliureClassFK;
+		this.failureClassFK = faliureClassFK;
 	}
 
 	public EventCause getEventCauseFK() {

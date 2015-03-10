@@ -11,7 +11,9 @@ import javax.persistence.NamedQuery;
 
 @NamedQueries({
 		@NamedQuery(name = "FailureClass.findAll", query = "select o from FailureClass o"),
-		@NamedQuery(name = "FailureClass.findByID", query = "select o from FailureClass o where o.id=:id"), })
+		@NamedQuery(name = "FailureClass.findByID", query = "select o from FailureClass o where o.id=:id"),
+		
+})
 @Entity
 public class FailureClass implements Serializable{
 	/**

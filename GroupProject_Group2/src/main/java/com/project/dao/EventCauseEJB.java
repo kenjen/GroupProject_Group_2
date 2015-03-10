@@ -34,6 +34,13 @@ public class EventCauseEJB implements EventCauseDAO {
 		List<EventCause> data = query.getResultList();
 		return data;
 	}
+	@Override
+	public List<Object[]> getImsiByCauseClass(int failureClass) {
+		Query query = em.createNamedQuery("FailureClass.getImsiByCauseClass");
+		query.setParameter("failureClass", failureClass);
+		return query.getResultList();
+	}
+
 
 	
 	public List<Object[]> countUniqueEventCauseByModel(String phoneModel) {
@@ -41,6 +48,13 @@ public class EventCauseEJB implements EventCauseDAO {
 		query.setParameter("phoneModel", phoneModel);
 		return query.getResultList();
 		
+	}
+
+	@Override
+	public List<Object[]> getCauseCodeByIMSI(Long imsi) {
+		Query query = em.createNamedQuery("findUniqueCauseByIMSI");
+		query.setParameter("IMSI", imsi);
+		return query.getResultList();
 	}
 
 }

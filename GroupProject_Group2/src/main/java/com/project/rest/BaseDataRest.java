@@ -215,5 +215,20 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
+	
+	@Path("/uniqueCauseByImsi/{IMSI}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getCauseCodeByIMSI(@PathParam("IMSI") String input) {
+		String imsiString = input.substring(3);
+		Long imsi = Long.parseLong(imsiString);
+		List<Object[]> list = baseDataService.getfindUniqueCauseByIMSI(imsi);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {"", Objects.toString(obj[1]), "", "", "","", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
+	}
 
 }

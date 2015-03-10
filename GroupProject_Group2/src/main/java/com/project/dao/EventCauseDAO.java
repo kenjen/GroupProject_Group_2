@@ -11,9 +11,9 @@ import com.project.entities.EventCause;
 public interface EventCauseDAO {
 	List<Object[]> getFailuresIdsByIMSI(Long imsi);
 	List<Object[]> countUniqueEventCauseByModel(String phoneModel);
-
+	List<Object[]> getCauseCodeByIMSI(Long imsi);
 	Collection getFailures();
-
+	List<Object[]> getImsiByCauseClass(int failureClass);
 	Collection getAllEventCause();
 	
 }
