@@ -9,6 +9,7 @@ import com.project.entities.EventCause;
 
 
 public interface EventCauseDAO {
+	// methods for queries
 	List<Object[]> getFailuresIdsByIMSI(Long imsi);
 	List<Object[]> countUniqueEventCauseByModel(String phoneModel);
 	List<Object[]> getCauseCodeByIMSI(Long imsi);

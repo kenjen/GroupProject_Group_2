@@ -21,7 +21,13 @@ import com.project.service.EventCauseService;
 public class EventCauseREST{
 	@EJB
 	private EventCauseService service;
-
+	/*
+	 * take in parameter from user,
+	 * loose the first 3 characters which are the reference to the query selection
+	 * store results passed from the dao through service
+	 * assign each object returned to its position in the array as defined in the queryTable.html
+	 */
+	
 	@GET
 	@Path("/eventCauseByImsi/{IMSI}")
 	@Produces(MediaType.APPLICATION_JSON)
