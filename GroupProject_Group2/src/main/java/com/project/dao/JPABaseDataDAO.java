@@ -146,4 +146,14 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 
+	@Override
+	public List<Object[]> getCountTop10ComboBetweenDates(Date startDate,
+			Date endDate) {
+		Query query = entityManager.createNamedQuery("BaseData.getCountTop10ComboBetweenDates");
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		List<Object[]> data = query.setMaxResults(10).getResultList();
+		return data;
+	}
+
 }

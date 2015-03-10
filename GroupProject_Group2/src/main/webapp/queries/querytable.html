@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html ng-app>
 	<head>
-	
+
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://www.shawnolson.net/scripts/public_smo_scripts.js"></script>
-		
+
 		<title>Query Viewer</title>
 		<script type="text/javascript" id="me">
 			var name = window.top.name;
 			var code = name.substring(0, 3);
 		</script>
 		<link href="/GroupProject_Group2/media/css/query-table.css" rel="stylesheet" type="text/css">
-		
+
 	</head>
 	<body ng-controller="errorLoader">
 		<table id="errorViewer" class="myTable">
@@ -42,7 +42,7 @@
 					<th class="accessCapability">Access Capability</th>
 					<th class="description">Description</th>
 					<th class="noCode">Query Result Table</th>
-						
+
 				</tr>
 			</thead>
 			<tbody>
@@ -72,10 +72,11 @@
 				</tr>
 			</tbody>
 		</table>
-		
+
 		<script>
 			function errorLoader($scope, $http) {
 				if(code == "c01"){
+					changecss('.imsi', 'display', 'table-cell');
 					changecss('.eventId','display','table-cell');
 					changecss('.causeCode','display','table-cell');
 					
@@ -99,7 +100,7 @@
 					changecss('.count','display','table-cell');
 					changecss('.tac','display','table-cell');
 					changecss('.marketingName','display','table-cell');
-
+					
 					$http.get('/GroupProject_Group2/rest/ue/callfailures/' + name).
 			        success(function(data) {
 			            $scope.records = data;
@@ -110,13 +111,12 @@
 					changecss('.count','display','table-cell');
 					changecss('.duration','display','table-cell');
 					changecss('.imsi','display','table-cell');
-
+					
 					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).
 			        success(function(data) {
 			            $scope.records = data;
 			        });
 			        
-					
 				    window.top.name = "";
 				}else if(code == "c05"){
 					//changecss('.tac','display','table-cell');
@@ -141,50 +141,43 @@
 			        success(function(data) {
 			            $scope.records = data;
 			        });
+			    }else if (code == "c07") {
+					changecss('.count', 'display', 'table-cell');
+					changecss('.country', 'display', 'table-cell');
+					changecss('.operator', 'display', 'table-cell');
+					changecss('.cellId', 'display', 'table-cell');
 
-					
-					
-				    window.top.name = "";
-				}else if(code == "c07"){
-					changecss('.count','display','table-cell');
-					changecss('.market','display','table-cell');
-					changecss('.operator','display','table-cell');
-					changecss('.cellId','display','table-cell');
+					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
+						$scope.records = data;
+					});
 
-					
-					
-				    window.top.name = "";
-				}else if(code == "c08"){
-					changecss('.causeCode','display','table-cell');
-					changecss('.imsi','display','table-cell');
+					window.top.name = "";
+				} else if (code == "c08") {
+					changecss('.causeCode', 'display', 'table-cell');
+					changecss('.imsi', 'display', 'table-cell');
 
-					
-					
-				    window.top.name = "";
-				}else if(code == "c09"){
-					changecss('.count','display','table-cell');
-					changecss('.imsi','display','table-cell');
+					window.top.name = "";
+				} else if (code == "c09") {
+					changecss('.count', 'display', 'table-cell');
+					changecss('.imsi', 'display', 'table-cell');
 
-					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).
-			        success(function(data) {
-			            $scope.records = data;
-			        });
-								
-				    window.top.name = "";
-				}else if(code == "c10"){
-					changecss('.imsi','display','table-cell');
-					changecss('.failureClass','display','table-cell');
-					changecss('.description','display','table-cell');
+					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
+						$scope.records = data;
+					});
 
-					
-					
-				    window.top.name = "";
-				}else{
-					changecss('.noCode','display','table-cell');
+					window.top.name = "";
+				} else if (code == "c10") {
+					changecss('.imsi', 'display', 'table-cell');
+					changecss('.failureClass', 'display', 'table-cell');
+					changecss('.description', 'display', 'table-cell');
+
+					window.top.name = "";
+				} else {
+					changecss('.noCode', 'display', 'table-cell');
 				}
 			}
 		</script>
-		
+
 		<script>
 			var x = readCookie('usercookie')
 			if (!x) {

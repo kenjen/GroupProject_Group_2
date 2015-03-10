@@ -78,4 +78,10 @@ public class BaseDataServiceEJB implements BaseDataService {
 			Date endDate) {
 		return baseDataDAO.getCountTop10ImsiBetweenDates(startDate, endDate);
 	}
+
+	@Override
+	public List<Object[]> getCountTop10ComboBetweenDates(Date startDate,
+			Date endDate) {
+		return baseDataDAO.getCountTop10ComboBetweenDates(startDate, endDate);
+	}
 }

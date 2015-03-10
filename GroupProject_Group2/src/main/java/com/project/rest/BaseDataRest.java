@@ -192,5 +192,28 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
+	
+	@GET
+	@Path("/counttop10mccmnccelldid_bydate/{dates}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getCountTop10ComboBetweenDates(@PathParam("dates") String dates) throws ParseException{
+		if(dates.length()==0){
+			return null;
+		}
+		String s = dates.substring(3, 22);
+		String e = dates.substring(22);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date start = sdf.parse(s);
+		Date end = sdf.parse(e);
+		
+		List<Object[]> list = baseDataService.getCountTop10ComboBetweenDates(start, end);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {"", "", Objects.toString(obj[3]), "", "", "", "", "", "", "", "", "", "", "", "", Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2]), "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
+	}
 
 }
