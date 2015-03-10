@@ -216,6 +216,7 @@ public class BaseDataRest {
 		return aList;
 	}
 	
+	@GET
 	@Path("/uniqueCauseByImsi/{IMSI}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String[]> getCauseCodeByIMSI(@PathParam("IMSI") String input) {
