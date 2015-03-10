@@ -12,7 +12,11 @@ import javax.persistence.*;
  */
 @NamedQueries({
 		@NamedQuery(name = "findEventCauseByIMSI", query = "select b.eventId, b.causeCode from BaseData a, EventCause b where a.imsi = :IMSI and b.id = a.eventCauseFK.id"),
-		@NamedQuery(name = "findEventCause", query = "select b from BaseData b "),
+		@NamedQuery(name = "findEventCause", query = "select e from  EventCause e"),
+		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b)  "
+				+ "FROM EventCause e, BaseData b, UE ue where e.id = b.eventCauseFK.id and ue.id = b.ueFK.id and "
+				+ "ue.marketingName = :phoneModel group by b.eventCauseFK"),
+
 		@NamedQuery(name = "EventCause.getAllEventCause", query = "select e from EventCause e")})
 @Entity
 @Table(name = "Event_Cause")

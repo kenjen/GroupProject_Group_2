@@ -8,6 +8,7 @@ import javax.ejb.Local;
 @Local
 public interface EventCauseService {
 	public List<Object[]> getFailuresIdsByIMSI(Long imsi);
+	public List<Object[]> countUniqueEventCauseByModel(String phoneModel);
 
 	public Collection getFailuresIds();
 }

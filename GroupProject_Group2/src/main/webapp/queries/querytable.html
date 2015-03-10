@@ -79,7 +79,7 @@
 					changecss('.eventId','display','table-cell');
 					changecss('.causeCode','display','table-cell');
 					
-					$http.get('/GroupProject_Group2/rest/event_cause/' + name).
+					$http.get('/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + name).
 			        success(function(data) {
 			            $scope.records = data;
 			        });
@@ -119,15 +119,20 @@
 					
 				    window.top.name = "";
 				}else if(code == "c05"){
-					changecss('.count','display','table-cell');
-					changecss('.tac','display','table-cell');
-					changecss('.marketingName','display','table-cell');
+					//changecss('.tac','display','table-cell');
+					//changecss('.marketingName','display','table-cell');
 					changecss('.eventId','display','table-cell');
 					changecss('.causeCode','display','table-cell');
-
+					changecss('.count','display','table-cell');
 					
-					
+					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).
+			        success(function(data) {
+			            $scope.records = data;
+			        });
+			        
+			        
 				    window.top.name = "";
+				    
 				}else if(code == "c06"){
 					changecss('.count','display','table-cell');
 					changecss('.imsi','display','table-cell');
