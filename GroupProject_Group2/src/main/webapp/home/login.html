@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<script>
+			window.onload = function(){
+				var x = readCookie('usercookie')
+				//alert("script! x = " + x)
+				if (x) {
+					var userType = x.charAt(x.length-2)
+					if(userType==0){
+						window.location.replace("/GroupProject_Group2/test_style/index.html");
+					}else if(userType==1){
+						window.location.replace("/GroupProject_Group2/test_style/index.html");
+					}else if(userType==2){
+						window.location.replace("/GroupProject_Group2/test_style/index.html");
+					}else if(userType==3){
+						window.location.replace("/GroupProject_Group2/test_style/index.html");
+					} 
+				}
+			}
+	</script>
+
+    <title>Login</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS 
+    <link href="css/sb-admin.css" rel="stylesheet"> -->
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	<!-- Custom Fonts 
+	<link rel="stylesheet" type="text/css" media="screen, projection"
+	href="http://www.blueprintcss.org/blueprint/screen.css" /> 
+
+	<link rel="stylesheet" type="text/css" media="screen, projection"
+	href="http://www.blueprintcss.org/blueprint/plugins/buttons/screen.css" />
+	
+	<link rel="stylesheet" type="text/css" media="print"
+	href="http://www.blueprintcss.org/blueprint/print.css" />
+	
+		-->
+	<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="login.js"></script>
+		
+	<style type="text/css">
+		#loginContent {
+			width: 350px;
+			margin: 100px auto;
+		}
+
+		button[type] {
+			margin: 0.5em 0;
+		}
+	</style>	
+
+</head>
+
+<body>
+
+<div id="response">
+			<pre></pre>
+		</div>
+
+		<div id="loginContent" class="container">
+			<div id="loginResult" style="display: none;"></div>
+			<form id="loginForm" name="loginForm">
+				<fieldset>
+					<legend>
+						Enter information
+					</legend>
+					<p>
+						<label for="username">Username</label>
+						<br />
+						<input type="text"
+						id="username" name="username" class="text" size="20" required/>
+					</p>
+					<p>
+						<label for="password">Password</label>
+						<br />
+						<input
+						type="password" id="password" name="password" class="text"
+						size="20" required/>
+					</p>
+					<p>
+						<button type="submit" class="button positive">
+							<img alt="ok"
+							src="http://www.blueprintcss.org/blueprint/plugins/buttons/icons/tick.png" />
+							Login
+						</button>
+					</p>
+				</fieldset>
+			</form>
+
+			<script
+			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script>
+			
+				(function($) {
+					function processForm(e) {
+						$.ajax({
+							url : '/GroupProject_Group2/rest/users/getuser',
+							dataType : 'json',
+							type : 'post',
+							contentType : 'application/json',
+							data : JSON.stringify({
+								"username" : $('#username').val(),
+								"password" : $('#password').val()
+							}),
+							processData : false,
+							success : function(data, textStatus, jQxhr) {
+								if (data != null) {
+									createCookie('usercookie', JSON.stringify(data), 0);
+									var key = 'userType';
+
+									if (data[key] == 0) {
+										window.location.replace("/GroupProject_Group2/test_style/index.html");
+									} else if (data[key] == 1) {
+										window.location.replace("/GroupProject_Group2/test_style/index.html");
+									} else if (data[key] == 2) {
+										window.location.replace("/GroupProject_Group2/test_style/index.html");
+									} else if (data[key] == 3) {
+										window.location.replace("/GroupProject_Group2/test_style/index.html");
+									} else {
+										window.location.replace("/GroupProject_Group2/");
+									}
+
+								}
+							},
+							error : function(jqXhr, textStatus, errorThrown) {
+								createCookie('usercookie', JSON.stringify(data), 7);
+								document.write('<p>Error</p><a href ="login.html">Continue</a>');
+								console.log(errorThrown);
+
+							}
+						});
+						e.preventDefault();
+					}
+
+
+					$('#loginForm').submit(processForm);
+				})(jQuery);
+
+				function createCookie(name, value, days) {
+					if (days) {
+						var date = new Date();
+						date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+						var expires = "; expires=" + date.toGMTString();
+					} else
+						var expires = "";
+					document.cookie = name + "=" + value + expires + "; path=/";
+				}
+
+				function readCookie(name) {
+					var nameEQ = name + "=";
+					var ca = document.cookie.split(';');
+					for (var i = 0; i < ca.length; i++) {
+						var c = ca[i];
+						while (c.charAt(0) == ' ')
+						c = c.substring(1, c.length);
+						if (c.indexOf(nameEQ) == 0)
+							return c.substring(nameEQ.length, c.length);
+					}
+					return null;
+				}
+
+				function eraseCookie(name) {
+					createCookie(name, "", -1);
+				}
+
+			</script>
+
+		</div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

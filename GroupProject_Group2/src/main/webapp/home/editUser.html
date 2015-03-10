@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+		<script type="text/javascript" src="login.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+
+		<style>
+			.hidden {
+				display: none;
+			}
+
+			.unhidden {
+				display: block;
+			}
+		</style>
+		<script type="text/javascript">
+			function unhide(clickedButton, divID) {
+				var item = document.getElementById(divID);
+				if (item) {
+					if (item.className == 'hidden') {
+						item.className = 'unhidden';
+					} 
+				}
+			}
+
+		</script>
+
+	</head>
+	<center>
+		<body ng-controller="userLoader">
+			<form id="selectUser" name="selectUser" class="unhidden">
+				User
+				<select id="userId">
+					<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
+				</select>
+				<br>
+				<br>
+				<input type="submit" id="select" value="Select User" onclick="unhide(this, 'editOnSelect')"/>
+			</form>
+			<br>
+
+			<script>
+				function userLoader($scope, $http) {
+					$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
+						$scope.users = data;
+					});
+				}
+			</script>
+
+			<script>
+				(function($) {
+					function processFormSelect(e) {
+						var userId = document.getElementById("userId").value;
+						$.ajax({
+							url : '/GroupProject_Group2/rest/users/getuserbyid/',
+							dataType : 'json',
+							type : 'post',
+							contentType : 'application/json',
+
+							data : JSON.stringify({
+								"id" : userId
+							}),
+							processData : false,
+							success : function(data, textStatus, jQxhr) {
+								var username_elem = document.getElementById("username");
+								var password_elem = document.getElementById("password");
+								var elem = document.getElementById("selectUser");
+								elem.className = 'hidden';
+								var type = data.userType;
+								document.getElementById("userType").selectedIndex = type;
+								username_elem.value = data.username;
+								password_elem.value = data.password;
+							},
+							error : function(jqXhr, textStatus, errorThrown) {
+								var elem = document.getElementById("result")
+								elem.innerHTML = "Select User Failed";
+								elem.style.color = 'red';
+							}
+						});
+						e.preventDefault();
+					}
+
+
+					$('#selectUser').submit(processFormSelect);
+				})(jQuery);
+			</script>
+
+			<div id="editOnSelect" class="hidden">
+
+				<form id="editUser" name="editUser">
+
+					Username
+					<br>
+					<input type="text" name="username" id="username" required>
+					<br>
+					Password
+					<br>
+					<input type="password" name="password" id="password" required>
+					<br>
+					User Type
+					<br>
+					<select id="userType">
+						<option>System Administrator</option>
+						<option>Network Management Engineer</option>
+						<option>Support Engineer</option>
+						<option>Customer Service Rep</option>
+					</select>
+					<br>
+					<br>
+					<input type="submit" id="edit" value="Edit User" />
+				</form>
+
+			</div>
+
+			<br>
+			<p id="result"></p>
+			<form action="/GroupProject_Group2/userEditing.html">
+				<input type="submit" value="Return" />
+			</form>
+
+			<script
+			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script>
+				(function($) {
+					function processFormEdit(e) {
+						var id = document.getElementById("userId").value;
+						var type = document.getElementById("userType").selectedIndex;
+						$.ajax({
+							url : '/GroupProject_Group2/rest/users/updateuser/',
+							dataType : 'json',
+							type : 'post',
+							contentType : 'application/json',
+
+							data : JSON.stringify({
+								"id" : id,
+								"username" : $('#username').val(),
+								"password" : $('#password').val(),
+								"userType" : type
+							}),
+							processData : false,
+							success : function(data, textStatus, jQxhr) {
+								var elem = document.getElementById("result")
+								var item = document.getElementById("editOnSelect");
+								item.className = 'hidden';
+								elem.innerHTML = "User Edited Succesfuly";
+								elem.style.color = 'black';
+							},
+							error : function(jqXhr, textStatus, errorThrown) {
+								var elem = document.getElementById("result")
+								elem.innerHTML = "Edit User Failed";
+								elem.style.color = 'red';
+							}
+						});
+						e.preventDefault();
+					}
+
+
+					$('#editUser').submit(processFormEdit);
+				})(jQuery);
+
+			</script>
+
+		</body>
+	</center>
+	<script type="text/javascript">
+		window.onload = function() {
+			try {
+				if (window.self == window.top) {
+					window.location.replace("/GroupProject_Group2/");
+				}
+			} catch (e) {
+
+			}
+		}
+	</script>
+</html>
