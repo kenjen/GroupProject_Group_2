@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-	<form id='form' style="text-align:center">
-		Select dates to filter failures by:<br>
-		Start Date:
-		<input type="datetime-local" id="startDate" name="startDate" value="2013-02-20T09:00:00"/>
-		End Date:
-		<input type="datetime-local" id="endDate" name="endDate" value="2013-02-20T13:00:00"/>
-		<br><br>
-		<input type='button' onClick='refreshTable();' value="Refresh" />
-	</form>
-	
-	<script type="text/javascript">
-		function refreshTable(){
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<form id='form' style="text-align:center">
+			Select dates to filter failures by:
+			<br>
+			Start Date:
+			<input type="datetime-local" id="startDate" name="startDate" value="2013-02-20T09:00:00"/>
+			End Date:
+			<input type="datetime-local" id="endDate" name="endDate" value="2013-02-20T13:00:00"/>
+			<br>
+			<br>
+			<input type='button' onClick='refreshTable();' value="Refresh" />
+		</form>
+
+		<script type="text/javascript">
+			function refreshTable() {
+			var startStringA = document.getElementById('startDate').value;
 			var startString = document.getElementById('startDate').value;
 			var endStringA = document.getElementById('endDate').value;
 			var endStringB = document.getElementById('endDate').value;
+			if(startStringA.length == 16){
+				startString = startStringA.concat(":00");
+			}
 			if(endStringA.length == 16){
 				endStringB = endStringA.concat(":00");
 			}
-			var stringNoCode = startString.concat(endStringB);
-			var code = "c04";
-			window.parent.name = code.concat(stringNoCode);
-			/* window.top.getElementById('tableFrame').reload(); */
-			var tableFrame = window.top.document.getElementById('tableFrame');
-			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
-			tableFrame.contentWindow.location.reload();
-			/* window.top.resizeTableFrame(); */
-		}
-	</script>
-</body>
+				var stringNoCode = startString.concat(endStringB);
+				var code = "c04";
+				window.parent.name = code.concat(stringNoCode);
+				/* window.top.getElementById('tableFrame').reload(); */
+				var tableFrame = window.top.document.getElementById('tableFrame');
+				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+				tableFrame.contentWindow.location.reload();
+				/* window.top.resizeTableFrame(); */
+			}
+		</script>
+	</body>
 </html>

@@ -144,5 +144,30 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
+	
+	@GET
+	@Path("/countsingleimsibetweendates/{dates}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getCountSingleImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
+		if(dates.length()<23){
+			return null;
+		}
+		String s = dates.substring(3, 22);
+		String e = dates.substring(22, 41);
+		String i = dates.substring(41);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		Date start = sdf.parse(s);
+		Date end = sdf.parse(e);
+		long imsi = Long.parseLong(i);
+		
+		List<Object[]> list = baseDataService.getCountSingleImsiBetweenDates(start, end, imsi);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {"", "", "", "", "", "", "", Objects.toString(obj[1]), "", "", "", "", "", "", "", Objects.toString(obj[0]), "", "", "", "", "", ""};
+			aList.add(str);
+		}
+		return aList;
+	}
 
 }

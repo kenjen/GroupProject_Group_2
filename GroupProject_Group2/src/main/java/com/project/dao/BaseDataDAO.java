@@ -20,4 +20,5 @@ public interface BaseDataDAO {
 	Collection<UE> getUEs();
 	List<Object[]> getImsiByDateRange(Date startDate, Date endDate);
 	List<Object[]> getCountImsiBetweenDates(Date startDate, Date endDate);
+	List<Object[]> getCountSingleImsiBetweenDates(Date startDate, Date endDate, long imsi);
 }
