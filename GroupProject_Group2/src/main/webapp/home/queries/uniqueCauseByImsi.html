@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>UniqueCauseByImsi</title>
+</head>
+<body>
+<form id='form' style="text-align:center">
+	
+		Enter IMSI:<br>
+		<input type="number" id = "imsi" name="imsi"/>
+		<br><br>
+		<input type="button" onClick='refreshTable();' value="Refresh" />
+		</form>
+	
+	<script type="text/javascript">
+		function refreshTable(){
+			var imsi = document.getElementById('imsi').value;
+			var code = "c08";
+			window.parent.name = code.concat(imsi);
+			/* window.top.getElementById('tableFrame').reload(); */
+			var tableFrame = window.top.document.getElementById('tableFrame');
+			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+			//tableFrame.contentWindow.location.reload();
+			/* window.top.resizeTableFrame(); */
+		}
+	</script>
+</body>
+</html>
