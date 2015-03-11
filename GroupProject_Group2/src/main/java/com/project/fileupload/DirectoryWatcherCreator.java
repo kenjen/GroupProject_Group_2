@@ -22,8 +22,8 @@ public class DirectoryWatcherCreator {
 	@PostConstruct
     public void initialise() throws IOException {
         String fileSystemPath = "/upload/";
-    	log.info("initialised");
         directoryWatcher.poll(fileSystemPath);
+        log.info("directory watcher initialised");
     }
 
 }
