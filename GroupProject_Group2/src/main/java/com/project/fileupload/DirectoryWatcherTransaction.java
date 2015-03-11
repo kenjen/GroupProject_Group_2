@@ -1,5 +1,6 @@
 package com.project.fileupload;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.ejb.EJB;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
-import com.project.dao.FileDAO;
 import com.project.dao.LookUpDataDAO;
 import com.project.entities.FileInfo;
 import com.project.reader.ReadBase;
@@ -37,25 +37,34 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 	ReadLookup lookupDataReader = new ExcelLookupDataRead();
 	ReadBase baseDataReader = new ExcelBaseDataRead();
 
-	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcherCreator.class);
+	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcherTransaction.class);
 	
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void addFilePath(FileInfo file){
+	public void addFilePath(FileInfo file) throws IOException{
 		if(UploadServlet.getFileExtension(file.getFilename()).equals(".xls")){
 			try {
-				lookupDataReader.setInputFile("/upload" + file.getFilepath());
+				log.info("starting transfer to database with file /upload/" + file.getFilename());
+				
+				lookupDataReader.setInputFile("/upload/" + file.getFilename());
 				lookupDataReader.setLookUpDao(lookupDao);
 				lookupDataReader.read();
 				
+				log.info("lookup data import finished");
+				
 				baseDataReader.setSheetNumber(0);
-				log.info("input file from directory watcher = " + "/upload" + file.getFilepath());
-				baseDataReader.setInputFile("/upload" + file.getFilepath().trim());
+				log.info("input file from directory watcher = " + "/upload" + file.getFilename());
+				baseDataReader.setInputFile("/upload/" + file.getFilename());
 				baseDataReader.setBaseDataDao(baseDataDao);
 				baseDataReader.setErrorBaseDataDao(errorDao);
+				
+				log.info("starting base data transfer with file /upload/" + file.getFilename());
+				
 				baseDataReader.read();
-			} catch (IOException e) {
-				e.printStackTrace();
+				
+				log.info("Upload completed with " + baseDataReader.getInvalidRowCount() + " invalid rows!!!!!!!!!");
+			} catch (FileNotFoundException e){
+				log.error("file not found exception: /upload" + file.getFilename());
 			}
 		}
 		fileService.addUploadedFilePath(file.getFilename(), "/upload" + file.getFilepath(), true);

@@ -7,9 +7,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 import com.project.dao.FileDAO;
-import com.project.dao.UserDAO;
 import com.project.entities.FileInfo;
-import com.project.entities.User;
 
 @Stateless
 @Local

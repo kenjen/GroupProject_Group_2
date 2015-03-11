@@ -34,6 +34,7 @@ public class JPAFileDAO implements FileDAO{
 	public boolean addUploadedFilePath(String name, String path, boolean flush) {
 		FileInfo f = new FileInfo(name, path);
 		em.persist(f);
+		log.info("name = " + f.getFilename() + "  path = " + f.getFilepath());
 		log.info("File Persisted: filepath = " + f.getFilepath());
 		return true;
 	}
