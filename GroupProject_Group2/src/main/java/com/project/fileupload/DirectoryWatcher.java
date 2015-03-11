@@ -29,9 +29,12 @@ public class DirectoryWatcher {
 	
 	boolean running = true;
 	
+	private static String systemFilePath = "";
+	
 	@Asynchronous
 	public void poll(String fileSystemPath) throws IOException {
-		Path folder = Paths.get("/upload/");
+		systemFilePath = fileSystemPath;
+		Path folder = Paths.get(systemFilePath);
 		WatchService watchService = folder.getFileSystem().newWatchService();
 		String fileNameS = "";
 		//registers folder with changes to listen for
@@ -52,9 +55,8 @@ public class DirectoryWatcher {
 						Path fileNameP = fullFilePath.getFileName();
 						fileNameS = fileNameP.toFile().toString();
 						Thread.sleep(1000); //wait 1 second to ensure file transfer completed
-						log.info("attempting upload of " + "/upload/" + fileNameS);
-						FileInfo file = new FileInfo(fileNameS, "/upload/" + fileNameS);
-						dirWatchTransaction.addFilePath(file);	//in separate class to allow requirement of separate transaction
+						log.info("attempting upload of " + systemFilePath + fileNameS);
+						dirWatchTransaction.addFilePath(systemFilePath, fileNameS);	//in separate class to allow requirement of separate transaction
 					}else if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
 						Path filePath = (Path) event.context();
 						Path fileNameP = filePath.getFileName();
@@ -64,8 +66,8 @@ public class DirectoryWatcher {
 					}
 				}
 			} catch (IOException e) {
-				File oldFile = new File("/upload/"+fileNameS);
-				File newFile = new File("/upload/*"+fileNameS.replaceAll(" ", "_").toLowerCase());
+				File oldFile = new File(systemFilePath+fileNameS);
+				File newFile = new File(systemFilePath+fileNameS.replaceAll(" ", "_").toLowerCase());
 				oldFile.renameTo(newFile);
 				log.info("Exception Occurred Due to POI bug. Renamed file");
 			} catch (InterruptedException e) {

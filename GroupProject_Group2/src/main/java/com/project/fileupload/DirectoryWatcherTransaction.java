@@ -41,33 +41,33 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 	
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void addFilePath(FileInfo file) throws IOException{
-		if(UploadServlet.getFileExtension(file.getFilename()).equals(".xls")){
+	public void addFilePath(String filePath, String fileName) throws IOException{
+		if(UploadServlet.getFileExtension(fileName).equals(".xls")){
 			try {
-				log.info("starting transfer to database with file /upload/" + file.getFilename());
+				log.info("starting transfer to database with file " + filePath + fileName);
 				
-				lookupDataReader.setInputFile("/upload/" + file.getFilename());
+				lookupDataReader.setInputFile(filePath + fileName);
 				lookupDataReader.setLookUpDao(lookupDao);
 				lookupDataReader.read();
 				
 				log.info("lookup data import finished");
 				
 				baseDataReader.setSheetNumber(0);
-				log.info("input file from directory watcher = " + "/upload" + file.getFilename());
-				baseDataReader.setInputFile("/upload/" + file.getFilename());
+				log.info("input file from directory watcher = " + filePath + fileName);
+				baseDataReader.setInputFile(filePath + fileName);
 				baseDataReader.setBaseDataDao(baseDataDao);
 				baseDataReader.setErrorBaseDataDao(errorDao);
 				
-				log.info("starting base data transfer with file /upload/" + file.getFilename());
+				log.info("starting base data transfer with file " + filePath + fileName);
 				
 				baseDataReader.read();
 				
 				log.info("Upload completed with " + baseDataReader.getInvalidRowCount() + " invalid rows!!!!!!!!!");
 			} catch (FileNotFoundException e){
-				log.error("file not found exception: /upload" + file.getFilename());
+				log.error("file not found exception: " + filePath + fileName);
 			}
 		}
-		fileService.addUploadedFilePath(file.getFilename(), "/upload" + file.getFilepath(), true);
+		fileService.addUploadedFilePath(fileName, filePath + fileName, true);
 	}
 
 	@Override

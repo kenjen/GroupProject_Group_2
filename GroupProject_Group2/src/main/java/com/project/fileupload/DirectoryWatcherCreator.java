@@ -1,5 +1,6 @@
 package com.project.fileupload;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
@@ -21,9 +22,23 @@ public class DirectoryWatcherCreator {
 
 	@PostConstruct
     public void initialise() throws IOException {
-        String fileSystemPath = "/upload/";
-        directoryWatcher.poll(fileSystemPath);
-        log.info("directory watcher initialised");
-    }
+		String fileSystemPath = "";
+		File directory;
+		if((System.getProperty("os.name").toLowerCase()).equals("windows")){
+			fileSystemPath = "c:/upload/";
+			log.info("windows detected");
+			directory = new File(fileSystemPath);
+		}else{
+			fileSystemPath = "/upload/";
+			log.info("windows not detected, assumming linux");
+			directory = new File(fileSystemPath);
+		}
+		if(directory.exists()){
+	        directoryWatcher.poll(fileSystemPath);
+	        log.info("directory watcher initialised");
+		}else{
+			log.info("directory does not exist");
+		}
+	}
 
 }
