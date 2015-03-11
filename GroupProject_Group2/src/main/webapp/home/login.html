@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<script>
+			window.onload = function(){
+				var x = readCookie('usercookie')
+				//alert("script! x = " + x)
+				if (x) {
+					var userType = x.charAt(x.length-2)
+					if(userType==0){
+						window.location.replace("index.html");
+					}else if(userType==1){
+						window.location.replace("index.html");
+					}else if(userType==2){
+						window.location.replace("index.html");
+					}else if(userType==3){
+						window.location.replace("index.html");
+					} 
+				}
+			}
+	</script>
+
+    <title>Login</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	
+
+		<!-- Morris Charts CSS -->
+		<link href="css/plugins/morris.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
+	
+	<script type="text/javascript"src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+
+</head>
+
+<body>
+
+			<div id="page-wrapper" align="center" >
+				<div class="container-fluid">
+									<!-- Page Heading -->
+					<div class="row">
+						<div class="col-lg-12">
+							<h1 class="page-header">Login</h1>
+						</div>
+					</div>
+					<!-- /.row -->
+				<div class="row">
+                    <div class="col-lg-6 text-center">                    
+                            <div class="panel-body">                            
+                            </div>                      
+                    </div>
+                </div>
+                
+					<div class="row">
+						<div class="col-lg-4 text-center">
+                    	</div>
+						<div class="col-lg-4 text-center">
+							<form id="loginForm" name="loginForm" role="form">
+								<div class="form-group">
+									<label>Username</label>
+									<input type="text" id="username" name="username" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label>Password</label>
+									<input input type="password" id="password" name="password" class="form-control" required>
+								</div>
+
+								<div class="form-group">
+									<button type="submit" class="btn btn-default">
+										Login
+									</button>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+				<!-- /.row -->
+
+			</div>
+			<!-- /.container-fluid -->
+
+
+		</div>
+		<!-- /#wrapper -->
+		
+		<script>
+			
+				(function($) {
+					function processForm(e) {
+						$.ajax({
+							url : '/GroupProject_Group2/rest/users/getuser',
+							dataType : 'json',
+							type : 'post',
+							contentType : 'application/json',
+							data : JSON.stringify({
+								"username" : $('#username').val(),
+								"password" : $('#password').val()
+							}),
+							processData : false,
+							success : function(data, textStatus, jQxhr) {
+								if (data != null) {
+									createCookie('usercookie', JSON.stringify(data), 0);
+									var key = 'userType';
+
+									if (data[key] == 0) {
+										window.location.replace("index.html");
+									} else if (data[key] == 1) {
+										window.location.replace("index.html");
+									} else if (data[key] == 2) {
+										window.location.replace("index.html");
+									} else if (data[key] == 3) {
+										window.location.replace("index.html");
+									} else {
+										window.location.replace("/GroupProject_Group2/home/");
+									}
+								}
+							else{
+										document.write('<p>Error</p><a href ="login.html">sdddd</a>');
+										
+									}
+							},
+							error : function(jqXhr, textStatus, errorThrown) {
+								//createCookie('usercookie', JSON.stringify(data), 0);
+								document.write('<p>Error</p><a href ="login.html">Continue</a>');
+								console.log(errorThrown);
+
+							}
+						});
+						e.preventDefault();
+					}
+
+
+					$('#loginForm').submit(processForm);
+				})(jQuery);
+
+				function createCookie(name, value, days) {
+					if (days) {
+						var date = new Date();
+						date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+						var expires = "; expires=" + date.toGMTString();
+					} else
+						var expires = "";
+					document.cookie = name + "=" + value + expires + "; path=/";
+				}
+
+				function readCookie(name) {
+					var nameEQ = name + "=";
+					var ca = document.cookie.split(';');
+					for (var i = 0; i < ca.length; i++) {
+						var c = ca[i];
+						while (c.charAt(0) == ' ')
+						c = c.substring(1, c.length);
+						if (c.indexOf(nameEQ) == 0)
+							return c.substring(nameEQ.length, c.length);
+					}
+					return null;
+				}
+
+				function eraseCookie(name) {
+					createCookie(name, "", -1);
+				}
+
+			</script>
+		
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+
+		<!-- Morris Charts JavaScript -->
+		<script src="js/plugins/morris/raphael.min.js"></script>
+		<script src="js/plugins/morris/morris.min.js"></script>
+		<script src="js/plugins/morris/morris-data.js"></script>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	</body>
+
+</html>
