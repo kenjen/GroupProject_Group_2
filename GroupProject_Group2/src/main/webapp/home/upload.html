@@ -20,7 +20,7 @@
 	<body ng-controller="fileLoader">
 		<center>
 			<!--<h1>File Upload</h1>-->
-			<form method="post" action="UploadServlet" enctype="multipart/form-data">
+			<form method="post" action="../UploadServlet" enctype="multipart/form-data">
 				Select file to upload to server:
 				<input type="file" class="btn btn-sm btn-warning" name="file" size="60" accept=".xls" style="background-color: gray;"/>
 				<br>
@@ -81,14 +81,5 @@
 			}
 
 		</script>
-		<script type="text/javascript">
-			window.onload = function() {
-	    		try {
-	        		if(window.self == window.top){
-	        			window.location.replace("/GroupProject_Group2/");
-		    		}
-	    		} catch (e) {}
-			}
-    	</script>
 	</body>
 </html>
