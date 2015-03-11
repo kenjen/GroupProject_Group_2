@@ -11,6 +11,28 @@
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 
+		<style>
+			.hidden {
+				display: none;
+			}
+
+			.unhidden {
+				display: block;
+			}
+		</style>
+		
+		<script type="text/javascript">
+			function unhide(clickedButton, divID) {
+				var item = document.getElementById(divID);
+				if (item) {
+					if (item.className == 'hidden') {
+						item.className = 'unhidden';
+					} 
+				}
+			}
+
+		</script>
+
 		<title>Add User</title>
 
 		<!-- Bootstrap Core CSS -->
@@ -103,20 +125,20 @@
 						</div>
 					</div>
 					<!-- /.row -->
-				<div class="row">
-                    <div class="col-lg-6 text-center">
-                    
-                            <div class="panel-body">
-                            
-                            </div>
-                      
-                    </div>
-                </div>
+					<div class="row">
+						<div class="col-lg-6 text-center">
+
+							<div class="panel-body">
+
+							</div>
+
+						</div>
+					</div>
 
 					<div class="row">
+						<div class="col-lg-4 text-center"></div>
 						<div class="col-lg-4 text-center">
-                    	</div>
-						<div class="col-lg-4 text-center">
+							<div id="editOnSelect" class="unhidden">
 							<form id="addUser" name="addUser" role="form">
 								<div class="form-group">
 									<label>Username</label>
@@ -143,7 +165,7 @@
 								</div>
 							</form>
 
-							<p id="result"></p>
+							
 							<form role="form" action="index.html">
 								<div class="form-group">
 									<button type="submit" class="btn btn-default">
@@ -151,6 +173,12 @@
 									</button>
 								</div>
 							</form>
+							
+							</div> <!-- end add user form hidden div! -->
+							
+							<p id="result"></p>
+							
+							
 
 							<script
 							src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -172,11 +200,12 @@
 											processData : false,
 											success : function(data, textStatus, jQxhr) {
 												if (data != null) {
-													//document.write("<center><body><br><p>User Added Successfully</p><br><form action='addUser.html'><input type='submit' class='btn btn-default' value='Add Another User' /></form></body></center>");
-													var elem = document.getElementById("result")
-													elem.innerHTML = "User Added Successfully";
-													elem.style.color = 'red';
-													
+													var elem = document.getElementById("result");
+													var item = document.getElementById("editOnSelect");
+													item.className = 'hidden';
+													elem.innerHTML = "User Added Successfully<br><br><form role='form' action='addUser.html'><div class='form-group'><button type='submit' class='btn btn-default'>Add Another User</button></div></form>";
+													elem.style.color = 'black';
+
 												} else {
 													var elem = document.getElementById("result")
 													elem.innerHTML = "User Creation Failed";

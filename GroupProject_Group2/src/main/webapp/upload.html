@@ -2,35 +2,47 @@
 <html ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="test_style/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS 
+    <link href="test_style/css/sb-admin.css" rel="stylesheet">
+	-->
+	
+    <!-- Custom Fonts -->
+    <link href="test_style/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<title>File Upload</title>
 	</head>
 	<body ng-controller="fileLoader">
 		<center>
-			<h1>File Upload</h1>
+			<!--<h1>File Upload</h1>-->
 			<form method="post" action="UploadServlet" enctype="multipart/form-data">
 				Select file to upload to server:
-				<input type="file" name="file" size="60" accept=".xls" style="background-color: gray;"/>
+				<input type="file" class="btn btn-sm btn-warning" name="file" size="60" accept=".xls" style="background-color: gray;"/>
 				<br>
-				<input type="submit" value="Upload To Server" />
+				<button type="submit" class="btn btn-sm btn-primary">Upload To Server</button>
 			</form>
 			<br>
 			<br>
 			<form method="get" action="UploadServlet" enctype="multipart/form-data">
 				Select uploaded file to send to database:
 				<br>
-					<select name="fileSelection" id="fileSelection">
+					<select name="fileSelection" id="fileSelection" class="form-control">
 						<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
 					</select>
 					<!-- <div ng-repeat="file in files">
 						<p>{{file}}<p>
 					</div> -->
 				<br>
-				<input type="submit" value="Transfer To Database" />
+				<button type="submit" class="btn btn-sm btn-primary">Transfer To Database</button>
 			</form>
 			<br>
 			<form method="post"  action="/GroupProject_Group2/error_data.html">
-				<input type="submit" formtarget="_blank" value="View invalid records in new tab" />
+				<button type="submit" class="btn btn-sm btn-primary" formtarget="_blank">View invalid records in new tab</button>
 			</form>
 		</center>
 		
