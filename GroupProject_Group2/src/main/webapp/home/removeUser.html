@@ -85,10 +85,12 @@
 				<ul class="nav navbar-nav side-nav">
 					<li class="active"><a href="index.html"><i
 							class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
-				<!--	<li><a href="charts.html"><i
+					<!--	<li><a href="charts.html"><i
 							class="fa fa-fw fa-bar-chart-o"></i> Charts</a></li> -->
 					<li><a href="queries.html"><i class="fa fa-fw fa-table"></i>
 							Queries</a></li>
+					<li><a href="upload.html"><i class="fa fa-fw fa-upload"></i>
+							Import & Upload</a></li>
 					<li><a href="javascript:;" data-toggle="collapse"
 						data-target="#demo"><i class="fa fa-fw fa-user"></i> User
 							Administration <i class="fa fa-fw fa-caret-down"></i></a>
@@ -125,38 +127,37 @@
 				<div class="row">
 					<div class="col-lg-4 text-center"></div>
 					<div id="editOnSelect" class="unhidden">
-					<div class="col-lg-4 text-center">
-						<form id="removeUser" name="removeUser" class="unhidden"
-							role="form">
-							<div class="form-group">
-								<label>Remove User</label> 
-								<select id="id" class="form-control">
-									<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<button type="submit"  class="btn btn-default">
-									Remove User</button>
-							</div>
-						</form>
+						<div class="col-lg-4 text-center">
+							<form id="removeUser" name="removeUser" class="unhidden"
+								role="form">
+								<div class="form-group">
+									<label>Remove User</label> <select id="id" class="form-control">
+										<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="submit" class="btn btn-default">Remove
+										User</button>
+								</div>
+							</form>
+						</div>
 					</div>
-				</div>
 
 
-				<script>
-					function userLoader($scope, $http) {
-						$http
-								.get(
-										'/GroupProject_Group2/rest/users/getallusers')
-								.success(function(data) {
-									$scope.users = data;
-								});
-					}
-				</script>
+					<script>
+						function userLoader($scope, $http) {
+							$http
+									.get(
+											'/GroupProject_Group2/rest/users/getallusers')
+									.success(function(data) {
+										$scope.users = data;
+									});
+						}
+					</script>
 
-				
 
-					
+
+
 				</div>
 				<p id="result"></p>
 
@@ -244,7 +245,8 @@
 							processData : false,
 							success : function(data, textStatus, jQxhr) {
 								var elem = document.getElementById("result")
-								var item = document.getElementById("editOnSelect");
+								var item = document
+										.getElementById("editOnSelect");
 								item.className = 'hidden';
 								elem.innerHTML = "User Removed Succesfully!<br><br><form role='form' action='removeUser.html'><div class='form-group'><button type='submit' class='btn btn-default'>Remove Another User</button></div></form>";
 								elem.style.color = 'black';

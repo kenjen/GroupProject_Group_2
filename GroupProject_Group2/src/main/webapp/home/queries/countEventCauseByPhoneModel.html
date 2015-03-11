@@ -21,7 +21,7 @@
 						<div class="col-lg-4 text-center"></div>
 						<div class="col-lg-4 text-center">
 							<div class="panel-body">
-								<form id='form' role="form" >
+								<form id='form' role="form" style="display: inline-block">
 									<div class="form-group">
 										<label>Choose Phone Model:</label>
 										<select id="phoneModelSelection" class="form-control">
@@ -61,6 +61,7 @@
 				window.top.name = code.concat(phoneModel);
 				var tableFrame = window.top.document.getElementById('tableFrame');
 				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+				tableFrame.contentWindow.location.reload();
 			}
 		</script>
 		<!-- jQuery -->
