@@ -9,6 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.project.entities.FileInfo;
 
 @Stateless
@@ -17,6 +20,8 @@ public class JPAFileDAO implements FileDAO{
 	
 	@PersistenceContext
 	private EntityManager em;
+	
+	private static final Logger log = LoggerFactory.getLogger(JPAFileDAO.class);
 
 	@Override
 	public Collection<FileInfo> getAllUploadedFilePaths() {
@@ -26,11 +31,19 @@ public class JPAFileDAO implements FileDAO{
 	}
 
 	@Override
-	public boolean addUploadedFilePath(String name, String path) {
+	public boolean addUploadedFilePath(String name, String path, boolean flush) {
 		FileInfo f = new FileInfo(name, path);
 		em.persist(f);
+		log.info("name = " + f.getFilename() + "  path = " + f.getFilepath());
+		log.info("File Persisted: filepath = " + f.getFilepath());
 		return true;
 	}
 
-	
+	@Override
+	public void removeFileFromDatabase(String fileName) {
+		FileInfo f = new FileInfo(fileName, "");
+		Query query = em.createQuery("delete from FileInfo f where f.filename = :fileName");
+		query.setParameter("fileName", fileName);
+		query.executeUpdate();
+	}
 }

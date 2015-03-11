@@ -1,4 +1,4 @@
-package com.project.servlets;
+package com.project.fileupload;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class UploadServlet extends HttpServlet {
 				finalFileName = t + "_" + timeInMili + fileExtension;
 				finalFilePath = savePath + File.separator + finalFileName;
 				part.write(finalFilePath);
-				fileDao.addUploadedFilePath(finalFileName, finalFilePath);
+				fileDao.addUploadedFilePath(finalFileName, finalFilePath, false);
 			}
 		//}
 		
@@ -150,7 +150,7 @@ public class UploadServlet extends HttpServlet {
 		return "";
 	}
 	
-	private String getFileExtension(String fileName){
+	static String getFileExtension(String fileName){
 		int location = 0;
 		for(int i=fileName.length()-1; i>0; i--){
 			if(fileName.charAt(i)=='.'){

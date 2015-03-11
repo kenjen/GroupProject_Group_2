@@ -8,6 +8,8 @@ public interface FileDAO {
 	
 	Collection<FileInfo> getAllUploadedFilePaths();
 	
-	boolean addUploadedFilePath(String name, String path);
+	boolean addUploadedFilePath(String name, String path, boolean flush);
+
+	void removeFileFromDatabase(String fileName);
 
 }
