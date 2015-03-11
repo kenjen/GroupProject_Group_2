@@ -2,9 +2,27 @@
 <html ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
-		<script type="text/javascript" src="login.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		
+		<title>Edit User</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="css/sb-admin.css" rel="stylesheet">
+
+		<!-- Morris Charts CSS -->
+		<link href="css/plugins/morris.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 		<style>
 			.hidden {
@@ -28,27 +46,166 @@
 		</script>
 
 	</head>
-	<center>
-		<body ng-controller="userLoader">
-			<form id="selectUser" name="selectUser" class="unhidden">
-				User
-				<select id="userId">
-					<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
-				</select>
-				<br>
-				<br>
-				<input type="submit" id="select" value="Select User" onclick="unhide(this, 'editOnSelect')"/>
-			</form>
-			<br>
+	<body ng-controller="userLoader">
 
-			<script>
-				function userLoader($scope, $http) {
-					$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
-						$scope.users = data;
-					});
-				}
-			</script>
+		<div id="wrapper">
 
+			<!-- Navigation -->
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">Systems Administrator</a>
+				</div>
+				<!-- Top Menu Items -->
+				<ul class="nav navbar-right top-nav">
+					<li class="dropdown">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> User <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+							</li>
+							<li>
+								<a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="login.html" onclick="eraseCookie('usercookie')"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav side-nav">
+						<li class="active">
+							<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+						</li>
+						<li>
+							<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+						</li>
+						<li>
+							<a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+						</li>
+						<li>
+							<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> User Administration <i class="fa fa-fw fa-caret-down"></i></a>
+							<ul id="demo" class="collapse">
+								<li>
+									<a href="addUser.html">Add User</a>
+								</li>
+								<li>
+									<a href="editUser.html">Edit User</a>
+								</li>
+								<li>
+									<a href="removeUser.html">Remove User</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</nav>
+
+			<div id="page-wrapper">
+
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="row">
+						<div class="col-lg-12">
+							<h1 class="page-header"> User Administration <small>Edit User</small></h1>
+						</div>
+					</div>
+					<!-- /.row -->
+				<div class="row">
+                    <div class="col-lg-6 text-center">
+                    <div class="panel-body">
+                	</div>
+                      
+                    </div>
+                </div>
+                               
+				<div class="row">
+						<div class="col-lg-4 text-center">
+                    	</div>
+                    	<div class="col-lg-4 text-center">
+							<form id="selectUser" name="selectUser" class="unhidden" role="form">
+								<div class="form-group">
+									<label>Select User</label>
+									<select id="userId" class="form-control">
+										<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="submit" id="select"  onclick="unhide(this, 'editOnSelect')" class="btn btn-default">
+										Select User
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>	
+					
+					
+				<script>
+					function userLoader($scope, $http) {
+						$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
+							$scope.users = data;
+						});
+					}
+				</script>	
+				
+				<div id="editOnSelect" class="hidden">
+						<div class="col-lg-4 text-center">
+						
+							<form id="editUser" name="editUser" role="form">
+								<div class="form-group">
+									<label>Username</label>
+									<input type="text" name="username" id="username" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<label>Password</label>
+									<input input type="password" name="password" id="password" class="form-control" required>
+								</div>
+
+								<div class="form-group">
+									<label>User Type</label>
+									<select id="userType" class="form-control">
+										<option>System Administrator</option>
+										<option>Network Management Engineer</option>
+										<option>Support Engineer</option>
+										<option>Customer Service Rep</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="submit" id="edit" class="btn btn-default">
+										Edit User
+									</button>
+								</div>
+								
+							</form>
+			
+							
+							<form role="form" action="index.html">
+								<div class="form-group">
+									<button type="submit" class="btn btn-default">
+										Cancel
+									</button>
+								</div>
+							</form>
+							
+							</div>
+					
+									
+						</div>
+						
+						<p id="result"></p>
+							
 			<script>
 				(function($) {
 					function processFormSelect(e) {
@@ -86,41 +243,73 @@
 					$('#selectUser').submit(processFormSelect);
 				})(jQuery);
 			</script>
-
-			<div id="editOnSelect" class="hidden">
-
-				<form id="editUser" name="editUser">
-
-					Username
-					<br>
-					<input type="text" name="username" id="username" required>
-					<br>
-					Password
-					<br>
-					<input type="password" name="password" id="password" required>
-					<br>
-					User Type
-					<br>
-					<select id="userType">
-						<option>System Administrator</option>
-						<option>Network Management Engineer</option>
-						<option>Support Engineer</option>
-						<option>Customer Service Rep</option>
-					</select>
-					<br>
-					<br>
-					<input type="submit" id="edit" value="Edit User" />
-				</form>
+							
+							
+	
 
 			</div>
+			<!-- /.container-fluid -->
 
-			<br>
-			<p id="result"></p>
-			<form action="/GroupProject_Group2/userEditing.html">
-				<input type="submit" value="Return" />
-			</form>
+		</div>
+		<!-- /#page-wrapper -->
 
-			<script
+		</div>
+		<!-- /#wrapper -->
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+
+		<!-- Morris Charts JavaScript -->
+		<script src="js/plugins/morris/raphael.min.js"></script>
+		<script src="js/plugins/morris/morris.min.js"></script>
+		<script src="js/plugins/morris/morris-data.js"></script>
+
+		<script>
+			var x = readCookie('usercookie')
+			if (x) {
+				var userType = x.charAt(x.length - 2)
+				if (userType != 0) {
+					window.location.replace("/GroupProject_Group2/");
+				}
+			} else {
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+			function createCookie(name, value, days) {
+				if (days) {
+					var date = new Date();
+					date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+					var expires = "; expires=" + date.toGMTString();
+				} else
+					var expires = "";
+				document.cookie = name + "=" + value + expires + "; path=/";
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+
+			function eraseCookie(name) {
+				createCookie(name, "", -1);
+				window.location.replace("/GroupProject_Group2/");
+			}
+
+		</script>
+		
+		<script
 			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 			<script>
 				(function($) {
@@ -144,7 +333,7 @@
 								var elem = document.getElementById("result")
 								var item = document.getElementById("editOnSelect");
 								item.className = 'hidden';
-								elem.innerHTML = "User Edited Succesfuly";
+								elem.innerHTML = "User Edited Succesfully!<br><br><form role='form' action='editUser.html'><div class='form-group'><button type='submit' class='btn btn-default'>Edit Another User</button></div></form>";
 								elem.style.color = 'black';
 							},
 							error : function(jqXhr, textStatus, errorThrown) {
@@ -161,18 +350,8 @@
 				})(jQuery);
 
 			</script>
+		
 
-		</body>
-	</center>
-	<script type="text/javascript">
-		window.onload = function() {
-			try {
-				if (window.self == window.top) {
-					window.location.replace("/GroupProject_Group2/");
-				}
-			} catch (e) {
+	</body>
 
-			}
-		}
-	</script>
 </html>

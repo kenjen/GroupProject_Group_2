@@ -11,7 +11,7 @@
 
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 
-		<title>Systems Administrator Dashboard</title>
+		<title>Add User</title>
 
 		<!-- Bootstrap Core CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -172,8 +172,11 @@
 											processData : false,
 											success : function(data, textStatus, jQxhr) {
 												if (data != null) {
-													document.write("<center><body><br><p>User Added Successfully</p><br><form action='/GroupProject_Group2/userEditing.html'><input type='submit' value='Return' /></form></body></center>");
-
+													//document.write("<center><body><br><p>User Added Successfully</p><br><form action='addUser.html'><input type='submit' class='btn btn-default' value='Add Another User' /></form></body></center>");
+													var elem = document.getElementById("result")
+													elem.innerHTML = "User Added Successfully";
+													elem.style.color = 'red';
+													
 												} else {
 													var elem = document.getElementById("result")
 													elem.innerHTML = "User Creation Failed";
