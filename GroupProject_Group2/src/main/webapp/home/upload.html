@@ -120,7 +120,7 @@
 			</form>
 			<br>
 			<br>
-			<form form id='form' role="form" method="get" action="UploadServlet" enctype="multipart/form-data" style="display: inline-block">
+			<form form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
 				Select uploaded file to send to database:
 				<br>
 					<select name="fileSelection" id="fileSelection" class="form-control">
@@ -187,7 +187,7 @@
 					var expires = "";
 				document.cookie = name + "=" + value + expires + "; path=/";
 			}
-
+			/*
 			function readCookie(name) {
 				var nameEQ = name + "=";
 				var ca = document.cookie.split(';');
@@ -202,6 +202,7 @@
 				}
 				return null;
 			}
+			*/
 
 			function eraseCookie(name) {
 				createCookie(name, "", -1);
