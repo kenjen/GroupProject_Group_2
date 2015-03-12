@@ -155,18 +155,12 @@
 		<script src="js/plugins/morris/morris-data.js"></script>
 
 		<script>
+										
 			var x = readCookie('usercookie')
-			if (x) {
-				//alert("cookie on welcome page!!!!!!!!!!!!!!!!: " + x);
-				//alert("user type = " + x.charAt(x.length-2))
-				var userType = x.charAt(x.length - 2)
-				if (userType != 0) {
-					window.location.replace("/GroupProject_Group2/");
-				}
-			} else {
-				window.location.replace("/GroupProject_Group2/");
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/home/login.html");
 			}
-
+			
 			function createCookie(name, value, days) {
 				if (days) {
 					var date = new Date();
@@ -176,7 +170,7 @@
 					var expires = "";
 				document.cookie = name + "=" + value + expires + "; path=/";
 			}
-			/*
+			
 			function readCookie(name) {
 				var nameEQ = name + "=";
 				var ca = document.cookie.split(';');
@@ -191,7 +185,7 @@
 				}
 				return null;
 			}
-			*/
+			
 
 			function eraseCookie(name) {
 				createCookie(name, "", -1);

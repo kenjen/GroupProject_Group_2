@@ -172,7 +172,13 @@
 		</div>
 		<!-- /#wrapper -->
 
-		<script>
+		<script>							
+			var x = readCookie('usercookie')
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+
+		
 			function queryReferenceLoader($scope, $http) {
 				var x = readCookie('usercookie');
 				var userType = x.charAt(x.length - 2);

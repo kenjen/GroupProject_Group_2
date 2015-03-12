@@ -143,6 +143,14 @@
 				window.location.replace("/GroupProject_Group2/home");
 			}
 		*/
+		
+							
+			var x = readCookie('usercookie')
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+
+		
 			function createCookie(name, value, days) {
 				if (days) {
 					var date = new Date();
