@@ -99,6 +99,7 @@ public class UploadServletTest extends Mockito{
 		assertTrue(".xls".equals((String)privateGetFileExtension.invoke(servlet, "group_project/test.xls")));
 		assertTrue(".xls".equals((String)privateGetFileExtension.invoke(servlet, "group_project\test.txt.xls")));
 		
+		privateGetFileExtension.setAccessible(false);
 	}
 	
 	

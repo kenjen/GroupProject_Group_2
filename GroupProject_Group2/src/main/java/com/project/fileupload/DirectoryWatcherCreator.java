@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class DirectoryWatcherCreator {
 	
 	@EJB
-    private DirectoryWatcher directoryWatcher;
+    private DirectoryWatcherInterface directoryWatcher;
 	
 	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcherCreator.class);
 	
@@ -38,6 +38,7 @@ public class DirectoryWatcherCreator {
 			log.info("windows not detected, assumming linux");
 			directory = new File(fileSystemPath);
 		}
+		
 		if(directory.exists()){
 	        directoryWatcher.poll(fileSystemPath);
 	        log.info("directory watcher initialised");

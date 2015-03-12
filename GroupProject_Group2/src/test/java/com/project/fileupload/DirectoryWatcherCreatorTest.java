@@ -7,6 +7,7 @@ import java.io.File;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
@@ -26,7 +27,8 @@ public class DirectoryWatcherCreatorTest{
 		return ShrinkWrap.create(WebArchive.class,"test.war")
 				.addPackages(true, "com.project")
 				.addAsLibraries(libraries)
-				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");
+				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
 	@Test

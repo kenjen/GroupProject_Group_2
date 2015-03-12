@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.LookUpDataDAO;
-import com.project.entities.FileInfo;
 import com.project.reader.ReadBase;
 import com.project.reader.ReadLookup;
 import com.project.reader.excel.ExcelBaseDataRead;
@@ -41,7 +40,7 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 	
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void addFilePath(String filePath, String fileName) throws IOException{
+	public boolean addFilePath(String filePath, String fileName) throws IOException{
 		if(UploadServlet.getFileExtension(fileName).equals(".xls")){
 			try {
 				log.info("starting transfer to database with file " + filePath + fileName);
@@ -62,18 +61,22 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 				
 				baseDataReader.read();
 				
+				fileService.addUploadedFilePath(fileName, filePath + fileName, true);
 				log.info("Upload completed with " + baseDataReader.getInvalidRowCount() + " invalid rows!!!!!!!!!");
+				return true;
 			} catch (FileNotFoundException e){
 				log.error("file not found exception: " + filePath + fileName);
+				return false;
 			}
 		}
-		fileService.addUploadedFilePath(fileName, filePath + fileName, true);
+		return false;
 	}
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void removeFileFromDatabase(String fileName) {
+	public boolean removeFileFromDatabase(String fileName) {
 		fileService.removeFileFromDatabase(fileName);
+		return true;
 	}
 
 }
