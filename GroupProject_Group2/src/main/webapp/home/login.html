@@ -12,11 +12,11 @@
 					if(userType==0){
 						window.location.replace("index.html");
 					}else if(userType==1){
-						window.location.replace("queries.html");
+						window.location.replace("alt_index.html");
 					}else if(userType==2){
-						window.location.replace("queries.html");
+						window.location.replace("alt_index.html");
 					}else if(userType==3){
-						window.location.replace("queries.html");
+						window.location.replace("alt_index.html");
 					} 
 				}
 			}
@@ -28,8 +28,6 @@
 		href="http://www.blueprintcss.org/blueprint/plugins/buttons/screen.css" />
 		<link rel="stylesheet" type="text/css" media="print"
 		href="http://www.blueprintcss.org/blueprint/print.css" />
-		<!--[if IE]><link rel="stylesheet" type="text/css" media="screen, projection"
-		href="http://www.blueprintcss.org/blueprint/ie.css"><![endif]-->
 		<script type="text/javascript"
 		src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		
@@ -45,16 +43,10 @@
 		</style>
 	</head>
 	<body>
-
-		<div id="response">
-			<pre></pre>
-		</div>
-
 		<div id="loginContent" class="container">
 			<div id="loginResult" style="display: none;"></div>
 			<form id="loginForm" name="loginForm">
-				<!--   method="post"-->
-				<!--  action="http://localhost:8080/cf/rest/users" >   -->
+				<p id="result"></p>
 				<fieldset>
 					<legend>
 						Enter information
@@ -103,31 +95,25 @@
 							success : function(data, textStatus, jQxhr) {
 								if (data != null) {
 									createCookie('usercookie', JSON.stringify(data), 0);
-									/*
-									var x = readCookie('usercookie')
-									if (x) {
-										alert("cookie at login: "+x);
-									}
-									*/
-									//$('#response pre').html(JSON.stringify(data));
 									var key = 'userType';
-									//alert("userType:  " + data[key]);
-
+									var elem = document.getElementById("result");
 									if (data[key] == 0) {
 										window.location.replace("index.html");
 									} else if (data[key] == 1) {
-										window.location.replace("queries.html");
+										window.location.replace("alt_index.html");
 									} else if (data[key] == 2) {
-										window.location.replace("queries.html");
+										window.location.replace("alt_index.html");
 									} else if (data[key] == 3) {
-										window.location.replace("queries.html");
+										window.location.replace("alt_index.html");
 									} else {
-										document.write('<p>Error user does not exist</p><a href ="login.html">Continue</a>');
+										elem.innerHTML = "Login Failed: wrong username or password";
+										elem.style.color = 'red';
 									}
 
 								}
 								else{
-									document.write('<p>Error user does not exist</p><a href ="login.html">Continue</a>');
+									elem.innerHTML = "Server Error - could not log in";
+									elem.style.color = 'red';
 									console.log(errorThrown);
 								}
 							},
