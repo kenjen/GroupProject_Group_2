@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app>
 
-<head>
+	<head>
 
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,9 +24,9 @@
 		<!-- Custom Fonts -->
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-</head>
+	</head>
 
-<body ng-controller="fileLoader">
+	<body ng-controller="fileLoader">
 
 		<div id="wrapper">
 
@@ -57,7 +57,7 @@
 							<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 						</li>
 						<li>
-						<!--	<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>   -->
+							<!--	<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>   -->
 						</li>
 						<li>
 							<a href="queries.html"><i class="fa fa-fw fa-table"></i> Queries</a>
@@ -93,46 +93,56 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<h1 class="page-header"> Import & Upload <small>New Datasets</small></h1>
-							<ol class="breadcrumb">
-							</ol>
+							<ol class="breadcrumb"></ol>
 						</div>
 					</div>
 					<!-- /.row -->
 
 					<div id="mainPanel" align="center">
-									<!--<h1>File Upload</h1>-->
-			<form method="post" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
-				Select file to upload to server:
-				<input type="file" class="btn btn-default" name="file" size="60" accept=".xls" style="background-color: gray;"/>
-				<br>
-				<button type="submit" class="btn btn-default">Upload To Server</button>
-			</form>
-			<br>
-			<br>
-			<form form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
-				Select uploaded file to send to database:
-				<br>
-					<select name="fileSelection" id="fileSelection" class="form-control">
-						<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
-					</select>
-					<!-- <div ng-repeat="file in files">
-						<p>{{file}}<p>
-					</div> -->
-				<br>
-				<button type="submit" class="btn btn-default">Transfer To Database</button>
-			</form>
-			<br>
-			<br>
-			<form form id='form' role="form" method="post"  action="/GroupProject_Group2/error_data.html">
-				<button type="submit" class="btn btn-default" formtarget="_blank">View invalid records in new tab</button>
-			</form>
-					
+						<!--<h1>File Upload</h1>-->
+						<form method="post" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
+							Select file to upload to server:
+							<input type="file" class="btn btn-default" name="file" size="60" accept=".xls" style="background-color: gray;"/>
+							<br>
+							<button type="submit" class="btn btn-default">
+								Upload To Server
+							</button>
+						</form>
+						<br>
+						<br>
+						<form form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
+							Select uploaded file to send to database:
+							<br>
+							<select name="fileSelection" id="fileSelection" class="form-control">
+								<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
+							</select>
+							<!-- <div ng-repeat="file in files">
+							<p>{{file}}<p>
+							</div> -->
+							<br>
+							<button type="submit" class="btn btn-default">
+								Transfer To Database
+							</button>
+						</form>
+						<br>
+						<br>
+						<form form id='form' role="form" method="post"  action="error_data.html">
+							<button type="submit" class="btn btn-default" formtarget="_blank">
+								View invalid records in new tab
+							</button>
+						</form>
 
 						<br/>
 						<br/>
 					</div>
 				</div>
 				<!-- /.row -->
+
+				<div class="row">
+					<div class="col-lg-12" style="height: 400px;">
+
+					</div>
+				</div>
 
 			</div>
 			<!-- /.container-fluid -->
@@ -155,12 +165,11 @@
 		<script src="js/plugins/morris/morris-data.js"></script>
 
 		<script>
-										
 			var x = readCookie('usercookie')
 			if (!x) {
 				window.location.replace("/GroupProject_Group2/home/login.html");
 			}
-			
+
 			function createCookie(name, value, days) {
 				if (days) {
 					var date = new Date();
@@ -170,7 +179,7 @@
 					var expires = "";
 				document.cookie = name + "=" + value + expires + "; path=/";
 			}
-			
+
 			function readCookie(name) {
 				var nameEQ = name + "=";
 				var ca = document.cookie.split(';');
@@ -185,44 +194,34 @@
 				}
 				return null;
 			}
-			
 
 			function eraseCookie(name) {
 				createCookie(name, "", -1);
 				window.location.replace("/GroupProject_Group2/home/login.html");
 			}
 		</script>
-		
+
 		<script>
 			function fileLoader($scope, $http) {
-			    $http.get('/GroupProject_Group2/rest/file').
-		        success(function(data) {
-		            $scope.files = data;
-		        });
+				$http.get('/GroupProject_Group2/rest/file').success(function(data) {
+					$scope.files = data;
+				});
 			}
 		</script>
-		
+
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 	</body>
 
 </html>
 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<title>File Upload</title>
+</head>
+<body ng-controller="fileLoader">
+	<center>
 
+	</center>
 
-
-
-
-
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-		<title>File Upload</title>
-	</head>
-	<body ng-controller="fileLoader">
-		<center>
-
-		</center>
-		
-
-	</body>
+</body>
 </html>

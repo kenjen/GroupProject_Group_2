@@ -6,10 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		
+
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-		
+
 		<title>Edit User</title>
 
 		<!-- Bootstrap Core CSS -->
@@ -39,7 +39,7 @@
 				if (item) {
 					if (item.className == 'hidden') {
 						item.className = 'unhidden';
-					} 
+					}
 				}
 			}
 
@@ -77,7 +77,7 @@
 							<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 						</li>
 						<li>
-						<!--	<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>  -->
+							<!--	<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>  -->
 						</li>
 						<li>
 							<a href="queries/queries.html"><i class="fa fa-fw fa-table"></i> Queries</a>
@@ -115,18 +115,16 @@
 						</div>
 					</div>
 					<!-- /.row -->
-				<div class="row">
-                    <div class="col-lg-6 text-center">
-                    <div class="panel-body">
-                	</div>
-                      
-                    </div>
-                </div>
-                               
-				<div class="row">
+					<div class="row">
+						<div class="col-lg-6 text-center">
+							<div class="panel-body"></div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
 						<div class="col-lg-4 text-center">
-                    	</div>
-                    	<div class="col-lg-4 text-center">
 							<form id="selectUser" name="selectUser" class="unhidden" role="form">
 								<div class="form-group">
 									<label>Select User</label>
@@ -141,20 +139,19 @@
 								</div>
 							</form>
 						</div>
-					</div>	
-					
-					
-				<script>
-					function userLoader($scope, $http) {
-						$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
-							$scope.users = data;
-						});
-					}
-				</script>	
-				
-				<div id="editOnSelect" class="hidden">
+					</div>
+
+					<script>
+						function userLoader($scope, $http) {
+							$http.get('/GroupProject_Group2/rest/users/getallusers').success(function(data) {
+								$scope.users = data;
+							});
+						}
+					</script>
+
+					<div id="editOnSelect" class="hidden">
 						<div class="col-lg-4 text-center">
-						
+
 							<form id="editUser" name="editUser" role="form">
 								<div class="form-group">
 									<label>Username</label>
@@ -179,10 +176,9 @@
 										Edit User
 									</button>
 								</div>
-								
+
 							</form>
-			
-							
+
 							<form role="form" action="index.html">
 								<div class="form-group">
 									<button type="submit" class="btn btn-default">
@@ -190,60 +186,62 @@
 									</button>
 								</div>
 							</form>
-							
-							</div>
-					
-									
+
 						</div>
-						
-						<p id="result"></p>
-							
-			<script>
-				(function($) {
-					function processFormSelect(e) {
-						var userId = document.getElementById("userId").value;
-						$.ajax({
-							url : '/GroupProject_Group2/rest/users/getuserbyid/',
-							dataType : 'json',
-							type : 'post',
-							contentType : 'application/json',
 
-							data : JSON.stringify({
-								"id" : userId
-							}),
-							processData : false,
-							success : function(data, textStatus, jQxhr) {
-								var username_elem = document.getElementById("username");
-								var password_elem = document.getElementById("password");
-								var elem = document.getElementById("selectUser");
-								elem.className = 'hidden';
-								var type = data.userType;
-								document.getElementById("userType").selectedIndex = type;
-								username_elem.value = data.username;
-								password_elem.value = data.password;
-							},
-							error : function(jqXhr, textStatus, errorThrown) {
-								var elem = document.getElementById("result")
-								elem.innerHTML = "Select User Failed";
-								elem.style.color = 'red';
+					</div>
+
+					<p id="result"></p>
+
+					<script>
+						(function($) {
+							function processFormSelect(e) {
+								var userId = document.getElementById("userId").value;
+								$.ajax({
+									url : '/GroupProject_Group2/rest/users/getuserbyid/',
+									dataType : 'json',
+									type : 'post',
+									contentType : 'application/json',
+
+									data : JSON.stringify({
+										"id" : userId
+									}),
+									processData : false,
+									success : function(data, textStatus, jQxhr) {
+										var username_elem = document.getElementById("username");
+										var password_elem = document.getElementById("password");
+										var elem = document.getElementById("selectUser");
+										elem.className = 'hidden';
+										var type = data.userType;
+										document.getElementById("userType").selectedIndex = type;
+										username_elem.value = data.username;
+										password_elem.value = data.password;
+									},
+									error : function(jqXhr, textStatus, errorThrown) {
+										var elem = document.getElementById("result")
+										elem.innerHTML = "Select User Failed";
+										elem.style.color = 'red';
+									}
+								});
+								e.preventDefault();
 							}
-						});
-						e.preventDefault();
-					}
 
 
-					$('#selectUser').submit(processFormSelect);
-				})(jQuery);
-			</script>
-							
-							
-	
+							$('#selectUser').submit(processFormSelect);
+						})(jQuery);
+					</script>
+
+					<div class="row">
+						<div class="col-lg-12" style="height: 400px;">
+
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
 
 			</div>
-			<!-- /.container-fluid -->
-
-		</div>
-		<!-- /#page-wrapper -->
+			<!-- /#page-wrapper -->
 
 		</div>
 		<!-- /#wrapper -->
@@ -260,23 +258,22 @@
 		<script src="js/plugins/morris/morris-data.js"></script>
 
 		<script>
-		/*
-			var x = readCookie('usercookie')
-			if (x) {
-				var userType = x.charAt(x.length - 2)
-				if (userType != 0) {
-					window.location.replace("/GroupProject_Group2/home");
-				}
-			} else {
-				window.location.replace("/GroupProject_Group2/home");
-			}
-		*/
-							
+			/*
+			 var x = readCookie('usercookie')
+			 if (x) {
+			 var userType = x.charAt(x.length - 2)
+			 if (userType != 0) {
+			 window.location.replace("/GroupProject_Group2/home");
+			 }
+			 } else {
+			 window.location.replace("/GroupProject_Group2/home");
+			 }
+			 */
+
 			var x = readCookie('usercookie')
 			if (!x) {
 				window.location.replace("/GroupProject_Group2/home/login.html");
 			}
-
 
 			function createCookie(name, value, days) {
 				if (days) {
@@ -307,49 +304,48 @@
 				window.location.replace("/GroupProject_Group2/login.html");
 			}
 		</script>
-		
+
 		<script
-			src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-			<script>
-				(function($) {
-					function processFormEdit(e) {
-						var id = document.getElementById("userId").value;
-						var type = document.getElementById("userType").selectedIndex;
-						$.ajax({
-							url : '/GroupProject_Group2/rest/users/updateuser/',
-							dataType : 'json',
-							type : 'post',
-							contentType : 'application/json',
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+			(function($) {
+				function processFormEdit(e) {
+					var id = document.getElementById("userId").value;
+					var type = document.getElementById("userType").selectedIndex;
+					$.ajax({
+						url : '/GroupProject_Group2/rest/users/updateuser/',
+						dataType : 'json',
+						type : 'post',
+						contentType : 'application/json',
 
-							data : JSON.stringify({
-								"id" : id,
-								"username" : $('#username').val(),
-								"password" : $('#password').val(),
-								"userType" : type
-							}),
-							processData : false,
-							success : function(data, textStatus, jQxhr) {
-								var elem = document.getElementById("result")
-								var item = document.getElementById("editOnSelect");
-								item.className = 'hidden';
-								elem.innerHTML = "User Edited Succesfully!<br><br><form role='form' action='editUser.html'><div class='form-group'><button type='submit' class='btn btn-default'>Edit Another User</button></div></form>";
-								elem.style.color = 'black';
-							},
-							error : function(jqXhr, textStatus, errorThrown) {
-								var elem = document.getElementById("result")
-								elem.innerHTML = "Edit User Failed";
-								elem.style.color = 'red';
-							}
-						});
-						e.preventDefault();
-					}
+						data : JSON.stringify({
+							"id" : id,
+							"username" : $('#username').val(),
+							"password" : $('#password').val(),
+							"userType" : type
+						}),
+						processData : false,
+						success : function(data, textStatus, jQxhr) {
+							var elem = document.getElementById("result")
+							var item = document.getElementById("editOnSelect");
+							item.className = 'hidden';
+							elem.innerHTML = "User Edited Succesfully!<br><br><form role='form' action='editUser.html'><div class='form-group'><button type='submit' class='btn btn-default'>Edit Another User</button></div></form>";
+							elem.style.color = 'black';
+						},
+						error : function(jqXhr, textStatus, errorThrown) {
+							var elem = document.getElementById("result")
+							elem.innerHTML = "Edit User Failed";
+							elem.style.color = 'red';
+						}
+					});
+					e.preventDefault();
+				}
 
 
-					$('#editUser').submit(processFormEdit);
-				})(jQuery);
+				$('#editUser').submit(processFormEdit);
+			})(jQuery);
 
-			</script>
-		
+		</script>
 
 	</body>
 
