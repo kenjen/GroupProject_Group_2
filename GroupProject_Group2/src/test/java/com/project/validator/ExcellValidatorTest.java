@@ -78,6 +78,10 @@ public class ExcellValidatorTest {
 	private void clearDataFromPersistenceModule() throws Exception {
 		tx.begin();
 		em.joinTransaction();
+		em.createQuery("delete from BaseData").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
 		em.createQuery("delete from EventCause").executeUpdate();
 		tx.commit();
 		tx.begin();

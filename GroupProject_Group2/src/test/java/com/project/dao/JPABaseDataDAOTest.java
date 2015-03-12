@@ -69,6 +69,22 @@ public class JPABaseDataDAOTest {
 		em.joinTransaction();
 		em.createQuery("delete from BaseData").executeUpdate();
 		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from EventCause").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from FailureClass").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from UE").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from MccMnc").executeUpdate();
+		tx.commit();
 	}
 
 	private void insertTestData() throws Exception, ParseException {
