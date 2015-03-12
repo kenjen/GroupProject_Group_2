@@ -102,15 +102,8 @@ public class UploadServlet extends HttpServlet {
 			}
 		//}
 		
-		
-		if(correctFileFound){
-			request.setAttribute("message", "Upload to server completed successfully!");
-			//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-		}else{
-			request.setAttribute("message", "Upload to server failed<br>Must end in .xls");
-			//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
-		}
-		request.getRequestDispatcher("/message.jsp").forward(request, response);
+			response.sendRedirect("/GroupProject_Group2/home/upload.html");
+
 	}
 	
 	
@@ -132,7 +125,7 @@ public class UploadServlet extends HttpServlet {
 		
 		request.setAttribute("message", "Transfer to database completed successfully!"
 					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data");
-		request.getRequestDispatcher("/message.jsp").forward(request, response);
+		request.getRequestDispatcher("/home/message.jsp").forward(request, response);
 		//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 
