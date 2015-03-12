@@ -210,8 +210,11 @@
 													elem.style.color = 'black';
 
 												} else {
+													var elem = document.getElementById("result");
+													var item = document.getElementById("editOnSelect");
+													item.className = 'hidden';
 													var elem = document.getElementById("result")
-													elem.innerHTML = "User Creation Failed";
+													elem.innerHTML = "User Creation Failed - Username Already Exists!<br><br><form role='form' action='addUser.html'><div class='form-group'><button type='submit' class='btn btn-default'>Add Another User</button></div></form>";
 													elem.style.color = 'red';
 												}
 											},

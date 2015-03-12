@@ -54,9 +54,9 @@ public class JPAUserDAO implements UserDAO{
 		}
 		if (!users.contains(user)){
 			em.persist(user);
-			//return "User Added";
+			return user;
 		}
-		return user;
+		return null;
 		//return "User Not Added";
 	}
 
