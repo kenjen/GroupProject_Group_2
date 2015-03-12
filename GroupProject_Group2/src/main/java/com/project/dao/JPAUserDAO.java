@@ -36,11 +36,11 @@ public class JPAUserDAO implements UserDAO{
 		query.setParameter("username", user.getUsername());
 		query.setParameter("password", user.getPassword());
 		List<User> result = query.getResultList();
-		/*
+		
 		if(result.isEmpty()){
 			return new User("ERROR", "ERROR", -1);
 		}
-		*/
+		
 		return result.get(0);
 	}
 	
