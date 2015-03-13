@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html ng-app>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<title>Dashboard</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="css/sb-admin.css" rel="stylesheet">
+
+		<!-- Morris Charts CSS -->
+		<link href="css/plugins/morris.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+		<script>
+			function resizeTableFrame() {
+				var tableFrame = document.getElementById('tableFrame');
+				tableFrame.style.height = tableFrame.contentWindow.document.body.scrollHeight + 'px';
+			}
+		</script>
+
+		<style>
+			.hidden {
+				display: none;
+			}
+
+			.unhidden {
+				display: block;
+			}
+		</style>
+		<script>
+			function unhide(clickedButton, divID) {
+				var item = document.getElementById(divID);
+				if (item) {
+					if (item.className == 'hidden') {
+						item.className = 'unhidden';
+					}
+				}
+			}
+
+		</script>
+
+	</head>
+
+	<body ng-controller="queryReferenceLoader">
+
+		<div id="wrapper">
+
+			<!-- Navigation -->
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="alt_index.html">Administraton Console</a>
+				</div>
+				<!-- Top Menu Items -->
+				<ul class="nav navbar-right top-nav">
+					<li class="dropdown">
+					<li class="dropdown">
+						<a href="login.html" onclick="eraseCookie('usercookie')"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+					</li>
+				</ul>
+				<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+					<ul class="nav navbar-nav side-nav">
+						<li>
+							<a href="alt_index.html"><i class="fa fa-fw fa-table"></i> Queries</a>
+						</li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</nav>
+
+			<div id="page-wrapper">
+
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="row">
+						<div class="col-lg-12">
+							<h1 class="page-header"> Queries</h1>
+							<ol class="breadcrumb">
+								<li class="active">
+									<i class="fa fa-fw fa-table"></i> Queries
+								</li>
+							</ol>
+						</div>
+					</div>
+					<!-- /.row -->
+
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
+						<div class="col-lg-4 text-center">
+							<div class="panel-body">
+								<div id = "selectQueryVisibility" class = "unhidden">
+									<form enctype="multipart/form-data" role="form">
+										<div class="form-group">
+											<label>Select Query</label>
+											<select id="querySelection" class="form-control">
+												<option ng-repeat="query in queries" value={{query.id}}>{{query.displayName}}</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<button type="submit" id="select"  onclick="alterQuery()" class="btn btn-default">
+												Select
+											</button>
+										</div>
+									</form>
+								</div><!-- end selectQueryVisibility  -->
+							</div>
+						</div>
+					</div>
+
+					<div id="parametersAndTableVisibility" class="hidden" align="center">
+						<div class="col-lg-12 text-center">
+							<p id="result"></p>
+							<iframe id="formFrame" src="queries/imsibydate.html" frameborder=0 width="100%" height="250"></iframe>
+							<br>
+							<iframe id="tableFrame" src="queries/querytable.html" frameborder=0 width="100%" height="600"></iframe>
+						</div><!-- end parametersAndTableVisibility  -->
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12" style="height: 400px;">
+
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- /#page-wrapper -->
+
+		</div>
+		<!-- /#wrapper -->
+
+		<script>
+			var x = readCookie('usercookie')
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+
+			function queryReferenceLoader($scope, $http) {
+				var x = readCookie('usercookie');
+				var userType = x.charAt(x.length - 2);
+				$http.get('/GroupProject_Group2/rest/queries/' + userType).success(function(data) {
+					$scope.queries = data;
+				});
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+
+			function createCookie(name, value, days) {
+				if (days) {
+					var date = new Date();
+					date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+					var expires = "; expires=" + date.toGMTString();
+				} else
+					var expires = "";
+				document.cookie = name + "=" + value + expires + "; path=/";
+			}
+
+			function eraseCookie(name) {
+				createCookie(name, "", -1);
+				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+
+			function alterQuery() {
+				var choice = document.getElementById('querySelection').value;
+				var formFrame = document.getElementById('formFrame');
+				var elem = document.getElementById("result")
+				elem.innerHTML = "Choose Another Query: <form role='form' action='alt_index.html'><div class='form-group'><button type='submit' class='btn btn-default'>Queries</button></div></form>";
+				elem.style.color = 'black';
+				var queryDiv = document.getElementById("selectQueryVisibility");
+				queryDiv.className = 'hidden';
+				var tableDiv = document.getElementById("parametersAndTableVisibility");
+				tableDiv.className = 'unhidden';
+				if (choice == 1) {
+					window.name = "c01"
+					formFrame.src = "queries/eventCauseByImsi.html";
+				} else if (choice == 2) {
+					window.name = "c02"
+					formFrame.src = "queries/imsibydate.html";
+				} else if (choice == 3) {
+					window.name = "c03"
+					formFrame.src = "queries/countmodelfailuresbydate.html";
+				} else if (choice == 4) {
+					window.name = "c04"
+					formFrame.src = "queries/countimsibydate.html";
+				} else if (choice == 5) {
+					window.name = "c05"
+					formFrame.src = "queries/countEventCauseByPhoneModel.html";
+				} else if (choice == 6) {
+					window.name = "c06"
+					formFrame.src = "queries/countsingleimsibydate.html";
+				} else if (choice == 7) {
+					window.name = "c07"
+					formFrame.src = "queries/top10mcc_mnc_celldid_bydate.html";
+				} else if (choice == 8) {
+					window.name = "c08"
+					formFrame.src = "queries/uniqueCauseByImsi.html";
+				} else if (choice == 9) {
+					window.name = "c09"
+					formFrame.src = "queries/counttop10imsibydate.html";
+				} else if (choice == 10) {
+					window.name = "c10"
+					formFrame.src = "queries/imsiByCauseClass.html";
+				}
+			}
+		</script>
+
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+
+		<!-- Morris Charts JavaScript -->
+		<script src="js/plugins/morris/raphael.min.js"></script>
+		<script src="js/plugins/morris/morris.min.js"></script>
+		<script src="js/plugins/morris/morris-data.js"></script>
+
+	</body>
+
+</html>

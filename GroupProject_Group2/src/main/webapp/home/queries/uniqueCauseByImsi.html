@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>UniqueCauseByImsi</title>
+<!-- Bootstrap Core CSS -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+</head>
+<body>
+	<div id="wrapper">
+		<div id="page-wrapper">
+
+			<div class="container-fluid">
+
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-lg-4 text-center"></div>
+					<div class="col-lg-4 text-center">
+						<div class="panel-body">
+
+							<form id='form' role="form" style="display: inline-block">
+								<h4>Select IMSI to filter causes by:</h4>
+								<div class="form-group">
+									<label>IMSI:</label> <input type="number" id = "imsi" name="imsi" class="form-control" required>
+								</div>
+								<div class="form-group">
+									<button type="submit" onClick='refreshTable();'
+										class="btn btn-default">Run Query</button>
+								</div>
+							</form>
+
+						</div>
+						<!-- /.panel -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+
+			</div>
+			<!-- /.container-fluid -->
+
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+	
+	<script type="text/javascript">
+		function refreshTable(){
+			var imsi = document.getElementById('imsi').value;
+			var code = "c08";
+			window.parent.name = code.concat(imsi);
+			/* window.top.getElementById('tableFrame').reload(); */
+			var tableFrame = window.top.document.getElementById('tableFrame');
+			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+			tableFrame.contentWindow.location.reload();
+			/* window.top.resizeTableFrame(); */
+		}
+	</script>
+			<!-- jQuery -->
+	<script src="../js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -19,8 +19,8 @@ import com.project.entities.UE;
 @Remote(BaseDataService.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class BaseDataServiceEJB implements BaseDataService {
-	
-	//@Inject
+
+	// @Inject
 	@EJB
 	private BaseDataDAO baseDataDAO;
 
@@ -39,26 +39,6 @@ public class BaseDataServiceEJB implements BaseDataService {
 	}
 
 	@Override
-	public Collection<FailureClass> addFailureClassKeys() {
-		return baseDataDAO.addFailureClassForeignKey();
-	}
-
-	@Override
-	public Collection<UE> addUEKeys() {
-		return baseDataDAO.addUEForeignKey();
-	}
-
-	@Override
-	public Collection<FailureClass> getFailureClasses() {
-		return baseDataDAO.getFailureClasses();
-	}
-
-	@Override
-	public Collection<UE> getUEs() {
-		return baseDataDAO.getUEs();
-	}
-
-	@Override
 	public List<Object[]> getImsiByDateRange(Date startDate, Date endDate) {
 		return baseDataDAO.getImsiByDateRange(startDate, endDate);
 	}
@@ -69,8 +49,10 @@ public class BaseDataServiceEJB implements BaseDataService {
 	}
 
 	@Override
-	public List<Object[]> getCountSingleImsiBetweenDates(Date startDate, Date endDate, long imsi) {
-		return baseDataDAO.getCountSingleImsiBetweenDates(startDate, endDate, imsi);
+	public List<Object[]> getCountSingleImsiBetweenDates(Date startDate,
+			Date endDate, long imsi) {
+		return baseDataDAO.getCountSingleImsiBetweenDates(startDate, endDate,
+				imsi);
 	}
 
 	@Override
@@ -84,6 +66,7 @@ public class BaseDataServiceEJB implements BaseDataService {
 			Date endDate) {
 		return baseDataDAO.getCountTop10ComboBetweenDates(startDate, endDate);
 	}
+
 	@Override
 	public List<Object[]> getfindUniqueCauseByIMSI(long imsi) {
 		return baseDataDAO.getfindUniqueCauseByIMSI(imsi);

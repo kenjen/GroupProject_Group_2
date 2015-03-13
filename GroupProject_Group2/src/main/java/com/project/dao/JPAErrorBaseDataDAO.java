@@ -28,18 +28,8 @@ public class JPAErrorBaseDataDAO implements ErrorBaseDataDAO {
 
 	@SuppressWarnings("rawtypes")
 	public void addAllErrorBaseData(Collection errorBaseDataList) {
-		entityManager.createNativeQuery("truncate table error_base_data")
-				.executeUpdate();
-		entityManager.createNativeQuery(
-				"alter table error_base_data AUTO_INCREMENT = 1")
-				.executeUpdate();
 		for (Object o : errorBaseDataList) {
-			int i = 0;
 			entityManager.persist(o);
-			if (++i % 50 == 0) {
-				entityManager.flush();
-				entityManager.clear();
-			}
 		}
 	}
 }

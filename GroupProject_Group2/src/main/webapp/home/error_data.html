@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<title>Base Data Errors</title>
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="css/sb-admin.css" rel="stylesheet">
+
+		<!-- Morris Charts CSS -->
+		<link href="css/plugins/morris.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body ng-controller="errorLoader">
+		
+			<div id="page-wrapper">
+				
+					<div class="row">
+						<div class="col-lg-12">
+							<h2 align="center">Error Data</h2>
+							<div class="table-responsive">
+								<table id="errorViewer" class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr>
+
+											<th>Id</th>
+											<th>Cause Code</th>
+											<th>Cell Id</th>
+											<th>Date</th>
+											<th>Duration</th>
+											<th>Event Id</th>
+											<th>Failure Class</th>
+											<th>IMSI</th>
+											<th>MCC</th>
+											<th>MNC</th>
+											<th>NE Version</th>
+											<th>TAC</th>
+											<th>Hier3 Id</th>
+											<th>Hier32 Id</th>
+											<th>Hier321 Id</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="error in errors">
+											<td>{{error.id}}</td>
+											<td>{{error.causeCode}}</td>
+											<td>{{error.cellId}}</td>
+											<td>{{error.date}}</td>
+											<td>{{error.duration}}</td>
+											<td>{{error.eventId}}</td>
+											<td>{{error.failureClass}}</td>
+											<td>{{error.imsi}}</td>
+											<td>{{error.mcc}}</td>
+											<td>{{error.mnc}}</td>
+											<td>{{error.neVersion}}</td>
+											<td>{{error.tac}}</td>
+											<td>{{error.hier3Id}}</td>
+											<td>{{error.hier32Id}}</td>
+											<td>{{error.hier321Id}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div><!-- end table-responsive -->
+				
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function errorLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/error_base_data').success(function(data) {
+					$scope.errors = data;
+				});
+			}
+		</script>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<script>
+			var x = readCookie('usercookie')
+			var userType = x.charAt(x.length - 2)
+			if (userType != 0) {
+				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+			if (!x) {
+				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for (var i = 0; i < ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ')
+					c = c.substring(1, c.length);
+					if (c.indexOf(nameEQ) == 0) {
+						return c.substring(nameEQ.length, c.length);
+					}
+				}
+				return null;
+			}
+		</script>
+	</body>
+</html>
