@@ -13,7 +13,7 @@ import com.project.entities.FailureClass;
 
 @Stateless
 @Local
-public class JPAFailureClassDAO implements FailureClassDAOLocal{
+public class JPAFailureClassDAO implements FailureClassDAO{
 
 	@PersistenceContext
 	private EntityManager em;

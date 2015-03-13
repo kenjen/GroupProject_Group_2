@@ -24,7 +24,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	@EJB
 	private EventCauseDAO eventCauseDAO;
 	@EJB
-	private FailureClassDAOLocal failureClassDAO;
+	private FailureClassDAO failureClassDAO;
 
 	@PersistenceContext(unitName = "GroupProject_Group2")
 	EntityManager entityManager;

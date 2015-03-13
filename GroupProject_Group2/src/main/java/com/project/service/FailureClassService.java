@@ -1,10 +1,12 @@
-package com.project.dao;
+package com.project.service;
 
 import java.util.Collection;
-import java.util.List;
+
+import javax.ejb.Local;
 
 import com.project.entities.FailureClass;
 
-public interface FailureClassDAOLocal {
+@Local
+public interface FailureClassService {
 	Collection<FailureClass> getAllFailureClasses();
 }
