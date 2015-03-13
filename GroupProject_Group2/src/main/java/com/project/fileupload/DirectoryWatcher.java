@@ -12,15 +12,15 @@ import java.util.List;
 
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.project.entities.FileInfo;
-
 @Stateless
-public class DirectoryWatcher {
+@Remote
+public class DirectoryWatcher implements DirectoryWatcherInterface{
 	
 	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcher.class);
 	
@@ -31,6 +31,7 @@ public class DirectoryWatcher {
 	
 	private static String systemFilePath = "";
 	
+	@Override
 	@Asynchronous
 	public void poll(String fileSystemPath) throws IOException {
 		systemFilePath = fileSystemPath;

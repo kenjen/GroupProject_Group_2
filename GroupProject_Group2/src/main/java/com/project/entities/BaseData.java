@@ -24,12 +24,12 @@ import javax.persistence.Transient;
 
 		@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate AND b.imsi = :imsi"),
 
-		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY count(b.imsi) DESC"),
+		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY b.imsi DESC"),
 
-		@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(*), m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK GROUP BY m.country, m.operator, b.cellId ORDER BY count(*) DESC"),
+		@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(m), m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK.id GROUP BY m.country, m.operator, b.cellId ORDER BY m DESC"),
 
 		@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.eventId, e.causeCode from EventCause e, BaseData b "
-				+ " where b.imsi = :imsi and e.id = b.eventCauseFK group by e.causeCode")
+				+ " where b.imsi = :imsi and e.id = b.eventCauseFK.id group by e.causeCode")
 
 })
 @Entity

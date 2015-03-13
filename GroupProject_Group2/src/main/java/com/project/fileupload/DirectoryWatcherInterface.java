@@ -2,12 +2,10 @@ package com.project.fileupload;
 
 import java.io.IOException;
 
+import javax.ejb.Asynchronous;
+
 public interface DirectoryWatcherInterface {
-/*
-	DirectoryWatcher getDirectoryWatcher() throws IOException;
 
-	boolean startWatching() throws IOException;
-
-	void stopWatching() throws IOException;
-*/
+	@Asynchronous
+	void poll(String fileSystemPath) throws IOException;
 }

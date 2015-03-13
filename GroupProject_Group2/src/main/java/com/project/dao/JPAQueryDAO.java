@@ -32,7 +32,7 @@ public class JPAQueryDAO implements QueryDAO{
 		list.add(new Query(2, 2, "List IMSI by Date Range"));
 		list.add(new Query(3, 2, "Count failures For Model Of Phone"));
 		list.add(new Query(4, 1, "Count failures and duration for each IMSI by Date"));
-		list.add(new Query(5, 1, "Unique EventId/CauseCode and Count Occurances For Model Of Phone"));
+		list.add(new Query(5, 1, "Unique EventId/CauseCode and Count Occurrences For Model Of Phone"));
 		list.add(new Query(6, 3, "Count failures for IMSI by Date"));
 		list.add(new Query(7, 1, "Top 10 Market/Operator/CellId Combinations by Date"));
 		list.add(new Query(8, 3, "Unique Cause Codes for IMSI"));
