@@ -57,4 +57,12 @@ public class EventCauseEJB implements EventCauseDAO {
 		query.setParameter("IMSI", imsi);
 		return query.getResultList();
 	}
+	
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
 }
