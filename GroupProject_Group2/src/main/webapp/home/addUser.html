@@ -20,16 +20,16 @@
 				display: block;
 			}
 		</style>
-		
+
 		<script type="text/javascript">
 			function unhide(clickedButton, divID) {
 				var item = document.getElementById(divID);
 				if (item) {
 					if (item.className == 'hidden') {
 						item.className = 'unhidden';
-					} 
+					}
 				}
-			}	
+			}
 
 		</script>
 
@@ -79,7 +79,7 @@
 							<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 						</li>
 						<li>
-					<!--		<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>  -->
+							<!--		<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>  -->
 						</li>
 						<li>
 							<a href="queries.html"><i class="fa fa-fw fa-table"></i> Queries</a>
@@ -131,46 +131,44 @@
 						<div class="col-lg-4 text-center"></div>
 						<div class="col-lg-4 text-center">
 							<div id="editOnSelect" class="unhidden">
-							<form id="addUser" name="addUser" role="form">
-								<div class="form-group">
-									<label>Username</label>
-									<input type="text" name="username" id="username" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<label>Password</label>
-									<input input type="password" name="password" id="password" class="form-control" required>
-								</div>
+								<form id="addUser" name="addUser" role="form">
+									<div class="form-group">
+										<label>Username</label>
+										<input type="text" name="username" id="username" class="form-control" required>
+									</div>
+									<div class="form-group">
+										<label>Password</label>
+										<input input type="password" name="password" id="password" class="form-control" required>
+									</div>
 
-								<div class="form-group">
-									<label>User Type</label>
-									<select class="form-control" id="userType" class="form-control">
-										<option>System Administrator</option>
-										<option>Network Management Engineer</option>
-										<option>Support Engineer</option>
-										<option>Customer Service Rep</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<button type="submit" id="add" class="btn btn-default">
-										Add User
-									</button>
-								</div>
-							</form>
+									<div class="form-group">
+										<label>User Type</label>
+										<select class="form-control" id="userType" class="form-control">
+											<option>System Administrator</option>
+											<option>Network Management Engineer</option>
+											<option>Support Engineer</option>
+											<option>Customer Service Rep</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="submit" id="add" class="btn btn-default">
+											Add User
+										</button>
+									</div>
+								</form>
 
-							
-							<form role="form" action="index.html">
-								<div class="form-group">
-									<button type="submit" class="btn btn-default">
-										Cancel
-									</button>
-								</div>
-							</form>
-							
-							</div> <!-- end add user form hidden div! -->
-							
+								<form role="form" action="index.html">
+									<div class="form-group">
+										<button type="submit" class="btn btn-default">
+											Cancel
+										</button>
+									</div>
+								</form>
+
+							</div>
+							<!-- end add user form hidden div! -->
+
 							<p id="result"></p>
-							
-							
 
 							<script
 							src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -223,9 +221,9 @@
 						</div>
 					</div>
 					<div class="row">
-					<div class="col-lg-12" style="height: 400px;">
-						
-					</div>
+						<div class="col-lg-12" style="height: 400px;">
+
+						</div>
 					</div>
 
 				</div>
@@ -252,22 +250,29 @@
 		<script src="js/plugins/morris/morris-data.js"></script>
 
 		<script>
-		/*
-			var x = readCookie('usercookie')
-			if (x) {
-				var userType = x.charAt(x.length - 2)
-				if (userType != 0) {
-					window.location.replace("/GroupProject_Group2/home");
-				}
-			} else {
-				window.location.replace("/GroupProject_Group2/home");
-			}
-		*/
-		
-					
+			/*
+			 var x = readCookie('usercookie')
+			 if (x) {
+			 var userType = x.charAt(x.length - 2)
+			 if (userType != 0) {
+			 window.location.replace("/GroupProject_Group2/home");
+			 }
+			 } else {
+			 window.location.replace("/GroupProject_Group2/home");
+			 }
+			 */
+
 			var x = readCookie('usercookie')
 			if (!x) {
 				window.location.replace("/GroupProject_Group2/home/login.html");
+			}
+			if (x) {
+				var userType = x.charAt(x.length - 2)
+				if (userType != 0) {
+					window.location.replace("/GroupProject_Group2/home/alt_index.html");
+				}
+			} else {
+				window.location.replace("/GroupProject_Group2/alt_index.html");
 			}
 
 			function createCookie(name, value, days) {
