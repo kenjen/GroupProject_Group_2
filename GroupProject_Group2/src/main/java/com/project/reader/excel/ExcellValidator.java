@@ -14,17 +14,7 @@ import com.project.entities.UE;
 import com.project.reader.Validator;
 
 public class ExcellValidator implements Validator {
-
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger
-			.getLogger(ExcellValidator.class);
-
-	/*
-	 * VALID DATE FORMAT
-	 */
 	private final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
-	/*
-	 * VAILD NE VERSION
-	 */
 	private final String NE_VERSION_PATTERN = ("^([1-9][1-9][A-B])$");
 
 	@Override
@@ -43,23 +33,13 @@ public class ExcellValidator implements Validator {
 			return false;
 		}
 		if (baseData.getDate().getTime() < 0)
-			return false; // before the Epoch
-			// if (baseData.getEventId() < 0 || baseData.getCauseCode() < 0)
-			// return false;
-		/*logger.info("BaseData object " + baseData.getId() + "EventCauseFK: "
-				+ baseData.getEventCauseFK());*/
+			return false;
 		if (baseData.getEventCauseFK().getId().equals(-1))
 			return false;
-		// if (baseData.getFailureClass() < 0)
-		// return false;
 		if (baseData.getFaliureClassFK().getId().equals(-1))
 			return false;
-		// if (baseData.getTac() < 0)
-		// return false;
 		if (baseData.getUeFK().getId().equals(-1))
 			return false;
-		// if (baseData.getMcc() < 0 || baseData.getMnc() < 0)
-		// return false;
 		if (baseData.getMccMncFK().getId().equals(-1))
 			return false;
 		if (baseData.getCellId() < 0)
@@ -77,9 +57,6 @@ public class ExcellValidator implements Validator {
 		if (baseData.getHier3Id() == null || baseData.getHier32Id() == null
 				|| baseData.getHier321Id() == null)
 			return false;
-		/*
-		 * Return true if validation passed
-		 */
 		return true;
 	}
 

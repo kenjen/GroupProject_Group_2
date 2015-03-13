@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<!-- Bootstrap Core CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+	</head>
+	<body ng-controller="failureLoader">
+		<div id="wrapper">
+			<div id="page-wrapper">
+
+				<div class="container-fluid">
+
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
+						<div class="col-lg-4 text-center">
+							<div class="panel-body">
+								<form id='form' role="form" style="display: inline-block">
+									<div class="form-group">
+										<label>Choose Failure Cause Class:</label>
+										<select id="phoneModelSelection" class="form-control">
+											<option id="failure" ng-repeat="model in models" value={{model.failureClass}}>{{model.description}}</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="submit" onClick='refreshTable();' class="btn btn-default">
+											Run Query
+										</button>
+									</div>
+								</form>
+
+							</div><!-- /.panel -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- /#page-wrapper -->
+
+		</div>
+		<!-- /#wrapper -->
+
+		<script type="text/javascript">
+			function failureLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/failureclass/getallfailureclasses').success(function(data) {
+					$scope.models = data;
+				});
+			}
+
+			function refreshTable() {
+				var phoneModel = document.getElementById('failure').value;
+				var code = "c10";
+				window.top.name = code.concat(phoneModel);
+				var tableFrame = window.top.document.getElementById('tableFrame');
+				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+				tableFrame.contentWindow.location.reload();
+			}
+		</script>
+		<!-- jQuery -->
+		<script src="../js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="../js/bootstrap.min.js"></script>
+	</body>
+	</body>
+</html>

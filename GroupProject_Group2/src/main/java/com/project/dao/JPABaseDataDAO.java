@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -12,8 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.project.entities.BaseData;
-import com.project.entities.FailureClass;
-import com.project.entities.UE;
 
 @Stateless
 @Local
@@ -34,10 +31,6 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		int i = 0;
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
-			if (++i % 50 == 0) {
-				entityManager.flush();
-				entityManager.clear();
-			}
 		}
 	}
 
