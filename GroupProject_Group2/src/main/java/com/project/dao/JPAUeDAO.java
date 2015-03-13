@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +16,19 @@ import com.project.entities.UE;
 @Local
 public class JPAUeDAO implements UeDAO {
 	
-	@PersistenceContext(unitName="GroupProject_Group2") EntityManager entityManager;
+	@PersistenceContext
+	EntityManager em;
+	
+	@Override
+	public Collection<UE> getAllUEs() {
+		Query query = em.createQuery("from UE");
+		List<UE> result = query.getResultList();
+		return result;
+	}
 
 	@Override
 	public List<Object[]> getCallFailuresDateRange(Date start, Date end, Integer tac) {
-		Query query = entityManager.createNamedQuery("Ue.getCallFailuresDateRange");
+		Query query = em.createNamedQuery("Ue.getCallFailuresDateRange");
 		query.setParameter("startDate", start);
 		query.setParameter("endDate", end);
 		query.setParameter("tac", tac);
@@ -29,7 +38,7 @@ public class JPAUeDAO implements UeDAO {
 
 	@Override
 	public List<UE> getAllModels() {
-		Query query = entityManager.createNamedQuery("Ue.getAllModels");
+		Query query = em.createNamedQuery("Ue.getAllModels");
 		List<UE> data = query.getResultList();
 		return data;
 	}
