@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -10,5 +11,7 @@ public interface UeDAO {
 	List<Object[]> getCallFailuresDateRange(Date start, Date end, Integer tac);
 
 	List<UE> getAllModels();
+
+	Collection<UE> getAllUEs();
 
 }
