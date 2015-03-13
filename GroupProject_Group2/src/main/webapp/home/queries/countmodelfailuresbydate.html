@@ -1,102 +1,108 @@
 <!DOCTYPE html>
 <html ng-app>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Insert title here</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 
+		<!-- Bootstrap Core CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom Fonts -->
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	</head>
+	<body ng-controller="phoneModelLoader">
+		<div id="wrapper">
+			<div id="page-wrapper">
 
-<!-- Custom Fonts -->
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-</head>
-<body ng-controller="phoneModelLoader">
-	<div id="wrapper">
-		<div id="page-wrapper">
+				<div class="container-fluid">
 
-			<div class="container-fluid">
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
+						<div class="col-lg-4 text-center">
+							<div class="panel-body">
 
-				<!-- /.row -->
-				<div class="row">
-					<div class="col-lg-4 text-center"></div>
-					<div class="col-lg-4 text-center">
-						<div class="panel-body">
-
-							<form id='form' role="form" style="display: inline-block">
-								<h4>Select phone model and dates to filter failures by:</h4>
-								<div class="form-group">
-									<label>Choose Phone Model:</label> <select
-										id="phoneModelSelection" class="form-control">
-										<option id="phone" ng-repeat="model in models"
-											value={{model.marketingName}}>{{model.marketingName}}</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label>Start Date:</label> <input type="datetime-local"
+								<form id='form' role="form" style="display: inline-block">
+									<h4>Select phone model and dates to filter failures by:</h4>
+									<div class="form-group">
+										<label>Choose Phone Model:</label>
+										<select id="phoneModelSelection" class="form-control">
+											<option id="phone" ng-repeat="model in models"
+											value={{model.tac}}>{{model.marketingName}}</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Start Date:</label>
+										<input type="datetime-local"
 										id="startDate" name="startDate" value="2013-02-20T09:00:00"
-										class="form-control" required> <label>End
-										Date:</label> <input type="datetime-local" id="endDate" name="endDate"
+										class="form-control" required>
+										<label>End
+											Date:</label>
+										<input type="datetime-local" id="endDate" name="endDate"
 										value="2013-02-20T13:00:00" class="form-control" required>
-								</div>
-								<div class="form-group">
-									<button type="submit" onClick='refreshTable();'
-										class="btn btn-default">Run Query</button>
-								</div>
-							</form>
+									</div>
+									<div class="form-group">
+										<button type="submit" onClick='refreshTable();'
+										class="btn btn-default">
+											Run Query
+										</button>
+									</div>
+								</form>
 
+							</div>
+							<!-- /.panel -->
 						</div>
-						<!-- /.panel -->
+						<!-- /.col -->
 					</div>
-					<!-- /.col -->
+					<!-- /.row -->
+
 				</div>
-				<!-- /.row -->
+				<!-- /.container-fluid -->
 
 			</div>
-			<!-- /.container-fluid -->
+			<!-- /#page-wrapper -->
 
 		</div>
-		<!-- /#page-wrapper -->
+		<!-- /#wrapper -->
 
-	</div>
-	<!-- /#wrapper -->
-
-
-
-
-
-
-	<script type="text/javascript">
-		function phoneModelLoader($scope, $http) {
-			$http.get('/GroupProject_Group2/rest/ue/getAllModels').success(
-					function(data) {
-						$scope.models = data;
-					});
-		}
-
-		function refreshTable() {
-			var startString = document.getElementById('startDate').value;
-			var endStringA = document.getElementById('endDate').value;
-			var endStringB = document.getElementById('endDate').value;
-			if (endStringA.length == 16) {
-				endStringB = endStringA.concat(":00");
+		<script type="text/javascript">
+			function phoneModelLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/ue/getAllModels').success(function(data) {
+					$scope.models = data;
+				});
 			}
-			var stringNoCode = startString.concat(endStringB);
-			var code = "c03";
-			window.name = code.concat(stringNoCode);
-			var tableFrame = window.top.document.getElementById('tableFrame');
-			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
-			tableFrame.contentWindow.location.reload();
-		}
-	</script>
 
-	</script>
-	<!-- jQuery -->
-	<script src="../js/jquery.js"></script>
+			function refreshTable() {
+				var startStringA = document.getElementById('startDate').value;
+				var startString = document.getElementById('startDate').value;
+				var endStringA = document.getElementById('endDate').value;
+				var endStringB = document.getElementById('endDate').value;
+				if (startStringA.length == 16) {
+					startString = startStringA.concat(":00");
+				}
+				if (endStringA.length == 16) {
+					endStringB = endStringA.concat(":00");
+				}
+				var StringC = document.getElementById('phoneModelSelection').value;
+				var stringABCode = startString.concat(endStringB);
+				var stringNoCode = stringABCode.concat(StringC);
+				var code = "c03";
+				alert(stringNoCode);
+				window.parent.name = code.concat(stringNoCode);
+				var tableFrame = window.top.document.getElementById('tableFrame');
+				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+				tableFrame.contentWindow.location.reload();
+			}
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="../js/bootstrap.min.js"></script>
-</body>
+		</script>
+
+		</script>
+		<!-- jQuery -->
+		<script src="../js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="../js/bootstrap.min.js"></script>
+	</body>
 </html>
