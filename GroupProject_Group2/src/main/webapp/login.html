@@ -3,84 +3,187 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script>
-			window.onload = function(){
-				var x = readCookie('usercookie')
-				//alert("script! x = " + x)
-				if (x) {
-					var userType = x.charAt(x.length-2)
-					if(userType==0){
-						window.location.replace("/GroupProject_Group2/WelcomeSysAdmin.html");
-					}else if(userType==1){
-						window.location.replace("/GroupProject_Group2/WelcomeNetManager.html");
-					}else if(userType==2){
-						window.location.replace("/GroupProject_Group2/WelcomeSupportEng.html");
-					}else if(userType==3){
-						window.location.replace("/GroupProject_Group2/WelcomeCustRep.html");
-					} 
-				}
-			}
-		</script>
-		<title>Login</title>
-		<link rel="stylesheet" type="text/css" media="screen, projection"
-		href="http://www.blueprintcss.org/blueprint/screen.css" />
-		<link rel="stylesheet" type="text/css" media="screen, projection"
-		href="http://www.blueprintcss.org/blueprint/plugins/buttons/screen.css" />
-		<link rel="stylesheet" type="text/css" media="print"
-		href="http://www.blueprintcss.org/blueprint/print.css" />
-		<!--[if IE]><link rel="stylesheet" type="text/css" media="screen, projection"
-		href="http://www.blueprintcss.org/blueprint/ie.css"><![endif]-->
+		
 		<script type="text/javascript"
 		src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script type="text/javascript" src="login.js"></script>
-		
-		<style type="text/css">
-			#loginContent {
-				width: 350px;
-				margin: 100px auto;
-			}
+		  <script src="js/prefixfree.min.js"></script>
+		 <style>
+@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
 
-			button[type] {
-				margin: 0.5em 0;
-			}
-		</style>
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.body{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background-image: url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRIrTzzR1A-wHpApQxDh0dcIjQLbStfb4b-gAEnUmtyul6ywY24);
+	background-size: cover;
+	-webkit-filter: blur(3px);
+	z-index: 0;
+	
+}
+
+.grad{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	z-index: 1;
+	opacity: 0.7;
+}
+
+.header{
+	position: absolute;
+	top: calc(50% - 35px);
+	left: calc(30% - 255px);
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 45px;
+	font-weight: 300;
+}
+
+.header div span{
+	color: #000099 !important;
+}
+
+.login{
+	position: absolute;
+	top: calc(50% - 75px);
+	left: calc(50% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+
+.login input[type=text]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 3px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+.login input[type=password]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 3px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login input[type=button]{
+	width: 263px;
+	height: 35px;
+	background: #fff;
+	border: 3px solid #fff;
+	cursor: pointer;
+	border-radius: 2px;
+	color: #333333;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+}
+
+.login input[type=button]:hover{
+	opacity: 0.8;
+}
+
+.login input[type=button]:active{
+	opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 3px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 3px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=button]:focus{
+	outline: none;
+}
+
+::-webkit-input-placeholder{
+   color: rgba(255,255,255,0.5);
+}
+
+::-moz-input-placeholder{
+   color: rgba(255,255,255,0.5);
+}
+</style>
 	</head>
 	<body>
+		<div class="body"></div>
+		<div class="grad"><img src="data:image/png;base64,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" alt="Ericsson logo" height="200" width="200"></div>
+		<div class="header">
+			<div>Ericsson<span> Call Events</span></div>
+		</div>
+		<br>
+		<div>
+		
+		</div>
+		
+
+  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
 
 		<div id="response">
 			<pre></pre>
 		</div>
-
-		<div id="loginContent" class="container">
+	
+		<div id="loginContent" class="login">
 			<div id="loginResult" style="display: none;"></div>
 			<form id="loginForm" name="loginForm">
 				<!--   method="post"-->
 				<!--  action="http://localhost:8080/cf/rest/users" >   -->
-				<fieldset>
-					<legend>
-						Enter information
-					</legend>
-					<p>
-						<label for="username">Username</label>
-						<br />
+				
 						<input type="text"
-						id="username" name="username" class="text" size="20" required/>
-					</p>
-					<p>
-						<label for="password">Password</label>
-						<br />
-						<input
-						type="password" id="password" name="password" class="text"
-						size="20" required/>
-					</p>
-					<p>
-						<button type="submit" class="button positive">
-							<img alt="ok"
-							src="http://www.blueprintcss.org/blueprint/plugins/buttons/icons/tick.png" />
-							Login
-						</button>
-					</p>
-				</fieldset>
+						id="username" name="username" placeholder="username" required/>
+				
+						<input type="password" id="password" name="password" placeholder="password"  required/>
+				
+							<input type="button" value="Login">
+					
+			
 			</form>
 			
 			
@@ -123,7 +226,7 @@
 									} else if (data[key] == 3) {
 										window.location.replace("/GroupProject_Group2/WelcomeCustRep.html");
 									} else {
-										window.location.replace("/GroupProject_Group2/");
+										window.location.replace("/GroupProject_Group2/queries.html");
 									}
 
 								}
