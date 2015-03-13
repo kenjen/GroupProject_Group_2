@@ -42,34 +42,6 @@ public class BaseDataRest {
 	}
 	
 	@GET
-	@Path("/testue")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<UE> addUEKeys() {
-		return baseDataService.addUEKeys();
-	}
-	
-	@GET
-	@Path("/testfc")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailureClass> addFailureClassKeys() {
-		return baseDataService.addFailureClassKeys();
-	}
-	
-	@GET
-	@Path("/testallue")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<UE> getUEs() {
-		return baseDataService.getUEs();
-	}
-	
-	@GET
-	@Path("/testallfc")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<FailureClass> getFailureClasses() {
-		return baseDataService.getFailureClasses();
-	}
-	
-	@GET
 	@Path("/eventcause")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<EventCause> getAllEventCause() {
