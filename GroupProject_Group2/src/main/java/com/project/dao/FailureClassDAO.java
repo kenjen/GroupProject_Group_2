@@ -2,8 +2,6 @@ package com.project.dao;
 
 import java.util.List;
 
-import persistence.PersistenceUtil;
-
 import com.project.entities.FailureClass;
 
 public class FailureClassDAO 
