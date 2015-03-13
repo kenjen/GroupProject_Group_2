@@ -5,15 +5,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.project.dao.LookUpDataDAO;
 import com.project.entities.EventCause;
@@ -25,6 +26,8 @@ import com.project.reader.ReadLookup;
 @Stateless
 @Local
 public class ExcelLookupDataRead implements ReadLookup {
+
+	private static final Logger log = LoggerFactory.getLogger(ExcelLookupDataRead.class);
 
 	private static List<EventCause> eventCauseListTop = new ArrayList<EventCause>();
 	EventCause eventCauseRecordTop = null;
@@ -121,6 +124,9 @@ public class ExcelLookupDataRead implements ReadLookup {
 
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
+		
+		log.info("input file path = " + inputFile);
+		
 		HSSFWorkbook hssfWorkBook = new HSSFWorkbook(hssfInputWorkbook);
 		new DataFormatter();
 

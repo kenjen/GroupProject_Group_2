@@ -16,7 +16,7 @@ public class PersistenceUtil implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	protected static EntityManagerFactory emf = 
-			Persistence.createEntityManagerFactory("dt340a"); 	
+			Persistence.createEntityManagerFactory("GroupProject_Group2"); 	
 	
 	
 	public static void persist(Object entity)
