@@ -109,6 +109,9 @@
 							</button>
 						</form>
 						<br>
+						<br>
+						<h4 id="server-reponse"></h4>
+						<br>
 
 						<form form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
 							Select uploaded file to send to database:
@@ -116,15 +119,11 @@
 							<select name="fileSelection" id="fileSelection" class="form-control">
 								<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
 							</select>
-							<!-- <div ng-repeat="file in files">
-							<p>{{file}}<p>
-							</div> -->
-							<br>
 							<button type="submit" class="btn btn-default">
 								Transfer To Database
 							</button>
 						</form>
-						<br>
+
 						<br>
 						<form form id='form' role="form" method="post"  action="error_data.html">
 							<button type="submit" class="btn btn-default" formtarget="_blank">
@@ -208,20 +207,20 @@
 				});
 			}
 		</script>
+		<script>
+			//alert(window.location.hash);
+			var response = window.location.hash;
+			var len = response.length;
+			var elem = document.getElementById("server-reponse");
+			if (len > 2) {
+				elem.innerHTML = "Server Response:" + response;
+				//elem.style.color = 'red';
+			}
+
+		</script>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 	</body>
 
-</html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-<title>File Upload</title>
-</head>
-<body ng-controller="fileLoader">
-	<center>
-
-	</center>
-
-</body>
 </html>

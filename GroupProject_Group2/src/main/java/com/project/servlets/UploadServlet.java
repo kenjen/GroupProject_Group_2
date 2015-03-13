@@ -101,8 +101,8 @@ public class UploadServlet extends HttpServlet {
 				fileDao.addUploadedFilePath(finalFileName, finalFilePath);
 			}
 		//}
-		
-			response.sendRedirect("/GroupProject_Group2/home/upload.html");
+			String resp = " Upload Successful";
+			response.sendRedirect("/GroupProject_Group2/home/upload.html#"+resp);
 
 	}
 	
@@ -123,10 +123,16 @@ public class UploadServlet extends HttpServlet {
 		baseDataReader.read();
 		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
 		
+		/*
 		request.setAttribute("message", "Transfer to database completed successfully!"
 					+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data");
 		request.getRequestDispatcher("/home/message.jsp").forward(request, response);
 		//getServletContext().getRequestDispatcher("/message.jsp").forward(request, response);
+		 * */
+		 
+		
+		String resp = " Transfer to database completed successfully! There were " + numOfInvalidRows + " invalid rows in the base data";
+		response.sendRedirect("/GroupProject_Group2/home/upload.html#"+resp);
 	}
 
 	/**
