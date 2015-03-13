@@ -46,7 +46,7 @@ public class ExcellValidator implements Validator {
 			return false; // before the Epoch
 //		if (baseData.getEventId() < 0 || baseData.getCauseCode() < 0)
 //			return false;
-		logger.info("BaseData object " + baseData.getId() + "EventCauseFK: " + baseData.getEventCauseFK());
+	//	logger.info("BaseData object " + baseData.getId() + "EventCauseFK: " + baseData.getEventCauseFK());
 		if (baseData.getEventCauseFK().getId().equals(-1))
 			return false;
 //		if (baseData.getFailureClass() < 0)
