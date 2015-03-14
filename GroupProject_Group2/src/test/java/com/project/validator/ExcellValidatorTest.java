@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.project.dao.EventCauseDAO;
-import com.project.dao.FailureClassDAOLocal;
+import com.project.dao.FailureClassDAO;
 import com.project.dao.MccMncDAO;
 import com.project.dao.UserEquipmentDAO;
 import com.project.entities.BaseData;
@@ -56,7 +56,7 @@ public class ExcellValidatorTest {
 	@EJB
 	private EventCauseDAO eventCauseDao;
 	@EJB
-	private FailureClassDAOLocal failureClassDao;
+	private FailureClassDAO failureClassDao;
 	@EJB
 	private UserEquipmentDAO ueDao;
 	@EJB

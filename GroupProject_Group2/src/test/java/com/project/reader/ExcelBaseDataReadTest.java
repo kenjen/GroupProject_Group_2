@@ -28,14 +28,18 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.EventCauseDAO;
@@ -48,6 +52,7 @@ import com.project.entities.FailureClass;
 import com.project.entities.MccMnc;
 import com.project.entities.UE;
 import com.project.reader.excel.ExcelBaseDataRead;
+import com.project.reader.excel.ExcelLookupDataRead;
 import com.project.reader.excel.ExcellValidator;
 
 @RunWith(Arquillian.class)
@@ -67,13 +72,15 @@ public class ExcelBaseDataReadTest {
 	private static final String OUTPUT_FILE = "C:/jboss-as-7.1.1.Final/test_workbook.xls";
 	private static final String INPUT_FILE = "C:/jboss-as-7.1.1.Final/test_workbook.xls";
 	private static final int sheetNumber = 0;
-	
-	@EJB
-	private LookUpDataDAO lookupDao;
-	
+
+	private static ReadLookup mockLookup;
+	private static Validator mockValidator;
+	private static ReadBase mockBaseDataRead;
+	private static EventCauseDAO eventCauseRecord;
+
 	@EJB
 	private ReadBase readBase;
-	
+
 	@EJB
 	private BaseDataDAO baseDataDao;
 
@@ -91,6 +98,19 @@ public class ExcelBaseDataReadTest {
 
 	@Inject
 	UserTransaction tx;
+
+	@BeforeClass
+	public static void setUp() throws IOException {
+		mockLookup = mock(ExcelLookupDataRead.class);
+		mockValidator = mock(ExcellValidator.class);
+		mockBaseDataRead = mock(ExcelBaseDataRead.class);
+		eventCauseRecord = mock(EventCauseDAO.class);
+
+		//eventCauseRecord.
+		
+		//when(eventCauseRecord.equals(obj);)
+		//when(mockValidator.isValid(eventCauseRecord)).thenReturn(true);
+	}
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
@@ -306,14 +326,17 @@ public class ExcelBaseDataReadTest {
 	}
 
 	@Test
-	@Ignore
 	public void testRead() throws Exception {
 		ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
 		ExcellValidator excelValidator = new ExcellValidator();
 		baseDataReader.setInputFile(INPUT_FILE);
 		baseDataReader.setSheetNumber(sheetNumber);
 
-		baseDataReader.read();
+		Logger log = Logger.getLogger(ExcelBaseDataReadTest.class);
+		
+		EventCause eventCauseRecord = ExcelLookupDataRead.getEventCause(10, 1);
+		
+		log.info("EVENT_CAUSE RETURNED FROM LOOKUP: " + eventCauseRecord);
 
 		List<BaseData> baseDataList = (List<BaseData>) baseDataDao
 				.getAllBaseData();

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -30,7 +29,7 @@ import com.project.entities.UE;
 public class ExcelBaseDataRead implements ReadBase {
 
 	private String inputFile;
-	//@Inject
+
 	private ExcellValidator validator = new ExcellValidator();
 
 	private int sheetNumber;
@@ -72,14 +71,15 @@ public class ExcelBaseDataRead implements ReadBase {
 				if (cell.getColumnIndex() == 0) {
 					try {
 						baseDataRecord.setDate(cell.getDateCellValue());
-					}catch(Exception e){
+					} catch (Exception e) {
 						baseDataRecord.setDate(new Date(1l));
 						rowValid = false;
 					}
 				}
 				if (cell.getColumnIndex() == 1) {
 					try {
-						baseDataRecord.setEventId((int) cell.getNumericCellValue());
+						baseDataRecord.setEventId((int) cell
+								.getNumericCellValue());
 					} catch (Exception e) {
 						baseDataRecord.setEventId(-1);
 						rowValid = false;
@@ -87,7 +87,8 @@ public class ExcelBaseDataRead implements ReadBase {
 				}
 				if (cell.getColumnIndex() == 2) {
 					try {
-						baseDataRecord.setFailureClass((int) cell.getNumericCellValue());
+						baseDataRecord.setFailureClass((int) cell
+								.getNumericCellValue());
 					} catch (Exception e) {
 						baseDataRecord.setFailureClass(-1);
 						rowValid = false;
@@ -119,7 +120,8 @@ public class ExcelBaseDataRead implements ReadBase {
 				}
 				if (cell.getColumnIndex() == 6) {
 					try {
-						baseDataRecord.setCellId((int) cell.getNumericCellValue());
+						baseDataRecord.setCellId((int) cell
+								.getNumericCellValue());
 					} catch (Exception e) {
 						baseDataRecord.setCellId(-1);
 						rowValid = false;
@@ -127,7 +129,8 @@ public class ExcelBaseDataRead implements ReadBase {
 				}
 				if (cell.getColumnIndex() == 7) {
 					try {
-						baseDataRecord.setDuration((int) cell.getNumericCellValue());
+						baseDataRecord.setDuration((int) cell
+								.getNumericCellValue());
 					} catch (Exception e) {
 						baseDataRecord.setDuration(-1);
 						rowValid = false;
@@ -135,7 +138,8 @@ public class ExcelBaseDataRead implements ReadBase {
 				}
 				if (cell.getColumnIndex() == 8) {
 					try {
-						baseDataRecord.setCauseCode((int) cell.getNumericCellValue());
+						baseDataRecord.setCauseCode((int) cell
+								.getNumericCellValue());
 					} catch (Exception e) {
 						baseDataRecord.setCauseCode(-1);
 						rowValid = false;
@@ -151,7 +155,8 @@ public class ExcelBaseDataRead implements ReadBase {
 				}
 				if (cell.getColumnIndex() == 10) {
 					try {
-						baseDataRecord.setImsi((long) cell.getNumericCellValue());
+						baseDataRecord.setImsi((long) cell
+								.getNumericCellValue());
 					} catch (Exception e) {
 						baseDataRecord.setImsi(-1l);
 						rowValid = false;
@@ -185,10 +190,7 @@ public class ExcelBaseDataRead implements ReadBase {
 					}
 				}
 			}
-			/*
-			 * PASS RELATIONAL COLUMN DATA TO LOOKUP TABLES TO OBTAIN AN OBJECT
-			 * REPRESENTING THE RELATIONSHIP BASED ON THE COLUMN(S) PASSED
-			 */
+
 			setAllLinks(baseDataRecord);
 			if (rowValid && validator.isValid(baseDataRecord)) {
 				baseDatList.add(baseDataRecord);
@@ -203,9 +205,6 @@ public class ExcelBaseDataRead implements ReadBase {
 		errorBaseDataDao.addAllErrorBaseData(errorBaseDatList);
 	}
 
-	/*
-	 * WE RETURN AN OBJECT REPRESENTING THE LOOKUP TABLE FROM THE VALUES PASSED
-	 */
 	private void setAllLinks(BaseData bd) {
 		if (bd.getCauseCode() != null && bd.getEventId() != null) {
 			EventCause ec = ExcelLookupDataRead.getEventCause(
