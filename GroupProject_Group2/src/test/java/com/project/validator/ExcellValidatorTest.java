@@ -47,9 +47,6 @@ public class ExcellValidatorTest {
 				.as(WebArchive.class);
 	}
 
-	private static org.apache.log4j.Logger logger = org.apache.log4j.Logger
-			.getLogger(ExcellValidatorTest.class);
-
 	private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 	private static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
@@ -174,8 +171,7 @@ public class ExcellValidatorTest {
 		}
 		BaseData bd = new BaseData(date, 1, 10, 101000, 1, 10, 4, 1000, 10,
 				"13B", 111111111111115L, "123", "123", "123");
-
-		@SuppressWarnings("unchecked")
+		
 		List<EventCause> evList = (List<EventCause>) eventCauseDao
 				.getAllEventCause();
 		bd.setEventCauseFK(evList.get(0));

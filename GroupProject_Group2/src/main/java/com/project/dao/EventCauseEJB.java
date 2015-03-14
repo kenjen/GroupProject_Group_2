@@ -24,13 +24,13 @@ public class EventCauseEJB implements EventCauseDAO {
 		return query.getResultList();
 	}
 
-	public Collection getFailures() {
+	public Collection<EventCause> getFailures() {
 		Query query = em.createNamedQuery("findEventCause");
 		return query.getResultList();
 	}
 
 	@Override
-	public Collection getAllEventCause() {
+	public Collection<EventCause> getAllEventCause() {
 		Query query = em.createNamedQuery("EventCause.getAllEventCause");
 		List<EventCause> data = query.getResultList();
 		return data;

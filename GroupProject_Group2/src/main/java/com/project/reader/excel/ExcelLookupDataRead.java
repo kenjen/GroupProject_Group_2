@@ -29,76 +29,26 @@ public class ExcelLookupDataRead implements ReadLookup {
 
 	private static final Logger log = LoggerFactory.getLogger(ExcelLookupDataRead.class);
 
-	private static List<EventCause> eventCauseListTop = new ArrayList<EventCause>();
-	EventCause eventCauseRecordTop = null;
-
-	private static List<FailureClass> failureClassListTop = new ArrayList<FailureClass>();
-	FailureClass failureClassRecordTop = null;
-
-	private static List<UE> ueListTop = new ArrayList<UE>();
-	UE ueRecordTop = null;
-
-	private static List<MccMnc> mccMncListTop = new ArrayList<MccMnc>();
-	MccMnc mccMncRecordTop = null;
-
-	public static EventCause getEventCause(Integer causeCode, Integer eventId) {
-		for (EventCause ec : eventCauseListTop) {
-			if (ec.getCauseCode().equals(causeCode)
-					&& ec.getEventId().equals(eventId)) {
-				return ec;
-			}
-		}
-		EventCause blankEc = new EventCause(-1, -1, "Empty");
-		blankEc.setId(-1);
-		return blankEc;
-	}
-
-	public static FailureClass getFailureClass(int failureCode) {
-		for (FailureClass fc : failureClassListTop) {
-			if (fc.getFailureClass().equals(failureCode))
-				return fc;
-		}
-		FailureClass blankFc = new FailureClass(-1, "Empty");
-		blankFc.setId(-1);
-		return blankFc;
-	}
-
-	public static UE getUe(int tac) {
-		for (UE ue : ueListTop) {
-			if (ue.getTac().equals(tac))
-				return ue;
-		}
-		UE blankUe = new UE(-1, "Empty", "Empty", "Empty");
-		blankUe.setId(-1);
-		return blankUe;
-	}
-
-	public static MccMnc getMccMnc(int mcc, int mnc) {
-		for (MccMnc mc : mccMncListTop) {
-			if (mc.getMcc().equals(mcc) && mc.getMnc().equals(mnc))
-				return mc;
-		}
-		MccMnc blankMc = new MccMnc(-1, -1, "Empty", "Empty");
-		blankMc.setId(-1);
-		return blankMc;
-	}
-
-	/*
-	 * LOOKUP READ + VALIDATION
-	 */
-
 	private String inputFile;
 
-	//@Inject
-	private ExcellValidator validator = new ExcellValidator();
+	private ExcellValidator validator;
 
 	private LookUpDataDAO lookUpDao;
+
+	private static List<EventCause> dbEventCauseList = new ArrayList<EventCause>();
+
+	private static List<FailureClass> dbFailureClassList = new ArrayList<FailureClass>();
+
+	private static List<UE> dbUeList = new ArrayList<UE>();
+
+	private static List<MccMnc> dbMccMncList = new ArrayList<MccMnc>();
 
 	public void setLookUpDao(LookUpDataDAO dao) {
 		this.lookUpDao = dao;
 	}
 
 	public ExcelLookupDataRead() {
+		validator = new ExcellValidator();
 	}
 
 	@Override
@@ -110,17 +60,59 @@ public class ExcelLookupDataRead implements ReadLookup {
 	public void setSheetNumber(int sheetNumber) {
 	}
 
+	public static EventCause getEventCause(Integer causeCode, Integer eventId) {
+		for (EventCause ec : dbEventCauseList) {
+			if (ec.getCauseCode().equals(causeCode)
+					&& ec.getEventId().equals(eventId)) {
+				return ec;
+			}
+		}
+		EventCause blankEc = new EventCause(-1, -1, "Empty");
+		blankEc.setId(-1);
+		return blankEc;
+	}
+
+	public static FailureClass getFailureClass(int failureCode) {
+		for (FailureClass fc : dbFailureClassList) {
+			if (fc.getFailureClass().equals(failureCode))
+				return fc;
+		}
+		FailureClass blankFc = new FailureClass(-1, "Empty");
+		blankFc.setId(-1);
+		return blankFc;
+	}
+
+	public static UE getUe(int tac) {
+		for (UE ue : dbUeList) {
+			if (ue.getTac().equals(tac))
+				return ue;
+		}
+		UE blankUe = new UE(-1, "Empty", "Empty", "Empty");
+		blankUe.setId(-1);
+		return blankUe;
+	}
+
+	public static MccMnc getMccMnc(int mcc, int mnc) {
+		for (MccMnc mc : dbMccMncList) {
+			if (mc.getMcc().equals(mcc) && mc.getMnc().equals(mnc))
+				return mc;
+		}
+		MccMnc blankMc = new MccMnc(-1, -1, "Empty", "Empty");
+		blankMc.setId(-1);
+		return blankMc;
+	}
+
 	@Override
 	public void read() throws IOException {
-		eventCauseListTop = new ArrayList<EventCause>();
-		failureClassListTop = new ArrayList<FailureClass>();
-		ueListTop = new ArrayList<UE>();
-		mccMncListTop = new ArrayList<MccMnc>();
-		
-		eventCauseRecordTop = null;
-		failureClassRecordTop = null;
-		ueRecordTop = null;
-		mccMncRecordTop = null;
+		ArrayList<EventCause> eventCauseList = null;
+		ArrayList<FailureClass> failureClassList = null;
+		ArrayList<UE> ueList = null;
+		ArrayList<MccMnc> mccMncList = null;
+
+		EventCause eventCauseRecord = null;
+		FailureClass failureClassRecord = null;
+		UE ueRecord = null;
+		MccMnc mccMncRecord = null;
 
 		FileInputStream hssfInputWorkbook = new FileInputStream(new File(
 				inputFile));
@@ -135,23 +127,24 @@ public class ExcelLookupDataRead implements ReadLookup {
 			HSSFSheet hssfWorkBookSheet = hssfWorkBook.getSheetAt(i);
 			// event_cause
 			if (i == 1) {
+				eventCauseList = new ArrayList<EventCause>();
 				int lastRow = hssfWorkBookSheet.getLastRowNum();
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
-					eventCauseRecordTop = new EventCause();
+					eventCauseRecord = new EventCause();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
 					boolean rowValid = true;
 					for (Cell cell : row) {
 						try {
 							if (cell.getColumnIndex() == 0) {
-								eventCauseRecordTop.setCauseCode((int) cell
+								eventCauseRecord.setCauseCode((int) cell
 										.getNumericCellValue());
 							}
 							if (cell.getColumnIndex() == 1) {
-								eventCauseRecordTop.setEventId((int) cell
+								eventCauseRecord.setEventId((int) cell
 										.getNumericCellValue());
 							}
 							if (cell.getColumnIndex() == 2) {
-								eventCauseRecordTop.setDescription(cell
+								eventCauseRecord.setDescription(cell
 										.getStringCellValue());
 							}
 						} catch (Exception e) {
@@ -159,30 +152,31 @@ public class ExcelLookupDataRead implements ReadLookup {
 							break;
 						}
 					}
-					if (rowValid && validator.isValid(eventCauseRecordTop)) {
-						eventCauseListTop.add(eventCauseRecordTop);
+					if (rowValid && validator.isValid(eventCauseRecord)) {
+						eventCauseList.add(eventCauseRecord);
 					} else {
 						// TO ERROR ENTITY??
 					}
 				}
-				lookUpDao.addAllEventCause(eventCauseListTop);
+				dbEventCauseList.addAll(eventCauseList);
+				lookUpDao.addAllEventCause(eventCauseList);
 			}
 			// failure_class
 			if (i == 2) {
+				failureClassList = new ArrayList<FailureClass>();
 				int lastRow = hssfWorkBookSheet.getLastRowNum();
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
-					failureClassRecordTop = new FailureClass();
+					failureClassRecord = new FailureClass();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
 					boolean rowValid = true;
 					for (Cell cell : row) {
 						try {
 							if (cell.getColumnIndex() == 0) {
-								failureClassRecordTop
-										.setFailureClass((int) cell
-												.getNumericCellValue());
+								failureClassRecord.setFailureClass((int) cell
+										.getNumericCellValue());
 							}
 							if (cell.getColumnIndex() == 1) {
-								failureClassRecordTop.setDescription(cell
+								failureClassRecord.setDescription(cell
 										.getStringCellValue());
 							}
 						} catch (Exception e) {
@@ -190,37 +184,39 @@ public class ExcelLookupDataRead implements ReadLookup {
 							break;
 						}
 					}
-					if (rowValid && validator.isValid(failureClassRecordTop)) {
-						failureClassListTop.add(failureClassRecordTop);
+					if (rowValid && validator.isValid(failureClassRecord)) {
+						failureClassList.add(failureClassRecord);
 					} else {
 						// TO ERROR ENTITY??
 					}
 				}
-				lookUpDao.addAllFailureClass(failureClassListTop);
+				dbFailureClassList.addAll(failureClassList);
+				lookUpDao.addAllFailureClass(failureClassList);
 			}
 			// ue
 			if (i == 3) {
+				ueList = new ArrayList<UE>();
 				int lastRow = hssfWorkBookSheet.getLastRowNum();
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
-					ueRecordTop = new UE();
+					ueRecord = new UE();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
 					boolean rowValid = true;
 					for (Cell cell : row) {
 						try {
 							if (cell.getColumnIndex() == 0) {
-								ueRecordTop.setTac((int) cell
+								ueRecord.setTac((int) cell
 										.getNumericCellValue());
 							}
 							if (cell.getColumnIndex() == 1) {
-								ueRecordTop.setMarketingName(cell
+								ueRecord.setMarketingName(cell
 										.getStringCellValue());
 							}
 							if (cell.getColumnIndex() == 2) {
-								ueRecordTop.setManufacturer(cell
+								ueRecord.setManufacturer(cell
 										.getStringCellValue());
 							}
 							if (cell.getColumnIndex() == 3) {
-								ueRecordTop.setAccessCapability(cell
+								ueRecord.setAccessCapability(cell
 										.getStringCellValue());
 							}
 						} catch (Exception e) {
@@ -228,37 +224,39 @@ public class ExcelLookupDataRead implements ReadLookup {
 							break;
 						}
 					}
-					if (rowValid && validator.isValid(ueRecordTop)) {
-						ueListTop.add(ueRecordTop);
+					if (rowValid && validator.isValid(ueRecord)) {
+						ueList.add(ueRecord);
 					} else {
 						// TO ERROR ENTITY??
 					}
 				}
-				lookUpDao.addAllUe(ueListTop);
+				dbUeList.addAll(ueList);
+				lookUpDao.addAllUe(ueList);
 			}
 			// mcc_mnc
 			if (i == 4) {
+				mccMncList = new ArrayList<MccMnc>();
 				int lastRow = hssfWorkBookSheet.getLastRowNum();
 				for (int currentRow = 1; currentRow <= lastRow; ++currentRow) {
-					mccMncRecordTop = new MccMnc();
+					mccMncRecord = new MccMnc();
 					Row row = hssfWorkBookSheet.getRow(currentRow);
 					boolean rowValid = true;
 					for (Cell cell : row) {
 						try {
 							if (cell.getColumnIndex() == 0) {
-								mccMncRecordTop.setMcc((int) cell
+								mccMncRecord.setMcc((int) cell
 										.getNumericCellValue());
 							}
 							if (cell.getColumnIndex() == 1) {
-								mccMncRecordTop.setMnc((int) cell
+								mccMncRecord.setMnc((int) cell
 										.getNumericCellValue());
 							}
 							if (cell.getColumnIndex() == 2) {
-								mccMncRecordTop.setCountry(cell
+								mccMncRecord.setCountry(cell
 										.getStringCellValue());
 							}
 							if (cell.getColumnIndex() == 3) {
-								mccMncRecordTop.setOperator(cell
+								mccMncRecord.setOperator(cell
 										.getStringCellValue());
 							}
 						} catch (Exception e) {
@@ -266,13 +264,14 @@ public class ExcelLookupDataRead implements ReadLookup {
 							break;
 						}
 					}
-					if (rowValid && validator.isValid(mccMncRecordTop)) {
-						mccMncListTop.add(mccMncRecordTop);
+					if (rowValid && validator.isValid(mccMncRecord)) {
+						mccMncList.add(mccMncRecord);
 					} else {
 						// TO ERROR ENTITY??
 					}
 				}
-				lookUpDao.addAllMccMnc(mccMncListTop);
+				dbMccMncList.addAll(mccMncList);
+				lookUpDao.addAllMccMnc(mccMncList);
 			}
 		}
 		hssfInputWorkbook.close();

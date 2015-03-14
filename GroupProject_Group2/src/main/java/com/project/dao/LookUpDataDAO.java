@@ -2,15 +2,19 @@ package com.project.dao;
 
 import java.util.Collection;
 
-@SuppressWarnings("rawtypes")
+import com.project.entities.EventCause;
+import com.project.entities.FailureClass;
+import com.project.entities.MccMnc;
+import com.project.entities.UE;
+
 public interface LookUpDataDAO {
 
-	void addAllEventCause(Collection eventCauseList);
-	
-	void addAllFailureClass(Collection failureCauseList);
-	
-	void addAllUe(Collection ueList);
-	
-	void addAllMccMnc(Collection mccMncList);
+	void addAllEventCause(Collection<EventCause> eventCauseList);
+
+	void addAllFailureClass(Collection<FailureClass> failureCauseList);
+
+	void addAllUe(Collection<UE> ueList);
+
+	void addAllMccMnc(Collection<MccMnc> mccMncList);
 
 }
