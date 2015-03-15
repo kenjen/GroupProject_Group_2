@@ -326,6 +326,7 @@ public class ExcelBaseDataReadTest {
 	}
 
 	@Test
+	@Ignore
 	public void testRead() throws Exception {
 		ExcelBaseDataRead baseDataReader = new ExcelBaseDataRead();
 		ExcellValidator excelValidator = new ExcellValidator();
