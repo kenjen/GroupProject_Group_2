@@ -128,7 +128,7 @@
 							<form id="selectUser" name="selectUser" class="unhidden" role="form">
 								<div class="form-group">
 									<label>Select User</label>
-									<select id="userId" class="form-control">
+									<select id="userId" class="form-control" autofocus required>
 										<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
 									</select>
 								</div>
@@ -155,7 +155,7 @@
 							<form id="editUser" name="editUser" role="form">
 								<div class="form-group">
 									<label>Username</label>
-									<input type="text" name="username" id="username" class="form-control" required>
+									<input type="text" name="username" id="username" class="form-control" autofocus required>
 								</div>
 								<div class="form-group">
 									<label>Password</label>

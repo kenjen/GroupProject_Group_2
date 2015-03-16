@@ -28,7 +28,7 @@
 									<h4>Select phone model and dates to count model failures by:</h4>
 									<div class="form-group">
 										<label>Choose Phone Model:</label>
-										<select id="phoneModelSelection" class="form-control">
+										<select id="phoneModelSelection" class="form-control" autofocus required>
 											<option id="phone" ng-repeat="model in models"
 											value={{model.tac}}>{{model.marketingName}}</option>
 										</select>
