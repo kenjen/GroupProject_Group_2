@@ -28,7 +28,7 @@ import javax.persistence.Transient;
 
 		@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(m) as countModel, m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK.id GROUP BY m.country, m.operator, b.cellId ORDER BY countModel DESC"),
 
-		@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.eventId, e.causeCode from EventCause e, BaseData b "
+		@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.id, e.causeCode from EventCause e, BaseData b "
 				+ " where b.imsi = :imsi and e.id = b.eventCauseFK.id group by e.causeCode")
 
 })
