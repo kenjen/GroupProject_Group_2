@@ -175,7 +175,6 @@
 					
 				}else if(code == "c08"){
 					changecss('.causeCode','display','table-cell');
-					changecss('.eventId', 'display', 'table-cell');
 					
 					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name)
 					.success(function(data) {
