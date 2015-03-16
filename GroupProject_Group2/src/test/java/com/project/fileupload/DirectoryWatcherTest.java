@@ -36,7 +36,7 @@ public class DirectoryWatcherTest extends Mockito{
 				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml");
 	}
 	
-	/*@Mock
+	@Mock
 	DirectoryWatcherTransactionInterface dirWatchTransaction;
 	
 	@InjectMocks
@@ -45,7 +45,7 @@ public class DirectoryWatcherTest extends Mockito{
 	@Test
 	public void testPoll(){
 		
-		String fileSystemPath;
+		/*String fileSystemPath;
 		String excellName = "excell.xls";
 		String nonExcellName = "anything.txt";
 		if((System.getProperty("os.name").substring(0, 7).toLowerCase()).equals("windows")){
@@ -71,8 +71,8 @@ public class DirectoryWatcherTest extends Mockito{
 			e.printStackTrace();
 		}
 		
-		
-	}*/
+		*/
+	}
 	
 	// mock DirectoryWatcherTransaction to stop calls to the database
 	/*@Test

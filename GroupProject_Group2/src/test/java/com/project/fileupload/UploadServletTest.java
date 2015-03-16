@@ -61,10 +61,12 @@ public class UploadServletTest extends Mockito{
 		servlet.doPost(request, response);
 		
 		//TODO test not entering loop
-		verify(part, times(0)).write(anyString());
+		/*verify(part, times(0)).write(anyString());
 		verify(request, times(0)).setAttribute("message", "Upload to server completed successfully!");
 		verify(request, times(1)).setAttribute("message", "Upload to server failed<br>Must end in .xls");
-		verify(dao, times(0)).addUploadedFilePath(anyString(), anyString(), anyBoolean());
+		verify(dao, times(0)).addUploadedFilePath(anyString(), anyString(), anyBoolean());*/
+		
+		verify(response, times(1)).sendRedirect("/GroupProject_Group2/home/upload.html#Upload Successful");
 	}
 	
 	@Test
@@ -84,7 +86,8 @@ public class UploadServletTest extends Mockito{
 		
 		servlet.doGet(request, response);
 		
-		verify(request, times(1)).setAttribute("message", "Transfer to database completed successfully!<br>There were 30 invalid rows in the base data");
+		verify(response, times(1)).sendRedirect("/GroupProject_Group2/home/upload.html#Transfer to database completed successfully!"
+				+ "<br>There were 30 invalid rows in the base data");
 	}
 	
 	@Test
