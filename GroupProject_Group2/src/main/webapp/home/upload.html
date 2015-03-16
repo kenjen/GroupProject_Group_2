@@ -120,7 +120,7 @@
 								<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
 							</select>
 							<br>
-							<button type="submit" class="btn btn-default">
+							<button id="submitButton" type="submit" class="btn btn-default" onclick="return hideButton()">
 								Transfer To Database
 							</button>
 							<br>
@@ -187,6 +187,15 @@
 				} else
 					var expires = "";
 				document.cookie = name + "=" + value + expires + "; path=/";
+			}
+
+			function hideButton(){
+				var buttn = document.getElementById("submitButton");
+				var parent = buttn.parentNode;
+				parent.removeChild(buttn);
+
+				var temp = jQuery('#form').submit();
+				return true;
 			}
 
 			function readCookie(name) {
