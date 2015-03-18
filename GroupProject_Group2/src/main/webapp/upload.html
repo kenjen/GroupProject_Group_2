@@ -57,7 +57,7 @@
 							<a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 						</li>
 						<li>
-							<!--	<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>   -->
+							<a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
 						</li>
 						<li>
 							<a href="queries.html"><i class="fa fa-fw fa-table"></i> Queries</a>
@@ -100,7 +100,7 @@
 
 					<div id="mainPanel" align="center">
 						<!--<h1>File Upload</h1>-->
-						<form method="post" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
+						<form method="post" action="UploadServlet" enctype="multipart/form-data" style="display: inline-block">
 							Select file to upload to server:
 							<input type="file" class="btn btn-default" name="file" size="60" accept=".xls" style="background-color: gray;"/>
 							<br>
@@ -113,7 +113,7 @@
 						<h4 id="server-reponse"></h4>
 						<br>
 
-						<form form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
+						<form form id='form' role="form" method="get" action="UploadServlet" enctype="multipart/form-data" style="display: inline-block">
 							Select uploaded file to send to database:
 							<br><br>
 							<select name="fileSelection" id="fileSelection" class="form-control">
@@ -168,12 +168,12 @@
 		<script>
 			var x = readCookie('usercookie')
 			if (!x) {
-				window.location.replace("/GroupProject_Group2/home/login.html");
+				window.location.replace("/GroupProject_Group2/login.html");
 			}
 			if (x) {
 				var userType = x.charAt(x.length - 2)
 				if (userType != 0) {
-					window.location.replace("/GroupProject_Group2/home/alt_index.html");
+					window.location.replace("/GroupProject_Group2/alt_index.html");
 				}
 			} else {
 				window.location.replace("/GroupProject_Group2/alt_index.html");
@@ -215,7 +215,7 @@
 
 			function eraseCookie(name) {
 				createCookie(name, "", -1);
-				window.location.replace("/GroupProject_Group2/home/login.html");
+				window.location.replace("/GroupProject_Group2/login.html");
 			}
 		</script>
 

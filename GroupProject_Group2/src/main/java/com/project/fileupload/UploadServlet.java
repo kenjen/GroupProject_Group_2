@@ -103,7 +103,7 @@ public class UploadServlet extends HttpServlet {
 		//}
 		
 		String resp = "Upload Successful";
-		response.sendRedirect("/GroupProject_Group2/home/upload.html#"+resp);
+		response.sendRedirect("/GroupProject_Group2/upload.html#"+resp);
 	}
 	
 	
@@ -125,7 +125,7 @@ public class UploadServlet extends HttpServlet {
 		
 		String resp = "Transfer to database completed successfully!"
 				+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data";
-		response.sendRedirect("/GroupProject_Group2/home/upload.html#"+resp);
+		response.sendRedirect("/GroupProject_Group2/upload.html#"+resp);
 	}
 
 	/**
