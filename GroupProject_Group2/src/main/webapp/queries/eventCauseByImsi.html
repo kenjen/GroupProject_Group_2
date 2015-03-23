@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
@@ -9,7 +10,7 @@
 		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	</head>
-	<body ng-controller="failureLoader">
+	<body ng-controller="phoneModelLoader">
 		<div id="wrapper">
 			<div id="page-wrapper">
 
@@ -22,9 +23,9 @@
 							<div class="panel-body">
 								<form id='form' role="form" style="display: inline-block">
 									<div class="form-group">
-										<label>Choose IMSI:</label>
-										<select id="phoneIMSISelection" class="form-control">
-											<option id="imsi" ng-repeat="model in models" value={{model}}>{{model}}</option>
+										<h4>Select IMSI to display EventID/Cause Code by:</h4>
+										<select id="phoneIMSISelection" class="form-control" autofocus required>
+											<option id="phone" ng-repeat="model in models" value={{model}}>{{model}}</option>
 										</select>
 									</div>
 									<div class="form-group">
@@ -33,8 +34,10 @@
 										</button>
 									</div>
 								</form>
-							</div>
-						</div>
+
+							</div><!-- /.panel -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
 
 				</div>
 				<!-- /.container-fluid -->
@@ -44,15 +47,16 @@
 
 		</div>
 		<!-- /#wrapper -->
-				
+
 		<script type="text/javascript">
-			function failureLoader($scope, $http) {
+		function phoneModelLoader($scope, $http) {
 				$http.get('/GroupProject_Group2/rest/base_data/getUniqueImsis').success(function(data) {
 					$scope.models = data;
 				});
 			}
-		
-		function refreshTable(){
+
+		function refreshTable() {
+				
 			var imsi = document.getElementById('phoneIMSISelection').value;
 			var code = "c01";
 			window.parent.name = code.concat(imsi);
