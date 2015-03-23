@@ -68,4 +68,8 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public List<Object[]> getfindUniqueCauseByIMSI(long imsi) {
 		return baseDataDAO.getfindUniqueCauseByIMSI(imsi);
 	}
+	
+	public List<Object> getUniqueIMSI() {
+		return baseDataDAO.getUniqueIMSI();
+	}
 }

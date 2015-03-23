@@ -203,5 +203,12 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
+	@GET
+	@Path("/getUniqueImsis")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Object> getUniqueImsi() {
+		return (List ) baseDataService.getUniqueIMSI();
+
+	}
 
 }
