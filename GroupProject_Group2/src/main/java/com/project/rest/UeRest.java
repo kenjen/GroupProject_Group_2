@@ -51,7 +51,7 @@ public class UeRest {
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
 			
-			String[] str = {"", "", "", "", "", "", "", "", "", "", "", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", Objects.toString(obj[2]), "", "", ""};
+			String[] str = {"", "", "", "", "", "", "", "", "", "", "", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", Objects.toString(obj[2]), Objects.toString(obj[3]), Objects.toString(obj[4]), ""};
 			aList.add(str);
 		}
 		return aList;
