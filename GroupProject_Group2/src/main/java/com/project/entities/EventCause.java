@@ -15,7 +15,7 @@ import javax.persistence.*;
 		@NamedQuery(name = "findEventCauseByIMSI", query = "SELECT b.eventId, b.causeCode, b.description from BaseData a, EventCause b"
 				+ " where a.imsi = :IMSI and b.id = a.eventCauseFK.id"),
 		@NamedQuery(name = "findEventCause", query = "select e from  EventCause e"),
-		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b) as countCombo  "
+		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b) as countCombo, e.description  "
 				+ "FROM EventCause e, BaseData b, UE u where e.id = b.eventCauseFK.id and u.id = b.ueFK.id and "
 				+ "u.marketingName = :phoneModel group by b.eventCauseFK ORDER BY countCombo DESC"),
 		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, f.description from FailureClass f, BaseData "
