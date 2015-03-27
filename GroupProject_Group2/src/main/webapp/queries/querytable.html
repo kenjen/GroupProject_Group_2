@@ -103,6 +103,7 @@
 					changecss('.eventId','display','table-cell');
 					changecss('.causeCode','display','table-cell');
 					changecss('.description','display','table-cell');
+					changecss('.date','display','table-cell');
 					
 					$http.get('/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + name).
 			        success(function(data) {
