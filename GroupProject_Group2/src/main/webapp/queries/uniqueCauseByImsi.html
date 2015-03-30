@@ -10,7 +10,7 @@
 <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
 </head>
-<body>
+<body onload="loadField()">
 	<div id="wrapper">
 		<div id="page-wrapper">
 
@@ -25,7 +25,7 @@
 							<form id='form' role="form" style="display: inline-block">
 								<h4>Select IMSI to list unique causes by:</h4>
 								<div class="form-group">
-									<label>IMSI:</label> <input type="text" id = "imsi" name="imsi" class="form-control" autofocus required>
+									<label>IMSI:</label> <input type="text" id = "imsi" name="imsi" class="form-control" value="" autofocus required>
 								</div>
 								<div class="form-group">
 									<button type="submit" onClick='refreshTable();'
@@ -52,14 +52,24 @@
 	<script type="text/javascript">
 		function refreshTable(){
 			var imsi = document.getElementById('imsi').value;
+			console.log("refresh imsi is: "+imsi);
 			var code = "c08";
 			window.parent.name = code.concat(imsi);
 			/* window.top.getElementById('tableFrame').reload(); */
 			var tableFrame = window.top.document.getElementById('tableFrame');
 			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
 			tableFrame.contentWindow.location.reload();
+			//var name = window.parent.name;
 			/* window.top.resizeTableFrame(); */
 		}
+		
+		function loadField(){
+			var name = window.parent.name;
+			var imsi = name.substring(3);
+			console.log("load imsi is: "+imsi);
+			document.getElementById('imsi').value = imsi;
+		}
+		
 	</script>
 			<!-- jQuery -->
 	<script src="../js/jquery.js"></script>
