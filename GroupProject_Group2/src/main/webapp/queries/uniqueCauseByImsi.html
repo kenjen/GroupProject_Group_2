@@ -1,79 +1,84 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>UniqueCauseByImsi</title>
-<!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<!-- Bootstrap Core CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom Fonts -->
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
-</head>
-<body onload="loadField()">
-	<div id="wrapper">
-		<div id="page-wrapper">
+		<!-- Custom Fonts -->
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-			<div class="container-fluid">
+	</head>
+	<body ng-controller="phoneModelLoader" onload="loadField()">
+		<div id="wrapper">
+			<div id="page-wrapper">
 
-				<!-- /.row -->
-				<div class="row">
-					<div class="col-lg-4 text-center"></div>
-					<div class="col-lg-4 text-center">
-						<div class="panel-body">
+				<div class="container-fluid">
 
-							<form id='form' role="form" style="display: inline-block">
-								<h4>Select IMSI to list unique causes by:</h4>
-								<div class="form-group">
-									<label>IMSI:</label> <input type="text" id = "imsi" name="imsi" class="form-control" value="" autofocus required>
-								</div>
-								<div class="form-group">
-									<button type="submit" onClick='refreshTable();'
-										class="btn btn-default">Run Query</button>
-								</div>
-							</form>
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
+						<div class="col-lg-4 text-center">
+							<div class="panel-body">
+								<form id='form' role="form" style="display: inline-block">
+									<div class="form-group">
+										<h4>Select imsi to display unique Cause Code by:</h4>
+										<select id="phoneIMSISelection" class="form-control" autofocus required>
+											<option id="phone" ng-repeat="model in models" value={{model}}>{{model}}</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="submit" onClick='refreshTable();' class="btn btn-default">
+											Run Query
+										</button>
+									</div>
+								</form>
 
-						</div>
-						<!-- /.panel -->
-					</div>
-					<!-- /.col -->
+							</div><!-- /.panel -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+
 				</div>
-				<!-- /.row -->
+				<!-- /.container-fluid -->
 
 			</div>
-			<!-- /.container-fluid -->
+			<!-- /#page-wrapper -->
 
 		</div>
-		<!-- /#page-wrapper -->
+		<!-- /#wrapper -->
 
-	</div>
-	<!-- /#wrapper -->
-	
-	<script type="text/javascript">
-		function refreshTable(){
-			var imsi = document.getElementById('imsi').value;
-			console.log("refresh imsi is: "+imsi);
-			var code = "c08";
-			window.parent.name = code.concat(imsi);
-			/* window.top.getElementById('tableFrame').reload(); */
-			var tableFrame = window.top.document.getElementById('tableFrame');
-			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
-			tableFrame.contentWindow.location.reload();
-			//var name = window.parent.name;
-			/* window.top.resizeTableFrame(); */
-		}
-		
-		function loadField(){
-			var name = window.parent.name;
-			var imsi = name.substring(3);
-			document.getElementById('imsi').value = imsi;
-		}
-		
-	</script>
-			<!-- jQuery -->
-	<script src="../js/jquery.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="../js/bootstrap.min.js"></script>
-</body>
+		<script type="text/javascript">
+			function phoneModelLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/base_data/getUniqueImsis').success(function(data) {
+					$scope.models = data;
+				});
+			}
+
+			function refreshTable() {
+				var imsi = document.getElementById('phoneIMSISelection').value;
+				var code = "c08";
+				window.parent.name = code.concat(imsi);
+				/* window.top.getElementById('tableFrame').reload(); */
+				var tableFrame = window.top.document.getElementById('tableFrame');
+				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+				tableFrame.contentWindow.location.reload();
+				//var name = window.parent.name;
+				/* window.top.resizeTableFrame(); */
+			}
+
+			function loadField() {
+				var name = window.parent.name;
+				var imsi = name.substring(3);
+				document.getElementById('phoneIMSISelection').value = imsi;
+			}
+
+		</script>
+		<!-- jQuery -->
+		<script src="../js/jquery.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="../js/bootstrap.min.js"></script>
+	</body>
 </html>

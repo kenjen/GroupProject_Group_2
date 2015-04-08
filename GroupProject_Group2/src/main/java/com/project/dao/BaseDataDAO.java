@@ -24,4 +24,6 @@ public interface BaseDataDAO {
 	List<Object[]> getCountTop10ComboBetweenDates(Date startDate, Date endDate);
 
 	List<Object[]> getfindUniqueCauseByIMSI(long imsi);
+	
+	List<Object> getUniqueIMSI();
 }

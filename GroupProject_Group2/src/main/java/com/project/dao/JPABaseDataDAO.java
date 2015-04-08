@@ -89,5 +89,11 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		List<Object[]> data = query.getResultList();
 		return data;
 	}
+	
+	public List<Object> getUniqueIMSI() {
+			Query query = entityManager.createNamedQuery("BaseData.getUniqueImsi");
+			List<Object> data = query.getResultList();
+			return data;
+		}
 
 }

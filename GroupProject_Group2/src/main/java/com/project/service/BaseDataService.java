@@ -21,4 +21,5 @@ public interface BaseDataService {
 	List<Object[]> getCountTop10ImsiBetweenDates(Date startDate, Date endDate);
 	List<Object[]> getCountTop10ComboBetweenDates(Date startDate, Date endDate);
 	List<Object[]> getfindUniqueCauseByIMSI(long imsi);
+	List<Object> getUniqueIMSI();
 }

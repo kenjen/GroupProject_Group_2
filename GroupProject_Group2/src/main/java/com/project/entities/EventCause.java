@@ -5,13 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
-/*
- @NamedQueries(
- {@NamedQuery
- (name = "findEventCauseByIMSI", 
- query = "select b.eventId, b.causeCode from BaseData b where b.imsi = :IMSI "),
- */
 @NamedQueries({
+
 		@NamedQuery(name = "findEventCauseByIMSI", query = "SELECT b.eventId, b.causeCode, b.description, a.date from BaseData a, EventCause b"
 				+ " where a.imsi = :IMSI and b.id = a.eventCauseFK.id"),
 		@NamedQuery(name = "findEventCause", query = "select e from  EventCause e"),
