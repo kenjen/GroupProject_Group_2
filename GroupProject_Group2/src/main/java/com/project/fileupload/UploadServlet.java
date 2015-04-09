@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.Date;
 
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
@@ -52,15 +54,8 @@ public class UploadServlet extends HttpServlet {
 	@EJB
 	private FileDAO fileDao;
 	
-	/*
-	@EJB
-	ReadLookup lookupDataReader;
-	@EJB
-	ReadBase baseDataReader;
-	*/
-	//@Inject
 	ReadLookup lookupDataReader = new ExcelLookupDataRead();
-	//@Inject
+	
 	ReadBase baseDataReader = new ExcelBaseDataRead();
 	
 	/**
@@ -69,15 +64,12 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// gets absolute path of the web application
-		
-		
 		String appPath = request.getServletContext().getRealPath("");
 		// constructs path of the directory to save uploaded file
 		String savePath = appPath + File.separator + SAVE_DIR;
 		
 		// creates the save directory if it does not exists
 		File fileSaveDir = new File(savePath);
-		File myFile = new File(fileSaveDir + File.separator + "upload.txt");
 		if (!fileSaveDir.exists()) {
 			fileSaveDir.mkdir();
 		}
@@ -85,22 +77,18 @@ public class UploadServlet extends HttpServlet {
 		String finalFilePath = "";
 		String finalFileName = "";
 		String fileExtension = "";
-		boolean correctFileFound = false;
 		Part part = request.getPart("file");
-		//for (Part part : request.getParts()) {
-			String fileName = extractFileName(part);
-			fileExtension = getFileExtension(fileName);
-			if(fileExtension.equals(".xls")){
-				correctFileFound = true;
-				long timeInMili = System.currentTimeMillis();
-				Date t = new Date(timeInMili);
-				timeInMili = timeInMili >> 4;
-				finalFileName = t + "_" + timeInMili + fileExtension;
-				finalFilePath = savePath + File.separator + finalFileName;
-				part.write(finalFilePath);
-				fileDao.addUploadedFilePath(finalFileName, finalFilePath, false);
-			}
-		//}
+		String fileName = extractFileName(part);
+		fileExtension = getFileExtension(fileName);
+		if(fileExtension.equals(".xls")){
+			long timeInMili = System.currentTimeMillis();
+			Date t = new Date(timeInMili);
+			timeInMili = timeInMili >> 4;
+			finalFileName = t + "_" + timeInMili + fileExtension;
+			finalFilePath = savePath + File.separator + finalFileName;
+			part.write(finalFilePath);
+			fileDao.addUploadedFilePath(finalFileName, finalFilePath, false);
+		}
 		
 		String resp = "Upload Successful";
 		response.sendRedirect("/GroupProject_Group2/home/upload.html#"+resp);
@@ -122,7 +110,6 @@ public class UploadServlet extends HttpServlet {
 		baseDataReader.setErrorBaseDataDao(errorDao);
 		baseDataReader.read();
 		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-		
 		String resp = "Transfer to database completed successfully!"
 				+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data";
 		response.sendRedirect("/GroupProject_Group2/home/upload.html#"+resp);

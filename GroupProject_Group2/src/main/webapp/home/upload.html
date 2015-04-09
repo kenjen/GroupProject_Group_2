@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 
 	<head>
 
@@ -26,7 +26,7 @@
 
 	</head>
 
-	<body ng-controller="fileLoader">
+	<body data-ng-controller="fileLoader">
 
 		<div id="wrapper">
 
@@ -113,11 +113,11 @@
 						<h4 id="server-reponse"></h4>
 						<br>
 
-						<form form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
+						<form id='form' role="form" method="get" action="../UploadServlet" enctype="multipart/form-data" style="display: inline-block">
 							Select uploaded file to send to database:
 							<br><br>
 							<select name="fileSelection" id="fileSelection" class="form-control">
-								<option ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
+								<option data-ng-repeat="file in files" value={{file.filepath}}>{{file.filename}}</option>
 							</select>
 							<br>
 							<button type="submit" class="btn btn-default">
@@ -126,14 +126,21 @@
 							<br>
 						</form>
 
-						<br>
-						<form form id='form' role="form" method="post"  action="error_data.html">
+						<br><br>
+						<form id='form' role="form" method="post"  action="error_data.html">
 							<button type="submit" class="btn btn-default" formtarget="_blank">
 								View invalid records in new tab
 							</button>
 						</form>
 
 						<br/>
+						
+						<br>
+							<button class="btn btn-default" onclick="removeFile();">
+								Remove file from database
+							</button>
+						<br/>
+						
 						<br/>
 					</div>
 				</div>
@@ -197,7 +204,6 @@
 					while (c.charAt(0) == ' ')
 					c = c.substring(1, c.length);
 					if (c.indexOf(nameEQ) == 0) {
-						//alert("found cookie on click: " + c.substring(nameEQ.length, c.length));
 						return c.substring(nameEQ.length, c.length);
 					}
 				}
@@ -208,17 +214,29 @@
 				createCookie(name, "", -1);
 				window.location.replace("/GroupProject_Group2/home/login.html");
 			}
-		</script>
 
-		<script>
+			function removeFile(){
+				var fileSelection = document.getElementById("fileSelection");
+				var selectedIndex = fileSelection.selectedIndex;
+				console.log("Selected index = " + selectedIndex);
+				var encodedFilePath = encodeURI(fileSelection[selectedIndex].innerHTML);
+				console.log(encodedFilePath);
+				$.ajax({
+					url: '/GroupProject_Group2/rest/file/delete/'+ encodedFilePath,
+					type: "DELETE",
+					success: function(result){
+						console.log("file removed successfully");
+						fileSelection.remove(selectedIndex);
+					}
+				});
+			}
+			
 			function fileLoader($scope, $http) {
 				$http.get('/GroupProject_Group2/rest/file').success(function(data) {
 					$scope.files = data;
 				});
 			}
-		</script>
-		<script>
-			//alert(window.location.hash);
+			
 			var response = window.location.hash;
 			var len = response.length;
 			var elem = document.getElementById("server-reponse");
