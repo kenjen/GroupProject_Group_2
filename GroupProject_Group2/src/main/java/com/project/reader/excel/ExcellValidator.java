@@ -39,11 +39,6 @@ public class ExcellValidator implements Validator {
 		}
 		if (baseData.getDate().getTime() < 0)
 			return false;
-		log.info(baseData.toString());
-		log.info("EventCauseFK = " + baseData.getEventCauseFK());
-		log.info("event id = " + baseData.getEventCauseFK().getEventId());
-		log.info("cause code = " + baseData.getEventCauseFK().getCauseCode());
-		log.info("id = " + baseData.getEventCauseFK().getId());
 		if (baseData.getEventCauseFK().getId().equals(-1))
 			return false;
 		if (baseData.getFaliureClassFK().getId().equals(-1))

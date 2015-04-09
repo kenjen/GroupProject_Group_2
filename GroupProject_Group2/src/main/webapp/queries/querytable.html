@@ -411,33 +411,52 @@
 						}
 					});
 				});
-
 			}//end graphs
 
-			$("#flot-pie-chart").bind("plotclick", function(event, pos, item){
+			$(document).ready(function(){
+				$("#flot-pie-chart").bind("plotclick", function(event, pos, item){
 					if(item){
-						alert(item.series.label);
-						if (code == "c09") {
-							var splitData = item.series.label.split(" ");
-							var imsi = splitData[splitData.length-1];
-							$.ajax({
-								url: '/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + imsi,
+						var splitData = item.series.label.split(" ");
 
+						if(code=="c09"){
+							var imsi = splitData[splitData.length-1];
+							var drilldownData = [];
+							$.ajax({
+								url: '/GroupProject_Group2/rest/event_cause/eventCauseByImsi/c09' + imsi,
+	
 								success: function(response){
-									var data = [];
-									for (var i = 0; i < response.length; i++) {
-										data.push({
-											label : "Event Cause: " + resultData[i][21],
-											data : parseInt(resultData[i][15])
+									for(var i=0; i<response.length; i++){
+										drilldownData.push({
+											label : response[i][1] + "," + response[i][5] + " Description: " + response[i][21],
+											data : 1
 										});
 									}
-									plotObj.setData(response);
-									plotObj.setupGrid();
-									plotObj.draw();
+
+									plotObj = $.plot($("#flot-pie-chart"), drilldownData, {
+										series : {
+											pie : {
+												show : true
+											}
+										},
+										grid : {
+											hoverable : true
+										},
+										tooltip : true,
+										tooltipOpts : {
+											content : "%p.0%, %s", // show percentages, rounding to 2 decimal places
+											shifts : {
+												x : 20,
+												y : 0
+											},
+											defaultTheme : false
+										}
+									});
+									
 								}
 							});
 						}
 					}
+				});
 			});
 		</script>
 
