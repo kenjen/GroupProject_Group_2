@@ -163,6 +163,7 @@
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.description', 'display', 'table-cell');
 					changecss('.date', 'display', 'table-cell');
+					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
@@ -172,10 +173,12 @@
 				} else if (code == "c02") {
 					changecss('.date', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
-
+					document.getElementById('graphButton').className='hidden';
+					
 					$http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 					});
+					
 
 					window.top.name = "";
 				} else if (code == "c03") {
@@ -184,6 +187,7 @@
 					changecss('.marketingName', 'display', 'table-cell');
 					changecss('.manufacturer', 'display', 'table-cell');
 					changecss('.accessCapability', 'display', 'table-cell');
+					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/ue/callfailures/' + name).success(function(data) {
 						$scope.records = data;
@@ -218,10 +222,10 @@
 				} else if (code == "c06") {
 					changecss('.count', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
+					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/base_data/countsingleimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
-						resultData = data;
 					});
 				} else if (code == "c07") {
 					changecss('.count', 'display', 'table-cell');
@@ -256,6 +260,7 @@
 					window.top.name = "";
 				} else if (code == "c10") {
 					changecss('.imsi', 'display', 'table-cell');
+					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
