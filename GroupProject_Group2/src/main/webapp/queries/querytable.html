@@ -15,6 +15,7 @@
 			var code = name.substring(0, 3);
 			var resultData;
 			var labelInfo;
+			var plotObj;
 			//var q8 = false;
 		</script>
 		<style>
@@ -389,14 +390,15 @@
 						});
 					}
 
-					var plotObj = $.plot($("#flot-pie-chart"), data, {
+					plotObj = $.plot($("#flot-pie-chart"), data, {
 						series : {
 							pie : {
 								show : true
 							}
 						},
 						grid : {
-							hoverable : true
+							hoverable : true,
+							clickable : true
 						},
 						tooltip : true,
 						tooltipOpts : {
@@ -408,10 +410,35 @@
 							defaultTheme : false
 						}
 					});
-
 				});
 
 			}//end graphs
+
+			$("#flot-pie-chart").bind("plotclick", function(event, pos, item){
+					if(item){
+						alert(item.series.label);
+						if (code == "c09") {
+							var splitData = item.series.label.split(" ");
+							var imsi = splitData[splitData.length-1];
+							$.ajax({
+								url: '/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + imsi,
+
+								success: function(response){
+									var data = [];
+									for (var i = 0; i < response.length; i++) {
+										data.push({
+											label : "Event Cause: " + resultData[i][21],
+											data : parseInt(resultData[i][15])
+										});
+									}
+									plotObj.setData(response);
+									plotObj.setupGrid();
+									plotObj.draw();
+								}
+							});
+						}
+					}
+			});
 		</script>
 
 	</body>
