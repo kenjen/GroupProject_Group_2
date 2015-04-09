@@ -16,9 +16,15 @@
 
 	</head>
 
+	
 	<body onload="loadField()">
-	<body ng-controller="phoneModelLoader">
-		<div id="wrapper">
+		
+		<datalist id="datalist"  ng-controller="phoneImsiLoader">
+			<option id="phone" ng-repeat="model in models" value="{{model}}">
+		</datalist>
+		
+		
+			<div id="wrapper">
 			<div id="page-wrapper">
 
 				<div class="container-fluid">
@@ -31,9 +37,7 @@
 							<form id='form' role="form" style="display: inline-block">
 									<div class="form-group">
 										<h4>Select IMSI to display EventID/Cause Code by:</h4>
-										<select id="phoneIMSISelection" class="form-control" autofocus required>
-											<option id="phone" ng-repeat="model in models" value={{model}}>{{model}}</option>
-										</select>
+										<input id ="phoneIMSISelection" type="text" list="datalist">
 									</div>
 									<div class="form-group">
 										<button type="submit" onClick='refreshTable();' class="btn btn-default">
@@ -60,7 +64,7 @@
 
 		<script type="text/javascript">
 
-			function phoneModelLoader($scope, $http) {
+			function phoneImsiLoader($scope, $http) {
 				$http.get('/GroupProject_Group2/rest/base_data/getUniqueImsis').success(function(data) {
 					$scope.models = data;
 				});

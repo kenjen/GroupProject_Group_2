@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <!-- Bootstrap Core CSS -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 <!-- Custom Fonts -->
 <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
 	type="text/css">
@@ -13,22 +14,26 @@
 
 </head>
 <body onload="loadField()">
-	<div id="wrapper">
-		<div id="page-wrapper">
+		
+		<datalist id="datalist"  ng-controller="phoneImsiLoader">
+			<option id="phone" ng-repeat="model in models" value="{{model}}">
+		</datalist>
+		
+		
+			<div id="wrapper">
+			<div id="page-wrapper">
 
-			<div class="container-fluid">
+				<div class="container-fluid">
 
-				<!-- /.row -->
-				<div class="row">
-					<div class="col-lg-4 text-center"></div>
-					<div class="col-lg-4 text-center">
-						<div class="panel-body">
-
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
+						<div class="col-lg-4 text-center">
+							<div class="panel-body">
 							<form id='form' role="form" style="display: inline-block">
+									<div class="form-group">
 								<h4>Select IMSI and dates to count total failures by:</h4>
-								<div class="form-group">
-									<label>IMSI:</label> <input type="text" id="imsi"
-										class="form-control" autofocus required>
+									<input id ="phoneIMSISelection" type="text" list="datalist">
 								</div>
 								<div class="form-group">
 									<label>Start Date:</label> <input type="datetime-local"
@@ -60,6 +65,13 @@
 	<!-- /#wrapper -->
 
 	<script type="text/javascript">
+	
+		function phoneImsiLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/base_data/getUniqueImsis').success(function(data) {
+					$scope.models = data;
+				});
+			}
+			
 		function refreshTable() {
 			var startStringA = document.getElementById('startDate').value;
 			var startString = document.getElementById('startDate').value;
@@ -71,7 +83,7 @@
 			if (endStringA.length == 16) {
 				endStringB = endStringA.concat(":00");
 			}
-			var StringC = document.getElementById('imsi').value;
+			var StringC = document.getElementById('phoneIMSISelection').value;
 			var stringABCode = startString.concat(endStringB);
 			var stringNoCode = stringABCode.concat(StringC);
 			var code = "c06";
