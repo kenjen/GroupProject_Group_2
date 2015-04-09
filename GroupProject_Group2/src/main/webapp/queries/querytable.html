@@ -422,13 +422,14 @@
 							var imsi = splitData[splitData.length-1];
 							var drilldownData = [];
 							$.ajax({
-								url: '/GroupProject_Group2/rest/event_cause/eventCauseByImsi/c09' + imsi,
+								url: '/GroupProject_Group2/rest/causeByImsiDate/' + imsi + "::" + name,
 	
 								success: function(response){
 									for(var i=0; i<response.length; i++){
 										drilldownData.push({
-											label : response[i][1] + "," + response[i][5] + " Description: " + response[i][21],
-											data : 1
+											//TODO
+											label : response[i][0] + ", " + " Description: " + response[i][2],
+											data : response[i][1]
 										});
 									}
 

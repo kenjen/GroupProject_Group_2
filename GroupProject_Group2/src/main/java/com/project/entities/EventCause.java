@@ -17,6 +17,10 @@ import javax.persistence.*;
 						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass"),
 
 		@NamedQuery(name = "EventCause.getAllEventCause", query = "select e from EventCause e"),
+		
+		@NamedQuery(name = "EventCause.countUniqueEventCauseByImsiDate", query = "SELECT b.eventCauseFK.id, count(b) as countCombo, e.description  "
+				+ "FROM EventCause e, BaseData b where e.id = b.eventCauseFK.id and b.imsi = :imsi and b.date Between :startDate AND :endDate "
+				+ "group by b.eventCauseFK ORDER BY countCombo DESC"),
 		})
 
 @Entity

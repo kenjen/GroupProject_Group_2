@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -64,5 +65,14 @@ public class EventCauseEJB implements EventCauseDAO {
 
 	public void setEm(EntityManager em) {
 		this.em = em;
+	}
+
+	@Override
+	public List<Object[]> countUniqueEventCauseByImsiDate(String imsi, Date start, Date end) {
+		Query query = em.createNamedQuery("findUniqueCauseByIMSI");
+		query.setParameter("imsi", imsi);
+		query.setParameter("startDate", start);
+		query.setParameter("endDate", end);
+		return query.getResultList();
 	}
 }
