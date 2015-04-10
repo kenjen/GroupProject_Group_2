@@ -68,8 +68,8 @@ public class EventCauseEJB implements EventCauseDAO {
 	}
 
 	@Override
-	public List<Object[]> countUniqueEventCauseByImsiDate(String imsi, Date start, Date end) {
-		Query query = em.createNamedQuery("findUniqueCauseByIMSI");
+	public List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end) {
+		Query query = em.createNamedQuery("EventCause.countUniqueEventCauseByImsiDate");
 		query.setParameter("imsi", imsi);
 		query.setParameter("startDate", start);
 		query.setParameter("endDate", end);

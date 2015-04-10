@@ -299,10 +299,10 @@
 
 		<!-- Flot Charts JavaScript -->
 		<!--[if lte IE 8]><script src="js/excanvas.min.js"></script><![endif]-->
-		<script src="../js/plugins/flot/jquery.flot.js"></script>
+		<script src="../js/plugins/newflot/jquery.flot.js"></script>
 		<script src="../js/plugins/flot/jquery.flot.tooltip.min.js"></script>
 		<script src="../js/plugins/flot/jquery.flot.resize.js"></script>
-		<script src="../js/plugins/flot/jquery.flot.pie.js"></script>
+		<script src="../js/plugins/newflot/jquery.flot.pie.js"></script>
 
 		<script>
 			function graphs() {
@@ -416,46 +416,48 @@
 			$(document).ready(function(){
 				$("#flot-pie-chart").bind("plotclick", function(event, pos, item){
 					if(item){
-						var splitData = item.series.label.split(" ");
+						var drilldownData = [];
 
 						if(code=="c09"){
+							var splitData = item.series.label.split(" ");
 							var imsi = splitData[splitData.length-1];
-							var drilldownData = [];
-							$.ajax({
-								url: '/GroupProject_Group2/rest/causeByImsiDate/' + imsi + "::" + name,
-	
-								success: function(response){
-									for(var i=0; i<response.length; i++){
-										drilldownData.push({
-											//TODO
-											label : response[i][0] + ", " + " Description: " + response[i][2],
-											data : response[i][1]
-										});
-									}
-
-									plotObj = $.plot($("#flot-pie-chart"), drilldownData, {
-										series : {
-											pie : {
-												show : true
-											}
-										},
-										grid : {
-											hoverable : true
-										},
-										tooltip : true,
-										tooltipOpts : {
-											content : "%p.0%, %s", // show percentages, rounding to 2 decimal places
-											shifts : {
-												x : 20,
-												y : 0
-											},
-											defaultTheme : false
-										}
-									});
-									
-								}
-							});
+							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiDate/' + imsi + "::" + name;
 						}
+
+
+							
+						$.ajax({
+							url: queryUrl,
+							success: function(response){
+								for(var i=0; i<response.length; i++){
+									drilldownData.push({
+										label : response[i][0] + ", " + " Description: " + response[i][2],
+										data : parseInt(response[i][1])
+									});
+								}
+
+								$.plot($("#flot-pie-chart"), drilldownData, {
+									series : {
+										pie : {
+											show : true
+										}
+									},
+									grid : {
+										hoverable : true
+									},
+									tooltip : true,
+									tooltipOpts : {
+										content : "%p.0%, %s", // show percentages, rounding to 2 decimal places
+										shifts : {
+											x : 20,
+											y : 0
+										},
+										defaultTheme : false
+									}
+								});
+								
+							}
+						});
 					}
 				});
 			});

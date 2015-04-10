@@ -98,7 +98,7 @@ public class EventCauseREST{
 	public List<String[]> countUniqueEventCauseByImsiDate(@PathParam("data") String data){
 		try{
 			String[] splitData = data.split("::");
-			String imsi = splitData[0];
+			Long imsi = Long.parseLong(splitData[0]);
 			String s = splitData[1].substring(3, 22);
 			String e = splitData[1].substring(22);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -109,7 +109,7 @@ public class EventCauseREST{
 			
 			ArrayList<String[]> aList = new ArrayList<String[]>();
 			for(Object[] obj : list){
-				String[] str = {Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2]), Objects.toString(obj[3])};
+				String[] str = {Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2])};
 				aList.add(str);
 			}
 			return aList;

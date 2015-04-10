@@ -43,7 +43,7 @@ public class EventCauseServiceEJB implements EventCauseService {
 		return dao.getImsiByCauseClass(failureClass);
 	}
 	@Override
-	public List<Object[]> countUniqueEventCauseByImsiDate(String imsi, Date start, Date end) {
+	public List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end) {
 		return dao.countUniqueEventCauseByImsiDate(imsi, start, end);
 	}
 
