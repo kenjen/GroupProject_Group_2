@@ -14,4 +14,5 @@ public interface EventCauseService {
 	public List<Object[]> getImsiByCauseClass(int failureClass) ;
 	public Collection getFailuresIds();
 	public List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end);
+	public List<Object[]> getUniqueEventCauseByImsiByCauseCode(Long imsi, Integer causeCode);
 }

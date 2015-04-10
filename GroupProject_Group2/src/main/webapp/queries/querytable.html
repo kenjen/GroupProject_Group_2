@@ -423,7 +423,12 @@
 							var imsi = splitData[splitData.length-1];
 							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiDate/' + imsi + "::" + name;
 						}
-
+						
+						if(code=="c08"){
+							var splitData = item.series.label.split(" ");
+							var causeCode = splitData[splitData.length-1];
+							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiByCauseCode/' + causeCode + "::" + name;
+						}
 
 							
 						$.ajax({
