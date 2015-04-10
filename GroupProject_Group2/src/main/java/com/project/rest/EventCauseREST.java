@@ -126,7 +126,7 @@ public class EventCauseREST{
 	
 			String[] splitData = data.split("::");
 			Integer causeCode = Integer.parseInt(splitData[0]);
-			Long imsi = Long.parseLong(splitData[1]);
+			Long imsi = Long.parseLong(splitData[1].substring(3));
 
 			
 			List<Object[]> list = service.getUniqueEventCauseByImsiByCauseCode(imsi, causeCode);

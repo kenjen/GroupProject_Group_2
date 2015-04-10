@@ -71,7 +71,7 @@
 							<h2 align="center">Results</h2>
 
 							<div id="queryGraph" class="hidden">
-								<input type="submit" value="Table" onclick="unhide()">
+								<input type="submit" value="Table" class="btn btn-default" onclick="unhide()"><input type="submit" id="mainGraphButton" value="Back To Main Graph" class="btn btn-default" onclick="graphs()">
 								<div class="col-lg-4">
 									<div class="panel panel-green">
 										<div class="panel-body">
@@ -88,7 +88,7 @@
 
 							</div>
 							<div id="queryTable" class="unhidden">
-								<input type="submit" id="graphButton" value="Graph" onclick="graphs()">
+								<input type="submit" id="graphButton" value="Graph" class="btn btn-default" onclick="graphs()">
 								<div class="table-responsive">
 									<table id="errorViewer"
 									class="table table-bordered table-hover table-striped">
@@ -311,6 +311,7 @@
 				queryGraph.className = 'unhidden';
 				var queryTable = document.getElementById('queryTable');
 				queryTable.className = 'hidden';
+				document.getElementById('mainGraphButton').style.visibility = "hidden";
 
 				//Flot Line Chart with Tooltips
 				$(graphButton).submit(function() {
@@ -417,6 +418,8 @@
 				$("#flot-pie-chart").bind("plotclick", function(event, pos, item){
 					if(item){
 						var drilldownData = [];
+						
+						document.getElementById('mainGraphButton').style.visibility = "visible";
 
 						if(code=="c09"){
 							var splitData = item.series.label.split(" ");
