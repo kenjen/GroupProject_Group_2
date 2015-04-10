@@ -87,7 +87,7 @@
 
 							</div>
 							<div id="queryTable" class="unhidden">
-								<input type="submit" id="graphButton" value="Graph" onclick="graphs()">
+								<input type="submit" id="graphButton" value="Graph" class="hidden" onclick="graphs()">
 								<div class="table-responsive">
 									<table id="errorViewer"
 									class="table table-bordered table-hover table-striped">
@@ -163,7 +163,6 @@
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.description', 'display', 'table-cell');
 					changecss('.date', 'display', 'table-cell');
-					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
@@ -172,8 +171,7 @@
 					window.top.name = "";
 				} else if (code == "c02") {
 					changecss('.date', 'display', 'table-cell');
-					changecss('.imsi', 'display', 'table-cell');
-					document.getElementById('graphButton').className='hidden';
+					changecss('.imsi', 'display', 'table-cell');	
 					
 					$http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
@@ -187,7 +185,6 @@
 					changecss('.marketingName', 'display', 'table-cell');
 					changecss('.manufacturer', 'display', 'table-cell');
 					changecss('.accessCapability', 'display', 'table-cell');
-					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/ue/callfailures/' + name).success(function(data) {
 						$scope.records = data;
@@ -198,6 +195,7 @@
 					changecss('.count', 'display', 'table-cell');
 					changecss('.duration', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
+					document.getElementById('graphButton').className='unhidden';
 
 					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
@@ -212,6 +210,7 @@
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.description', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
+					document.getElementById('graphButton').className='unhidden';
 
 					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).success(function(data) {
 						$scope.records = data;
@@ -222,7 +221,6 @@
 				} else if (code == "c06") {
 					changecss('.count', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
-					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/base_data/countsingleimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
@@ -232,6 +230,7 @@
 					changecss('.country', 'display', 'table-cell');
 					changecss('.operator', 'display', 'table-cell');
 					changecss('.cellId', 'display', 'table-cell');
+					document.getElementById('graphButton').className='unhidden';
 
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
@@ -242,6 +241,7 @@
 				} else if (code == "c08") {
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
+					document.getElementById('graphButton').className='unhidden';
 
 					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
@@ -252,6 +252,7 @@
 				} else if (code == "c09") {
 					changecss('.count', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
+					document.getElementById('graphButton').className='unhidden';
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
@@ -260,7 +261,6 @@
 					window.top.name = "";
 				} else if (code == "c10") {
 					changecss('.imsi', 'display', 'table-cell');
-					document.getElementById('graphButton').className='hidden';
 
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
