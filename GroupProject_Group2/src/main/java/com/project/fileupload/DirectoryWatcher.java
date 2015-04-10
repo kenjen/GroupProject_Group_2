@@ -15,14 +15,17 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 
 @Stateless
 @Remote
 public class DirectoryWatcher implements DirectoryWatcherInterface{
-	
-	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcher.class);
+
+	//private static final Logger log = LoggerFactory.getLogger(DirectoryWatcher.class);
+	private static final Logger log = Logger.getLogger(DirectoryWatcher.class);
+	private static final Logger uploadlog = Logger.getLogger("uploadlog");
 	
 	@EJB
 	DirectoryWatcherTransactionInterface dirWatchTransaction;
@@ -34,6 +37,8 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 	@Override
 	@Asynchronous
 	public void poll(String fileSystemPath) throws IOException {
+
+		PropertyConfigurator.configure("libs/log4j.properties");
 		systemFilePath = fileSystemPath;
 		Path folder = Paths.get(systemFilePath);
 		WatchService watchService = folder.getFileSystem().newWatchService();
@@ -42,6 +47,7 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 		folder.register(watchService, 
 				StandardWatchEventKinds.ENTRY_CREATE,
 				StandardWatchEventKinds.ENTRY_DELETE);
+		uploadlog.info("testing file log");
 		log.info("polling on " + folder.toAbsolutePath());
 		while(running) {
 			WatchKey watchKey = null;
