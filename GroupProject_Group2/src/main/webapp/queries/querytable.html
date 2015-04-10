@@ -16,6 +16,7 @@
 			var code = name.substring(0, 3);
 			var resultData;
 			var labelInfo;
+			var allFailures;
 			//var q8 = false;
 		</script>
 		<style>
@@ -39,7 +40,7 @@
 			}
 
 			#flot-pie-chart {
-				width: 800px !important;
+				width: 900px !important;
 			}
 
 		</style>
@@ -203,13 +204,9 @@
 					changecss('.count', 'display', 'table-cell');
 					changecss('.duration', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
-					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
-					}
 
 					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
-						resultData = data;
 					});
 
 					window.top.name = "";
@@ -245,6 +242,13 @@
 					if (showGraphButton) {
 						document.getElementById('graphButton').className = 'unhidden';
 					}
+					
+					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
+						allFailures = data;
+						allFailures = allFailures[0][15];
+						//console.log("json response: "+allFailures);
+
+					});
 
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
@@ -337,7 +341,7 @@
 
 				//Flot Line Chart with Tooltips
 				$(graphButton).submit(function() {
-					console.log("document ready");
+					//console.log("document ready");
 					var offset = 0;
 					plot();
 
@@ -396,13 +400,18 @@
 
 					for (var i = 0; i < resultData.length; i++) {
 						if (code == "c07") {
-							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2];
+							var totalFailures= parseInt(allFailures);
+							//console.log("on graph allFailures = : "+totalFailures);
+							var thisFailure = parseInt(resultData[i][15]);
+							//console.log("on graph this failure = : "+thisFailure);
+							var percentage = (thisFailure/totalFailures)*100;
+							percentage = (percentage).toFixed(2);
+							//console.log("percent = : "+percentage);
+							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage+"%";
 						} else if (code == "c05") {
 							labelInfo = "Event Cause: " + resultData[i][21];
 						} else if (code == "c09") {
 							labelInfo = "Imsi: " + resultData[i][7];
-						} else if (code == "c04") {
-							labelInfo = "Imsi: " + resultData[i][7] + " Total Duration: " + resultData[i][4];
 						} else if (code == "c08") {
 							labelInfo = "Cause Code: " + resultData[i][1];
 						}

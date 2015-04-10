@@ -26,4 +26,6 @@ public interface BaseDataDAO {
 	List<Object[]> getfindUniqueCauseByIMSI(long imsi);
 	
 	List<Object> getUniqueIMSI();
+	
+	List<Object[]> getAllFailuresByDate(Date startDate, Date endDate);
 }

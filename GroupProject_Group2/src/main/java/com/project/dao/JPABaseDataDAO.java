@@ -96,4 +96,13 @@ public class JPABaseDataDAO implements BaseDataDAO {
 			return data;
 		}
 
+	@Override
+	public List<Object[]> getAllFailuresByDate(Date startDate, Date endDate) {
+		Query query = entityManager.createNamedQuery("BaseData.getCountAllFailuresBetweenDates");
+		query.setParameter("startDate", startDate);
+		query.setParameter("endDate", endDate);
+		List<Object[]> failureCount = query.getResultList();
+		return failureCount;
+	}
+
 }
