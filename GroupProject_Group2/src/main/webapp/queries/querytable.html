@@ -423,38 +423,54 @@
 							var imsi = splitData[splitData.length-1];
 							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiDate/' + imsi + "::" + name;
 						}
+						else if(code=="c05"){
+							var splitData = item.series.label.split(":");
+							var eventCauseDescription = splitData[splitData.length-1].trim();
+							var encodedDescription = encodeURI(eventCauseDescription + "::" + name);
+							var queryUrl = '/GroupProject_Group2/rest/base_data/countCellFailuresByModelEventCause/' + encodedDescription;
+						}
 
 
 							
-						$.ajax({
-							url: queryUrl,
-							success: function(response){
-								for(var i=0; i<response.length; i++){
-									drilldownData.push({
-										label : response[i][0] + ", " + " Description: " + response[i][2],
-										data : parseInt(response[i][1])
-									});
-								}
-
-								$.plot($("#flot-pie-chart"), drilldownData, {
-									series : {
-										pie : {
-											show : true
-										}
-									},
-									grid : {
-										hoverable : true
-									},
-									tooltip : true,
-									tooltipOpts : {
-										content : "%p.0%, %s", // show percentages, rounding to 2 decimal places
-										shifts : {
-											x : 20,
-											y : 0
-										},
-										defaultTheme : false
-									}
+				$.ajax({
+					url: queryUrl,
+					success: function(response){
+						
+						for(var i=0; i<response.length; i++){
+							if(code=="c09"){
+								drilldownData.push({
+									label : response[i][0] + ", " + " Description: " + response[i][2],
+									data : parseInt(response[i][1])
 								});
+							}
+							else if(code=="c05"){
+								drilldownData.push({
+								label : "Cell: "+ response[i][0] + ", " + " Number of occurences: " + response[i][1] + ", " + " Duration of failures: " + response[i][2] ,
+								data : parseInt(response[i][1])
+								});
+							}
+						
+						}
+						
+						$.plot($("#flot-pie-chart"), drilldownData, {
+							series : {
+								pie : {
+									show : true
+								}
+							},
+							grid : {
+								hoverable : true
+							},
+							tooltip : true,
+							tooltipOpts : {
+								content : "%p.0%, %s", // show percentages, rounding to 2 decimal places
+								shifts : {
+									x : 20,
+									y : 0
+								},
+								defaultTheme : false
+							}
+						});
 								
 							}
 						});

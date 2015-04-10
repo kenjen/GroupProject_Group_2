@@ -72,4 +72,8 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public List<Object> getUniqueIMSI() {
 		return baseDataDAO.getUniqueIMSI();
 	}
+	public List<Object[]> countCellFailuresByModelEventCause(String description,
+			String marketingName) {
+		return baseDataDAO.countCellFailuresByModelEventCause(description, marketingName);
+	}
 }

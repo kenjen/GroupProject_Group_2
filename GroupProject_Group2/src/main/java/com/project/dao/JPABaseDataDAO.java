@@ -90,6 +90,14 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 	
+	public List<Object[]> countCellFailuresByModelEventCause(String description,String marketingName) {
+		Query query = entityManager.createNamedQuery("BaseData.countCellFailuresByModelEventCause");
+		query.setParameter("description", description);
+		query.setParameter("marketingName", marketingName);
+		List<Object[]> data = query.getResultList();
+		return data;
+	}
+	
 	public List<Object> getUniqueIMSI() {
 			Query query = entityManager.createNamedQuery("BaseData.getUniqueImsi");
 			List<Object> data = query.getResultList();

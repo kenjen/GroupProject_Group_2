@@ -31,7 +31,11 @@ import javax.persistence.Transient;
 		@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.id, e.causeCode, count(e.id) as countCombo from EventCause e, BaseData b "
 				+ " where b.imsi = :imsi and e.id = b.eventCauseFK.id group by e.causeCode ORDER BY countCombo DESC"),
 				
-		@NamedQuery(name = "BaseData.getUniqueImsi", query = "SELECT b.imsi from BaseData b group by b.imsi")
+		@NamedQuery(name = "BaseData.getUniqueImsi", query = "SELECT b.imsi from BaseData b group by b.imsi"),
+		
+		@NamedQuery(name = "BaseData.countCellFailuresByModelEventCause", query = "Select b.cellId, count(b.cellId) as countCellFailures, sum(b.duration) from BaseData b,"
+				+ " UE ue, EventCause e where ue.id = b.ueFK.id and e.description = :description and ue.marketingName = :marketingName and b.eventCauseFK.id = e.id "
+				+ "group by b.cellId")
 
 })
 @Entity

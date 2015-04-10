@@ -1,5 +1,7 @@
 package com.project.rest;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,16 +21,22 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.project.entities.BaseData;
 import com.project.entities.EventCause;
 import com.project.entities.FailureClass;
 import com.project.entities.UE;
+import com.project.fileupload.DirectoryWatcher;
 import com.project.service.BaseDataService;
 
 @Path("/base_data")
 public class BaseDataRest {
 	@EJB
 	private BaseDataService baseDataService;
+	
+	private static final Logger log = LoggerFactory.getLogger(BaseDataRest.class);
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GET
@@ -209,6 +217,35 @@ public class BaseDataRest {
 	public List<Object> getUniqueImsi() {
 		return (List ) baseDataService.getUniqueIMSI();
 
+	}
+	@GET
+	@Path("/countCellFailuresByModelEventCause/{cellEventCauseId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> countCellFailuresByModelEventCause(@PathParam("cellEventCauseId") String data) {
+		String decoded = "";
+		try {
+			decoded = URLDecoder.decode(data, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] splitData = decoded.split("::");
+		log.info("decoded = " + decoded);
+		log.info("split 0 = " + splitData[0]);
+		
+		String marketingName = splitData[1].substring(3);
+		String description = splitData[0];
+		
+		List<Object[]> list = baseDataService.countCellFailuresByModelEventCause(description, marketingName);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2])};
+			aList.add(str);
+		}
+		return aList;
+	
+		
 	}
 
 }
