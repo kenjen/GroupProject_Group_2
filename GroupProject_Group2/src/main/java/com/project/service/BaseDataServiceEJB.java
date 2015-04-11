@@ -72,4 +72,9 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public List<Object> getUniqueIMSI() {
 		return baseDataDAO.getUniqueIMSI();
 	}
+
+	@Override
+	public List<Object[]> getAllFailuresByDate(Date startDate, Date endDate) {
+		return baseDataDAO.getAllFailuresByDate(startDate, endDate);
+	}
 }

@@ -8,6 +8,7 @@
 		<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://www.shawnolson.net/scripts/public_smo_scripts.js"></script>
+		<br />
 
 		<title>Query Viewer</title>
 		<script type="text/javascript" id="me">
@@ -16,6 +17,7 @@
 			var resultData;
 			var labelInfo;
 			var plotObj;
+			var allFailures;
 			//var q8 = false;
 		</script>
 		<style>
@@ -39,7 +41,7 @@
 			}
 
 			#flot-pie-chart {
-				width: 800px !important;
+				width: 900px !important;
 			}
 
 		</style>
@@ -86,7 +88,7 @@
 
 							</div>
 							<div id="queryTable" class="unhidden">
-								<input type="submit" id="graphButton" value="Graph" onclick="graphs()">
+								<input type="submit" id="graphButton" value="Graph" class="hidden" onclick="graphs()">
 								<div class="table-responsive">
 									<table id="errorViewer"
 									class="table table-bordered table-hover table-striped">
@@ -157,6 +159,14 @@
 		<script>
 			//$(window).resize(graphs())
 			function errorLoader($scope, $http) {
+				var x = readCookie('usercookie');
+				var userType = x.charAt(x.length - 2);
+				var showGraphButton = false;
+				if (userType == 0 || userType == 1) {
+					showGraphButton = true;
+				}
+				//alert(x)
+				//alert(showGraphButton)
 				if (code == "c01") {
 					changecss('.eventId', 'display', 'table-cell');
 					changecss('.causeCode', 'display', 'table-cell');
@@ -196,7 +206,6 @@
 
 					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
-						resultData = data;
 					});
 
 					window.top.name = "";
@@ -207,6 +216,9 @@
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.description', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
+					if (showGraphButton) {
+						document.getElementById('graphButton').className = 'unhidden';
+					}
 
 					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).success(function(data) {
 						$scope.records = data;
@@ -220,13 +232,22 @@
 
 					$http.get('/GroupProject_Group2/rest/base_data/countsingleimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
-						resultData = data;
 					});
 				} else if (code == "c07") {
 					changecss('.count', 'display', 'table-cell');
 					changecss('.country', 'display', 'table-cell');
 					changecss('.operator', 'display', 'table-cell');
 					changecss('.cellId', 'display', 'table-cell');
+					if (showGraphButton) {
+						document.getElementById('graphButton').className = 'unhidden';
+					}
+					
+					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
+						allFailures = data;
+						allFailures = allFailures[0][15];
+						//console.log("json response: "+allFailures);
+
+					});
 
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
@@ -237,6 +258,9 @@
 				} else if (code == "c08") {
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
+					if (showGraphButton) {
+						document.getElementById('graphButton').className = 'unhidden';
+					}
 
 					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
@@ -247,6 +271,10 @@
 				} else if (code == "c09") {
 					changecss('.count', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
+					if (showGraphButton) {
+						document.getElementById('graphButton').className = 'unhidden';
+					}
+
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
@@ -312,7 +340,7 @@
 
 				//Flot Line Chart with Tooltips
 				$(graphButton).submit(function() {
-					console.log("document ready");
+					//console.log("document ready");
 					var offset = 0;
 					plot();
 
@@ -371,15 +399,19 @@
 
 					for (var i = 0; i < resultData.length; i++) {
 						if (code == "c07") {
-							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2];
+							var totalFailures= parseInt(allFailures);
+							//console.log("on graph allFailures = : "+totalFailures);
+							var thisFailure = parseInt(resultData[i][15]);
+							//console.log("on graph this failure = : "+thisFailure);
+							var percentage = (thisFailure/totalFailures)*100;
+							percentage = (percentage).toFixed(2);
+							//console.log("percent = : "+percentage);
+							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage+"%";
 						} else if (code == "c05") {
 							labelInfo = "Event Cause: " + resultData[i][21];
 						} else if (code == "c09") {
 							labelInfo = "Imsi: " + resultData[i][7];
-						} else if (code == "c04") {
-							labelInfo = "Imsi: " + resultData[i][7] + " Total Duration: " + resultData[i][4];
-						}
-						else if (code == "c08") {
+						} else if (code == "c08") {
 							labelInfo = "Cause Code: " + resultData[i][1];
 						}
 						data.push({
