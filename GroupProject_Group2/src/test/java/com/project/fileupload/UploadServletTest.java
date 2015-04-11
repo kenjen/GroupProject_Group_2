@@ -18,8 +18,11 @@ import javax.servlet.http.Part;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -34,9 +37,16 @@ public class UploadServletTest extends Mockito{
 
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap.create(ZipImporter.class, "test.war")
-				.importFrom(new File("target/GroupProject_Group2.war"))
-				.as(WebArchive.class);
+		
+		PomEquippedResolveStage pom = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeAndTestDependencies();
+		
+		File[] libraries = pom.resolve("org.apache.poi:poi").withTransitivity().asFile();
+		
+		return ShrinkWrap.create(WebArchive.class,"test.war")
+				.addPackages(true, "com.project")
+				.addAsLibraries(libraries)
+				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
 	@Inject
@@ -66,7 +76,7 @@ public class UploadServletTest extends Mockito{
 		verify(request, times(1)).setAttribute("message", "Upload to server failed<br>Must end in .xls");
 		verify(dao, times(0)).addUploadedFilePath(anyString(), anyString(), anyBoolean());*/
 		
-		verify(response, times(1)).sendRedirect("/GroupProject_Group2/home/upload.html#Upload Successful");
+		verify(response, times(1)).sendRedirect("/GroupProject_Group2/upload.html#Upload Successful");
 	}
 	
 	@Test
@@ -86,7 +96,7 @@ public class UploadServletTest extends Mockito{
 		
 		servlet.doGet(request, response);
 		
-		verify(response, times(1)).sendRedirect("/GroupProject_Group2/home/upload.html#Transfer to database completed successfully!"
+		verify(response, times(1)).sendRedirect("/GroupProject_Group2/upload.html#Transfer to database completed successfully!"
 				+ "<br>There were 30 invalid rows in the base data");
 	}
 	
