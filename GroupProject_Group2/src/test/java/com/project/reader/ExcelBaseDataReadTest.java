@@ -30,8 +30,11 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -39,6 +42,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
 
 import com.project.dao.BaseDataDAO;
@@ -60,9 +64,16 @@ public class ExcelBaseDataReadTest {
 
 	@Deployment
 	public static WebArchive createDeployment() {
-		return ShrinkWrap.create(ZipImporter.class, "test.war")
-				.importFrom(new File("target/GroupProject_Group2.war"))
-				.as(WebArchive.class);
+		
+		PomEquippedResolveStage pom = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeAndTestDependencies();
+		
+		File[] libraries = pom.resolve("org.apache.poi:poi").withTransitivity().asFile();
+		
+		return ShrinkWrap.create(WebArchive.class,"test.war")
+				.addPackages(true, "com.project")
+				.addAsLibraries(libraries)
+				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 
 	private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
