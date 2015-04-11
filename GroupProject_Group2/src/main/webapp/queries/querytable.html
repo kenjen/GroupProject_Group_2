@@ -242,6 +242,12 @@
 						document.getElementById('graphButton').className = 'unhidden';
 					}
 					
+					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
+						allFailures = data;
+						allFailures = allFailures[0][15];
+						//console.log("json response: "+allFailures);
+					});
+					
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
@@ -400,7 +406,7 @@
 							var percentage = (thisFailure/totalFailures)*100;
 							percentage = (percentage).toFixed(2);
 							//console.log("percent = : "+percentage);
-							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage+"%";
+							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage;
 						} else if (code == "c05") {
 							labelInfo = "Event Cause: " + resultData[i][21];
 						} else if (code == "c09") {
@@ -453,14 +459,16 @@
 							var operator = label.substring(label.indexOf("Operator:"), label.indexOf("Cell Id:"));
 							operator = operator.replace("Operator: ", "").trim();
 							
-							var cellId = label.substring(label.indexOf("Cell Id:"), label.length);
+							var cellId = label.substring(label.indexOf("Cell Id:"), label.indexOf("Percentage"));
 							cellId = cellId.replace("Cell Id: ", "").trim();
 							
-							var queryUrl = '/GroupProject_Group2/rest/failureclass/specificFailuresForTopTenCombi/' + country + "," + operator + "," + cellId + "," + name;
+							var queryData = encodeURI(country + "," + operator + "," + cellId + "," + name);
+							var queryUrl = '/GroupProject_Group2/rest/failureclass/specificFailuresForTopTenCombi/' + queryData;
 						}
 						else if(code=="c08"){
 							var splitData = item.series.label.split(" ");
 							var causeCode = splitData[splitData.length-1];
+							console.log(causeCode + "::" + name);
 							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiByCauseCode/' + causeCode + "::" + name;
 						}
 						else if(code=="c09"){
@@ -472,7 +480,7 @@
 						$.ajax({
 							url: queryUrl,
 							success: function(response){
-								if(code=="c09"){
+								if(code=="c09" || code=="c08"){
 									for(var i=0; i<response.length; i++){
 										drilldownData.push({
 											label : response[i][0] + ", " + " Description: " + response[i][2],
@@ -508,9 +516,7 @@
 										defaultTheme : false
 									}
 								});
-								
 							}
-						
 						});
 					}
 				});
