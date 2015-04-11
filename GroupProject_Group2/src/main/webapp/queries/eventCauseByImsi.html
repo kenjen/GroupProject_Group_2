@@ -1,71 +1,95 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>EventCauseCombiByImsi</title>
-<!-- Bootstrap Core CSS -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>EventCauseCombiByImsi</title>
+<html ng-app>
+	<head>
+		<meta charset="ISO-8859-1">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<!-- Bootstrap Core CSS -->
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom Fonts -->
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
+		<!-- Custom Fonts -->
 
-</head>
-<body>
-	<div id="wrapper">
-		<div id="page-wrapper">
+		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-			<div class="container-fluid">
+	</head>
 
-				<!-- /.row -->
-				<div class="row">
-					<div class="col-lg-4 text-center"></div>
-					<div class="col-lg-4 text-center">
-						<div class="panel-body">
+	<body onload="loadField()">
+	<body ng-controller="phoneModelLoader">
+		<div id="wrapper">
+			<div id="page-wrapper">
 
+				<div class="container-fluid">
+
+					<!-- /.row -->
+					<div class="row">
+						<div class="col-lg-4 text-center"></div>
+						<div class="col-lg-4 text-center">
+							<div class="panel-body">
 							<form id='form' role="form" style="display: inline-block">
-								<h4>Select IMSI to filter Event ID and Cause Code by:</h4>
-								<div class="form-group">
-									<label>IMSI:</label> <input type="text" id = "imsi" name="imsi" class="form-control" autofocus required>
-								</div>
-								<div class="form-group">
-									<button type="submit" onClick='refreshTable();'
-										class="btn btn-default">Run Query</button>
-								</div>
-							</form>
+									<div class="form-group">
+										<h4>Select IMSI to display EventID/Cause Code by:</h4>
+										<select id="phoneIMSISelection" class="form-control" autofocus required>
+											<option id="phone" ng-repeat="model in models" value={{model}}>{{model}}</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="submit" onClick='refreshTable();' class="btn btn-default">
+											Run Query
+										</button>
+									</div>
+								</form>
 
+							</div>
+							<!-- /.panel -->
 						</div>
-						<!-- /.panel -->
+						<!-- /.col -->
 					</div>
-					<!-- /.col -->
+					<!-- /.row -->
+
 				</div>
-				<!-- /.row -->
+				<!-- /.container-fluid -->
 
 			</div>
-			<!-- /.container-fluid -->
+			<!-- /#page-wrapper -->
 
 		</div>
-		<!-- /#page-wrapper -->
+		<!-- /#wrapper -->
 
-	</div>
-	<!-- /#wrapper -->
-	
-	<script type="text/javascript">
-		function refreshTable(){
-			var imsi = document.getElementById('imsi').value;
-			var code = "c01";
-			window.parent.name = code.concat(imsi);
-			/* window.top.getElementById('tableFrame').reload(); */
-			var tableFrame = window.top.document.getElementById('tableFrame');
-			tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
-			tableFrame.contentWindow.location.reload();
-			/* window.top.resizeTableFrame(); */
-		}
-	</script>
+		<script type="text/javascript">
+
+			function phoneModelLoader($scope, $http) {
+				$http.get('/GroupProject_Group2/rest/base_data/getUniqueImsis').success(function(data) {
+					$scope.models = data;
+				});
+			}
+
+
+			function refreshTable() {
+				var imsi = document.getElementById('phoneIMSISelection').value;
+				var code = "c01";
+				window.parent.name = code.concat(imsi);
+				/* window.top.getElementById('tableFrame').reload(); */
+				var tableFrame = window.top.document.getElementById('tableFrame');
+				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
+				tableFrame.contentWindow.location.reload();
+				/* window.top.resizeTableFrame(); */
+			}
+
+			function loadField() {
+				var name = window.parent.name;
+				var imsi = name.substring(3);
+				document.getElementById('phoneIMSISelection').value = imsi;
+			}
+
+		</script>
+
 		<!-- jQuery -->
-	<script src="../js/jquery.js"></script>
+		<script src="../js/jquery.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="../js/bootstrap.min.js"></script>
-</body>
+		<!-- Bootstrap Core JavaScript -->
+		<script src="../js/bootstrap.min.js"></script>
+	</body>
 </html>

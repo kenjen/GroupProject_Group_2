@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -15,5 +16,6 @@ public interface EventCauseDAO {
 	Collection<EventCause> getFailures();
 	List<Object[]> getImsiByCauseClass(int failureClass);
 	Collection<EventCause> getAllEventCause();
+	List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end);
 	
 }

@@ -1,5 +1,6 @@
 package com.project.service;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -40,6 +41,10 @@ public class EventCauseServiceEJB implements EventCauseService {
 	@Override
 	public List<Object[]> getImsiByCauseClass(int failureClass) {
 		return dao.getImsiByCauseClass(failureClass);
+	}
+	@Override
+	public List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end) {
+		return dao.countUniqueEventCauseByImsiDate(imsi, start, end);
 	}
 
 }

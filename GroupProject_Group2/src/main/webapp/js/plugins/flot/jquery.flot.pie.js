@@ -300,6 +300,9 @@ More detail and specific examples can be found in the included HTML file.
 				plot.insertLegend();
 			}
 			
+			//added so can redraw for drilldown (kian)
+			processed = false;
+			
 			// we're actually done at this point, just defining internal functions at this point
 			
 			function clear()

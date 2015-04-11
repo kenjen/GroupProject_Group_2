@@ -10,7 +10,7 @@
 		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	</head>
-	<body ng-controller="phoneModelLoader">
+	<body ng-controller="phoneModelLoader" onload="loadField()">
 		<div id="wrapper">
 			<div id="page-wrapper">
 
@@ -63,6 +63,11 @@
 				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
 				tableFrame.contentWindow.location.reload();
 			}
+			function loadField() {
+				var name = window.parent.name;
+				var model = name.substring(3);
+				document.getElementById('phoneModelSelection').value = model;
+			}				
 		</script>
 		<!-- jQuery -->
 		<script src="../js/jquery.js"></script>

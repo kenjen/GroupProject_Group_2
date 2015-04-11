@@ -6,16 +6,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.project.entities.BaseData;
 import com.project.entities.EventCause;
 import com.project.entities.FailureClass;
 import com.project.entities.MccMnc;
 import com.project.entities.UE;
+import com.project.fileupload.DirectoryWatcher;
 import com.project.reader.Validator;
 
 public class ExcellValidator implements Validator {
 	private final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 	private final String NE_VERSION_PATTERN = ("^([1-9][1-9][A-B])$");
+	private static final Logger log = LoggerFactory.getLogger(ExcellValidator.class);
 
 	@Override
 	public boolean isValid(BaseData baseData) {

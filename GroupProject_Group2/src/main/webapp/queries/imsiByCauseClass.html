@@ -10,7 +10,7 @@
 		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	</head>
-	<body ng-controller="failureLoader">
+	<body ng-controller="failureLoader" onload="loadField()">
 		<div id="wrapper">
 			<div id="page-wrapper">
 
@@ -56,13 +56,19 @@
 			}
 
 			function refreshTable() {
-				var phoneModel = document.getElementById('failure').value;
+				var phoneModel = document.getElementById('phoneModelSelection').value;
 				var code = "c10";
 				window.top.name = code.concat(phoneModel);
 				var tableFrame = window.top.document.getElementById('tableFrame');
 				tableFrame.src = "/GroupProject_Group2/queries/querytable.html";
 				tableFrame.contentWindow.location.reload();
 			}
+			function loadField() {
+				var name = window.parent.name;
+				var model = name.substring(3)
+				console.log("model string is: "+name);
+				document.getElementById('phoneModelSelection').value = model;
+			}				
 		</script>
 		<!-- jQuery -->
 		<script src="../js/jquery.js"></script>

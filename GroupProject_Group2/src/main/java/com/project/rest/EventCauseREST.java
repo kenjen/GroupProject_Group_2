@@ -2,6 +2,7 @@ package com.project.rest;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -32,7 +33,7 @@ public class EventCauseREST{
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
-			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			String[] str = {"", Objects.toString(obj[1]), "", Objects.toString(obj[3]), "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", Objects.toString(obj[2])};
 			aList.add(str);
 		}
 		return aList;
@@ -47,7 +48,7 @@ public class EventCauseREST{
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
-			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", Objects.toString(obj[2]), "", "", "", "", "", ""};
+			String[] str = {"", Objects.toString(obj[1]), "", "", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", Objects.toString(obj[2]), "", "", "", "", "", Objects.toString(obj[3])};
 			aList.add(str);
 		}
 		return aList;
@@ -89,6 +90,33 @@ public class EventCauseREST{
 	public Collection getEventCause() {
 		Collection ids = service.getFailuresIds();
 		return ids;
+	}
+	
+	@GET
+	@Path("/causeByImsiDate/{data}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> countUniqueEventCauseByImsiDate(@PathParam("data") String data){
+		try{
+			String[] splitData = data.split("::");
+			Long imsi = Long.parseLong(splitData[0]);
+			String s = splitData[1].substring(3, 22);
+			String e = splitData[1].substring(22);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			Date start = sdf.parse(s);
+			Date end = sdf.parse(e);
+			
+			List<Object[]> list = service.countUniqueEventCauseByImsiDate(imsi, start, end);
+			
+			ArrayList<String[]> aList = new ArrayList<String[]>();
+			for(Object[] obj : list){
+				String[] str = {Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2])};
+				aList.add(str);
+			}
+			return aList;
+		}catch(ParseException e1){
+			
+		}
+		return null;
 	}
 	
 }
