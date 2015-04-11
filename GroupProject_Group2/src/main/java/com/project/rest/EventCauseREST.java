@@ -119,4 +119,25 @@ public class EventCauseREST{
 		return null;
 	}
 	
+	@GET
+	@Path("/causeByImsiByCauseCode/{data}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> getUniqueEventCauseByImsiByCauseCode(@PathParam("data") String data) throws ParseException{
+	
+			String[] splitData = data.split("::");
+			Integer causeCode = Integer.parseInt(splitData[0]);
+			Long imsi = Long.parseLong(splitData[1].substring(3));
+
+			
+			List<Object[]> list = service.getUniqueEventCauseByImsiByCauseCode(imsi, causeCode);
+			
+			ArrayList<String[]> aList = new ArrayList<String[]>();
+			for(Object[] obj : list){
+				String[] str = {Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2])};
+				aList.add(str);
+			}
+			return aList;
+
+	}
+	
 }

@@ -17,5 +17,5 @@ public interface EventCauseDAO {
 	List<Object[]> getImsiByCauseClass(int failureClass);
 	Collection<EventCause> getAllEventCause();
 	List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end);
-	
+	List<Object[]> getUniqueEventCauseByImsiByCauseCode(Long imsi, Integer causeCode);
 }

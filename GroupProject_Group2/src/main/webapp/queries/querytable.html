@@ -71,7 +71,7 @@
 						<div class="col-lg-6">
 							<h2 align="center">Results</h2>
 							<div id="queryGraph" class="hidden">
-								<input type="submit" value="Table" onclick="unhide()">
+								<input type="submit" value="Table" class="btn btn-default" onclick="unhide()"><input type="submit" id="mainGraphButton" value="Back To Main Graph" class="btn btn-default" onclick="graphs()">
 								<div class="col-lg-4">
 									<div class="panel panel-green">
 										<div class="panel-body">
@@ -337,6 +337,7 @@
 				queryGraph.className = 'unhidden';
 				var queryTable = document.getElementById('queryTable');
 				queryTable.className = 'hidden';
+				document.getElementById('mainGraphButton').style.visibility = "hidden";
 
 				//Flot Line Chart with Tooltips
 				$(graphButton).submit(function() {
@@ -447,13 +448,20 @@
 				$("#flot-pie-chart").bind("plotclick", function(event, pos, item){
 					if(item){
 						var drilldownData = [];
+						
+						document.getElementById('mainGraphButton').style.visibility = "visible";
 
 						if(code=="c09"){
 							var splitData = item.series.label.split(" ");
 							var imsi = splitData[splitData.length-1];
 							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiDate/' + imsi + "::" + name;
 						}
-
+						
+						if(code=="c08"){
+							var splitData = item.series.label.split(" ");
+							var causeCode = splitData[splitData.length-1];
+							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiByCauseCode/' + causeCode + "::" + name;
+						}
 
 							
 						$.ajax({
