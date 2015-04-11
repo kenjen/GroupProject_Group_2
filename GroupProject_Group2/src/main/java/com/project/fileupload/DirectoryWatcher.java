@@ -70,9 +70,12 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 				File oldFile = new File(systemFilePath+fileNameS);
 				File newFile = new File(systemFilePath+fileNameS.replaceAll(" ", "_").toLowerCase());
 				oldFile.renameTo(newFile);
-				log.info("Exception Occurred Due to POI bug. Renamed file");
+				log.error("Exception Occurred Due to POI bug. Renamed file");
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				File oldFile = new File(systemFilePath+fileNameS);
+				File newFile = new File(systemFilePath+fileNameS.replaceAll(" ", "_").toLowerCase());
+				oldFile.renameTo(newFile);
+				log.error("InterruptedException Occurred Due");
 			} finally {
 				if (watchKey != null) {
 					boolean valid = watchKey.reset();
