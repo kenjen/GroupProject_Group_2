@@ -12,6 +12,16 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 		@NamedQuery(name = "FailureClass.findAll", query = "select o from FailureClass o"),
 		@NamedQuery(name = "FailureClass.findByID", query = "select o from FailureClass o where o.id=:id"),
+		@NamedQuery(name = "FailureClass.specificFailuresForTopTenCombi", query = "SELECT f.failureClass, f.description, count(b.id) as numOfFailures "
+				+ "FROM FailureClass f, BaseData b, MccMnc m "
+				+ "WHERE f.id = b.failureClassFK.id "
+				+ "AND b.mccMncFK.id = m.id "
+				+ "AND m.country = :country "
+				+ "AND m.operator = :operator "
+				+ "AND b.cellId = :cellId "
+				+ "AND b.date BETWEEN :startDate AND :endDate "
+				+ "GROUP BY f.failureClass "
+				+ "ORDER BY numOfFailures DESC")
 		
 })
 @Entity

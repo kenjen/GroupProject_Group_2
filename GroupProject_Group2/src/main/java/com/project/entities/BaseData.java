@@ -125,6 +125,37 @@ public class BaseData implements Serializable {
 	public BaseData() {
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cellId == null) ? 0 : cellId.hashCode());
+		result = prime * result + ((imsi == null) ? 0 : imsi.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BaseData other = (BaseData) obj;
+		if (cellId == null) {
+			if (other.cellId != null)
+				return false;
+		} else if (!cellId.equals(other.cellId))
+			return false;
+		if (imsi == null) {
+			if (other.imsi != null)
+				return false;
+		} else if (!imsi.equals(other.imsi))
+			return false;
+		return true;
+	}
+
 	public Integer getId() {
 		return id;
 	}

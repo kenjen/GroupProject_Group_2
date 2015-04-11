@@ -242,13 +242,6 @@
 						document.getElementById('graphButton').className = 'unhidden';
 					}
 					
-					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
-						allFailures = data;
-						allFailures = allFailures[0][15];
-						//console.log("json response: "+allFailures);
-
-					});
-
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
@@ -451,27 +444,49 @@
 						
 						document.getElementById('mainGraphButton').style.visibility = "visible";
 
-						if(code=="c09"){
+						if(code=="c07") {
+							var label = item.series.label;
+							
+							var country = label.substring(label.indexOf("Country:"), label.indexOf("Operator:"));
+							country = country.replace("Country: ", "").trim();
+							
+							var operator = label.substring(label.indexOf("Operator:"), label.indexOf("Cell Id:"));
+							operator = operator.replace("Operator: ", "").trim();
+							
+							var cellId = label.substring(label.indexOf("Cell Id:"), label.length);
+							cellId = cellId.replace("Cell Id: ", "").trim();
+							
+							var queryUrl = '/GroupProject_Group2/rest/failureclass/specificFailuresForTopTenCombi/' + country + "," + operator + "," + cellId + "," + name;
+						}
+						else if(code=="c08"){
+							var splitData = item.series.label.split(" ");
+							var causeCode = splitData[splitData.length-1];
+							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiByCauseCode/' + causeCode + "::" + name;
+						}
+						else if(code=="c09"){
 							var splitData = item.series.label.split(" ");
 							var imsi = splitData[splitData.length-1];
 							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiDate/' + imsi + "::" + name;
 						}
 						
-						if(code=="c08"){
-							var splitData = item.series.label.split(" ");
-							var causeCode = splitData[splitData.length-1];
-							var queryUrl = '/GroupProject_Group2/rest/event_cause/causeByImsiByCauseCode/' + causeCode + "::" + name;
-						}
-
-							
 						$.ajax({
 							url: queryUrl,
 							success: function(response){
-								for(var i=0; i<response.length; i++){
-									drilldownData.push({
-										label : response[i][0] + ", " + " Description: " + response[i][2],
-										data : parseInt(response[i][1])
-									});
+								if(code=="c09"){
+									for(var i=0; i<response.length; i++){
+										drilldownData.push({
+											label : response[i][0] + ", " + " Description: " + response[i][2],
+											data : parseInt(response[i][1])
+										});
+									}
+								} else if(code=="c07") {
+									// 0=class, 1=desc, 2=count
+									for(var i=0; i<response.length; i++){
+										drilldownData.push({
+											label : "FailureClass: " + response[i][0] + ", " + " Description: " + response[i][1],
+											data : parseInt(response[i][2])
+										});
+									}
 								}
 
 								$.plot($("#flot-pie-chart"), drilldownData, {
@@ -495,6 +510,7 @@
 								});
 								
 							}
+						
 						});
 					}
 				});
