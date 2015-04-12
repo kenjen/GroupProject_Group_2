@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -21,12 +20,11 @@ import javax.ws.rs.core.MediaType;
 
 import com.project.entities.BaseData;
 import com.project.entities.EventCause;
-import com.project.entities.FailureClass;
-import com.project.entities.UE;
 import com.project.service.BaseDataService;
 
 @Path("/base_data")
 public class BaseDataRest {
+	
 	@EJB
 	private BaseDataService baseDataService;
 
@@ -133,7 +131,6 @@ public class BaseDataRest {
 		Date start = sdf.parse(s);
 		Date end = sdf.parse(e);
 		long imsi = Long.parseLong(i);
-		
 		List<Object[]> list = baseDataService.getCountSingleImsiBetweenDates(start, end, imsi);
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();

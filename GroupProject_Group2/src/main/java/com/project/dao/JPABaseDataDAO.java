@@ -10,12 +10,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.project.entities.BaseData;
+import com.project.fileupload.DirectoryWatcher;
 
 @Stateless
 @Local
 public class JPABaseDataDAO implements BaseDataDAO {
+	
 
+	private static final Logger log = LoggerFactory.getLogger(JPABaseDataDAO.class);
+	
 	@PersistenceContext(unitName = "GroupProject_Group2")
 	EntityManager entityManager;
 
@@ -59,6 +66,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
 		query.setParameter("imsi", imsi);
+		log.info("imsi = " + imsi);
 		List<Object[]> data = query.getResultList();
 		return data;
 	}
