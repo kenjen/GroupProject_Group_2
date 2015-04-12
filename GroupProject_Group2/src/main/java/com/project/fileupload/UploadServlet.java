@@ -100,6 +100,14 @@ public class UploadServlet extends HttpServlet {
 		
 		String finalFilePath = request.getParameter("fileSelection");
 		
+		int numOfInvalidRows = parse(finalFilePath);
+		
+		String resp = "Transfer to database completed successfully!"
+				+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data";
+		response.sendRedirect("/GroupProject_Group2/upload.html#"+resp);
+	}
+	
+	private int parse(String finalFilePath) throws IOException{
 		lookupDataReader.setInputFile(finalFilePath);
 		lookupDataReader.setLookUpDao(lookupDao);
 		lookupDataReader.read();
@@ -109,10 +117,7 @@ public class UploadServlet extends HttpServlet {
 		baseDataReader.setBaseDataDao(dao);
 		baseDataReader.setErrorBaseDataDao(errorDao);
 		baseDataReader.read();
-		int numOfInvalidRows = baseDataReader.getInvalidRowCount();
-		String resp = "Transfer to database completed successfully!"
-				+ "<br>There were " + numOfInvalidRows + " invalid rows in the base data";
-		response.sendRedirect("/GroupProject_Group2/upload.html#"+resp);
+		return baseDataReader.getInvalidRowCount();
 	}
 
 	/**
