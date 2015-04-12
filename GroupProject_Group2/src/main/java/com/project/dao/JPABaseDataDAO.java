@@ -20,9 +20,6 @@ import com.project.fileupload.DirectoryWatcher;
 @Local
 public class JPABaseDataDAO implements BaseDataDAO {
 	
-
-	private static final Logger log = LoggerFactory.getLogger(JPABaseDataDAO.class);
-	
 	@PersistenceContext(unitName = "GroupProject_Group2")
 	EntityManager entityManager;
 
@@ -66,7 +63,6 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		query.setParameter("startDate", startDate);
 		query.setParameter("endDate", endDate);
 		query.setParameter("imsi", imsi);
-		log.info("imsi = " + imsi);
 		List<Object[]> data = query.getResultList();
 		return data;
 	}
