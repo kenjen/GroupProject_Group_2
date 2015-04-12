@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 <head>
-
 <meta charset="ISO-8859-1">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://www.shawnolson.net/scripts/public_smo_scripts.js"></script>
-<br />
 
 <title>Query Viewer</title>
 <script type="text/javascript" id="me">
-			var name = window.top.name;
-			var code = name.substring(0, 3);
-			var resultData;
-			var labelInfo;
-			var plotObj;
-			var allFailures;
-			//var q8 = false;
-		</script>
+	var name = window.top.name;
+	var code = name.substring(0, 3);
+	var resultData;
+	var labelInfo;
+	var plotObj;
+	var allFailures;
+	var scrollListening = false;
+	var maxLimit = 2000;
+	//var q8 = false;
+</script>
 <style>
 .hidden {
 	display: none;
@@ -45,12 +43,13 @@
 }
 </style>
 <script type="text/javascript">
-			function unhide() {
-				var item = document.getElementById('queryTable');
-				document.getElementById('queryGraph').className = 'hidden';
-				item.className = 'unhidden';
-			}
-		</script>
+	function unhide() {
+		var item = document.getElementById('queryTable');
+		document.getElementById('queryGraph').className = 'hidden';
+		item.className = 'unhidden';
+		document.getElementById('graphButton').className = 'unhidden btn btn-default';
+	}
+</script>
 
 <!-- <link href="/GroupProject_Group2/media/css/query-table.css" rel="stylesheet" type="text/css"> -->
 
@@ -58,11 +57,10 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom Fonts -->
-<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
+<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 </head>
-<body ng-controller="errorLoader">
+<body>
 	<div id="wrapper">
 		<div id="page-wrapper">
 			<div class="container-fluid">
@@ -70,32 +68,24 @@
 					<div class="col-lg-6">
 						<h2 align="center">Results</h2>
 						<div id="queryGraph" class="hidden">
-							<input type="submit" value="Table" class="btn btn-default"
-								onclick="unhide()"><input type="submit"
-								id="mainGraphButton" value="Back To Main Graph"
-								class="btn btn-default" onclick="graphs()">
+							<input type="submit" value="Table" class="btn btn-default" onclick="unhide()"><input type="submit" id="mainGraphButton" value="Back To Main Graph" class="btn btn-default" onclick="graphs()">
 							<div class="col-lg-4">
 								<div class="panel panel-green">
 									<div class="panel-body">
 										<div class="flot-chart">
-											<div class="flot-chart-content" id="flot-pie-chart"
-												style="width: 600px; height: 300px"></div>
+											<div class="flot-chart-content" id="flot-pie-chart" style="width: 600px; height: 300px"></div>
 										</div>
 										<div class="text-right">
-											<a href="#">View Details <i
-												class="fa fa-arrow-circle-right"></i></a>
+											<a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
 							</div>
-
 						</div>
-						<div id="queryTable" class="unhidden">
-							<input type="submit" id="graphButton" value="Graph"
-								class="hidden" onclick="graphs()">
+						<input type="submit" id="graphButton" value="Graph" class="hidden" onclick="graphs()">
+						<div id="queryTable" class="unhidden" data-ng-controller="errorLoader" onscroll="scrollListener()" style="overflow-y: auto; height: 500px">
 							<div class="table-responsive">
-								<table id="errorViewer"
-									class="table table-bordered table-hover table-striped">
+								<table id="errorViewer" class="table table-bordered table-hover table-striped">
 									<thead>
 										<tr>
 											<th class="id">Id</th>
@@ -121,11 +111,10 @@
 											<th class="accessCapability">Access Capability</th>
 											<th class="description">Description</th>
 											<th class="noCode">Query Result Table</th>
-
 										</tr>
 									</thead>
 									<tbody>
-										<tr ng-repeat="record in records">
+										<tr data-ng-repeat="record in records | limitTo:limit">
 											<td class="id">{{record[0]}}</td>
 											<td class="causeCode">{{record[1]}}</td>
 											<td class="cellId">{{record[2]}}</td>
@@ -152,16 +141,30 @@
 									</tbody>
 								</table>
 							</div>
-							<!-- end table-responsive -->
+							<a href="#" id="clickLink" data-ng-click=increaseLimit()></a>
 						</div>
+						<!--  -->
 					</div>
+					<!-- col-lg-6 -->
 				</div>
+				<!-- row -->
 			</div>
+			<!-- container-fluid -->
 		</div>
+		<!-- page-wrapper -->
 	</div>
+	<!-- wrapper -->
 
 	<script>
 			function errorLoader($scope, $http) {
+				$scope.increaseLimit = function(){
+					if($scope.limit<maxLimit){
+						$scope.limit += 1000;
+						scrollListening = true;
+						console.log($scope.limit);
+					}
+				}
+				
 				var x = readCookie('usercookie');
 				var userType = x.charAt(x.length - 2);
 				var showGraphButton = false;
@@ -176,15 +179,21 @@
 
 					$http.get('/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
 				} else if (code == "c02") {
 					changecss('.date', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
-
+					
 					$http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -197,6 +206,9 @@
 
 					$http.get('/GroupProject_Group2/rest/ue/callfailures/' + name).success(function(data) {
 						$scope.records = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -207,6 +219,9 @@
 
 					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -216,12 +231,15 @@
 					changecss('.description', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
 					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
 					}
 
 					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -231,6 +249,9 @@
 
 					$http.get('/GroupProject_Group2/rest/base_data/countsingleimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 				} else if (code == "c07") {
 					changecss('.count', 'display', 'table-cell');
@@ -238,7 +259,7 @@
 					changecss('.operator', 'display', 'table-cell');
 					changecss('.cellId', 'display', 'table-cell');
 					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
 					}
 					
 					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
@@ -249,6 +270,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 					window.top.name = "";
 
@@ -262,6 +286,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -269,12 +296,15 @@
 					changecss('.count', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
 					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
 					}
 
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -283,6 +313,9 @@
 
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
+						$scope.limit = 500;
+						maxLimit = data.length;
+						scrollListening = true;
 					});
 
 					window.top.name = "";
@@ -310,6 +343,18 @@
 				}
 				return null;
 			}
+
+			function scrollListener(){
+				if(scrollListening){
+					var div = document.getElementById("queryTable");
+					var scrolltop = div.scrollTop;
+					var scrollheight = div.scrollHeight;
+					if(scrolltop >= scrollheight - (scrollheight/8)){
+						scrollListening = false;
+						document.getElementById("clickLink").click();
+					}
+				}
+			}
 		</script>
 
 	<!-- jQuery -->
@@ -332,6 +377,7 @@
 				queryGraph.className = 'unhidden';
 				var queryTable = document.getElementById('queryTable');
 				queryTable.className = 'hidden';
+				document.getElementById('graphButton').className = 'hidden';
 				document.getElementById('mainGraphButton').style.visibility = "hidden";
 
 				//Flot Line Chart with Tooltips
