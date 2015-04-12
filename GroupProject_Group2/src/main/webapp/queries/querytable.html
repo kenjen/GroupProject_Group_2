@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 	<head>
 
 		<meta charset="ISO-8859-1">
@@ -8,7 +8,6 @@
 		<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://www.shawnolson.net/scripts/public_smo_scripts.js"></script>
-		<br />
 
 		<title>Query Viewer</title>
 		<script type="text/javascript" id="me">
@@ -19,6 +18,7 @@
 			var plotObj;
 			var allFailures;
 			var scrollListening = false;
+			var maxLimit = 2000;
 			//var q8 = false;
 		</script>
 		<style>
@@ -51,6 +51,7 @@
 				var item = document.getElementById('queryTable');
 				document.getElementById('queryGraph').className = 'hidden';
 				item.className = 'unhidden';
+				document.getElementById('graphButton').className = 'unhidden btn btn-default';
 			}
 		</script>
 
@@ -64,7 +65,7 @@
 		type="text/css">
 
 	</head>
-	<body id="scrollBody" ng-controller="errorLoader" onscroll="scrollListener()">
+	<body>
 		<div id="wrapper">
 			<div id="page-wrapper">
 				<div class="container-fluid">
@@ -88,8 +89,8 @@
 								</div>
 
 							</div>
-							<div id="queryTable" class="unhidden">
-								<input type="submit" id="graphButton" value="Graph" class="hidden" onclick="graphs()">
+							<input type="submit" id="graphButton" value="Graph" class="hidden" onclick="graphs()">
+							<div id="queryTable" class="unhidden"  data-ng-controller="errorLoader" onscroll="scrollListener()" style="overflow-y: auto; height:500px">
 								<div class="table-responsive">
 									<table id="errorViewer"
 									class="table table-bordered table-hover table-striped">
@@ -122,7 +123,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr ng-repeat="record in records | limitTo:limit">
+											<tr data-ng-repeat="record in records | limitTo:limit">
 												<td class="id">{{record[0]}}</td>
 												<td class="causeCode">{{record[1]}}</td>
 												<td class="cellId">{{record[2]}}</td>
@@ -162,8 +163,11 @@
 			//$(window).resize(graphs())
 			function errorLoader($scope, $http) {
 				$scope.increaseLimit = function(){
-					$scope.limit += 2000;
-					scrollListening = true;
+					if($scope.limit<maxLimit){
+						$scope.limit += 1000;
+						scrollListening = true;
+						console.log($scope.limit);
+					}
 				}
 				
 				var x = readCookie('usercookie');
@@ -184,6 +188,7 @@
 					$http.get('/GroupProject_Group2/rest/event_cause/eventCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -195,6 +200,7 @@
 					$http.get('/GroupProject_Group2/rest/base_data/imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -209,6 +215,7 @@
 					$http.get('/GroupProject_Group2/rest/ue/callfailures/' + name).success(function(data) {
 						$scope.records = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -221,6 +228,7 @@
 					$http.get('/GroupProject_Group2/rest/base_data/countimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -233,13 +241,14 @@
 					changecss('.description', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
 					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
 					}
 
 					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -251,6 +260,7 @@
 					$http.get('/GroupProject_Group2/rest/base_data/countsingleimsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 				} else if (code == "c07") {
@@ -259,7 +269,7 @@
 					changecss('.operator', 'display', 'table-cell');
 					changecss('.cellId', 'display', 'table-cell');
 					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
 					}
 					
 					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
@@ -272,6 +282,7 @@
 						$scope.records = data;
 						resultData = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 					window.top.name = "";
@@ -287,6 +298,7 @@
 						$scope.records = data;
 						resultData = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -295,13 +307,14 @@
 					changecss('.count', 'display', 'table-cell');
 					changecss('.imsi', 'display', 'table-cell');
 					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden';
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
 					}
 
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -312,6 +325,7 @@
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
 						$scope.limit = 500;
+						maxLimit = data.length;
 						scrollListening = true;
 					});
 
@@ -345,7 +359,7 @@
 
 			function scrollListener(){
 				if(scrollListening){
-					var div = document.getElementById("scrollBody");
+					var div = document.getElementById("queryTable");
 					var scrolltop = div.scrollTop;
 					var scrollheight = div.scrollHeight;
 					if(scrolltop >= scrollheight - (scrollheight/8)){
@@ -376,6 +390,7 @@
 				queryGraph.className = 'unhidden';
 				var queryTable = document.getElementById('queryTable');
 				queryTable.className = 'hidden';
+				document.getElementById('graphButton').className = 'hidden';
 				document.getElementById('mainGraphButton').style.visibility = "hidden";
 
 				//Flot Line Chart with Tooltips
