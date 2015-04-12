@@ -157,7 +157,6 @@
 		</div>
 
 		<script>
-			//$(window).resize(graphs())
 			function errorLoader($scope, $http) {
 				var x = readCookie('usercookie');
 				var userType = x.charAt(x.length - 2);
@@ -165,8 +164,6 @@
 				if (userType == 0 || userType == 1) {
 					showGraphButton = true;
 				}
-				//alert(x)
-				//alert(showGraphButton)
 				if (code == "c01") {
 					changecss('.eventId', 'display', 'table-cell');
 					changecss('.causeCode', 'display', 'table-cell');
@@ -210,8 +207,6 @@
 
 					window.top.name = "";
 				} else if (code == "c05") {
-					//changecss('.tac','display','table-cell');
-					//changecss('.marketingName','display','table-cell');
 					changecss('.eventId', 'display', 'table-cell');
 					changecss('.causeCode', 'display', 'table-cell');
 					changecss('.description', 'display', 'table-cell');
@@ -245,7 +240,6 @@
 					$http.get('/GroupProject_Group2/rest/base_data/countallfailuresbydate/' + name).success(function(data) {
 						allFailures = data;
 						allFailures = allFailures[0][15];
-						//console.log("json response: "+allFailures);
 					});
 					
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
@@ -293,9 +287,7 @@
 
 				}
 			}
-		</script>
-
-		<script>
+			
 			var x = readCookie('usercookie')
 			if (!x) {
 				window.location.replace("/GroupProject_Group2/login.html");
@@ -340,7 +332,6 @@
 
 				//Flot Line Chart with Tooltips
 				$(graphButton).submit(function() {
-					//console.log("document ready");
 					var offset = 0;
 					plot();
 
@@ -391,21 +382,14 @@
 
 				//Flot Pie Chart with Tooltips
 				$(function() {
-					//alert(resultData[0][15])
-					//alert("in pie flot with: "+ resultData[0][15]);
-					//alert(resultData.length);
 					var data = [];
-					//var labelInfo = resultData[i][16];
 
 					for (var i = 0; i < resultData.length; i++) {
 						if (code == "c07") {
 							var totalFailures= parseInt(allFailures);
-							//console.log("on graph allFailures = : "+totalFailures);
 							var thisFailure = parseInt(resultData[i][15]);
-							//console.log("on graph this failure = : "+thisFailure);
 							var percentage = (thisFailure/totalFailures)*100;
 							percentage = (percentage).toFixed(2);
-							//console.log("percent = : "+percentage);
 							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage;
 						} else if (code == "c05") {
 							labelInfo = "Event Cause: " + resultData[i][21];
@@ -450,7 +434,13 @@
 						
 						document.getElementById('mainGraphButton').style.visibility = "visible";
 
-						if(code=="c07") {
+						if(code=="c05"){
+							var splitData = item.series.label.split(":");
+							var eventCauseDescription = splitData[splitData.length-1].trim();
+							var encodedDescription = encodeURI(eventCauseDescription + "::" + name);
+							var queryUrl = '/GroupProject_Group2/rest/base_data/countCellFailuresByModelEventCause/' + encodedDescription;
+						}
+						else if(code=="c07") {
 							var label = item.series.label;
 							
 							var country = label.substring(label.indexOf("Country:"), label.indexOf("Operator:"));
@@ -494,6 +484,11 @@
 											data : parseInt(response[i][2])
 										});
 									}
+								}else if(code=="c05"){
+									drilldownData.push({
+										label : "Cell: "+ response[i][0] + ", " + " Number of occurences: " + response[i][1] + ", " + " Duration of failures: " + response[i][2] ,
+										data : parseInt(response[i][1])
+									});
 								}
 
 								$.plot($("#flot-pie-chart"), drilldownData, {
@@ -521,6 +516,5 @@
 				});
 			});
 		</script>
-
 	</body>
 </html>

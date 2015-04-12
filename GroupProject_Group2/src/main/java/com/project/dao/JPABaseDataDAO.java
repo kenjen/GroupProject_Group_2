@@ -108,5 +108,12 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		List<Object[]> failureCount = query.getResultList();
 		return failureCount;
 	}
-
+	
+	public List<Object[]> countCellFailuresByModelEventCause(String description,String marketingName) {
+		Query query = entityManager.createNamedQuery("BaseData.countCellFailuresByModelEventCause");
+		query.setParameter("description", description);
+		query.setParameter("marketingName", marketingName);
+		List<Object[]> data = query.getResultList();
+		return data;
+	}
 }

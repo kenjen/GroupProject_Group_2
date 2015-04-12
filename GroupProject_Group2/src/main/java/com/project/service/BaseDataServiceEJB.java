@@ -77,4 +77,9 @@ public class BaseDataServiceEJB implements BaseDataService {
 	public List<Object[]> getAllFailuresByDate(Date startDate, Date endDate) {
 		return baseDataDAO.getAllFailuresByDate(startDate, endDate);
 	}
+	
+	public List<Object[]> countCellFailuresByModelEventCause(String description,
+			String marketingName) {
+		return baseDataDAO.countCellFailuresByModelEventCause(description, marketingName);
+	}
 }

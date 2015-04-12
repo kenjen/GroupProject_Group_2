@@ -17,14 +17,12 @@ import javax.persistence.Transient;
 
 @NamedQueries({
 		@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
-		
-		@NamedQuery(name = "BaseData.getCountAllFailuresBetweenDates", query = "select count(b.imsi) as countImsi, sum(b.duration) from BaseData b where b.date Between :startDate AND :endDate"),
 
 		@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate"),
 
 		@NamedQuery(name = "BaseData.getCountImsiBetweenDates", query = "select count(b.imsi) as countImsi, sum(b.duration), b.imsi from BaseData b where b.date Between :startDate AND :endDate group by b.imsi ORDER BY countImsi DESC"),
 
-		@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where  b.imsi = :imsi AND b.date Between :startDate AND :endDate"),
+		@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate AND b.imsi = :imsi"),
 
 		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi) as countImsi, b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY countImsi DESC"),
 
@@ -33,7 +31,11 @@ import javax.persistence.Transient;
 		@NamedQuery(name = "BaseData.getfindUniqueCauseByIMSI", query = "SELECT e.id, e.causeCode, count(e.id) as countCombo from EventCause e, BaseData b "
 				+ " where b.imsi = :imsi and e.id = b.eventCauseFK.id group by e.causeCode ORDER BY countCombo DESC"),
 				
-		@NamedQuery(name = "BaseData.getUniqueImsi", query = "SELECT b.imsi from BaseData b group by b.imsi")
+		@NamedQuery(name = "BaseData.getUniqueImsi", query = "SELECT b.imsi from BaseData b group by b.imsi"),
+		
+		@NamedQuery(name = "BaseData.countCellFailuresByModelEventCause", query = "Select b.cellId, count(b.cellId) as countCellFailures, sum(b.duration) from BaseData b,"
+				+ " UE u, EventCause e where u.id = b.ueFK.id and e.description = :description and u.marketingName = :marketingName and b.eventCauseFK.id = e.id "
+				+ "group by b.cellId")
 
 })
 @Entity
@@ -123,37 +125,6 @@ public class BaseData implements Serializable {
 	}
 
 	public BaseData() {
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cellId == null) ? 0 : cellId.hashCode());
-		result = prime * result + ((imsi == null) ? 0 : imsi.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BaseData other = (BaseData) obj;
-		if (cellId == null) {
-			if (other.cellId != null)
-				return false;
-		} else if (!cellId.equals(other.cellId))
-			return false;
-		if (imsi == null) {
-			if (other.imsi != null)
-				return false;
-		} else if (!imsi.equals(other.imsi))
-			return false;
-		return true;
 	}
 
 	public Integer getId() {

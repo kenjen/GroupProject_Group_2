@@ -22,13 +22,24 @@ import com.project.entities.BaseData;
 import com.project.entities.EventCause;
 import com.project.service.BaseDataService;
 
+	
+
+	//
+
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@SuppressWarnings({ "unchecked", "rawtypes" })
 @Path("/base_data")
 public class BaseDataRest {
-	
 	@EJB
 	private BaseDataService baseDataService;
+	
+	private static final Logger log = LoggerFactory.getLogger(BaseDataRest.class);
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<BaseData> getAllBaseData() {
@@ -36,7 +47,7 @@ public class BaseDataRest {
 	}
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAllBaseData(){		
+	public void addAllBaseData(){
 	}
 	
 	@GET
@@ -48,7 +59,6 @@ public class BaseDataRest {
 		 for(BaseData bd : base){
 			 ec.add(bd.getEventCauseFK());
 		 }
-		 
 		 return ec;
 	}
 	
@@ -71,8 +81,6 @@ public class BaseDataRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<String[]> getImsiByDateRange(@PathParam("dates") String dates) throws ParseException{
 		if(dates.length()==0){
-			/*List<String[]> emptyCollection = Collections.emptyList();
-			return emptyCollection;*/
 			return null;
 		}
 		String s = dates.substring(3, 22);
@@ -91,8 +99,6 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
-	
-	
 	
 	@GET
 	@Path("/countimsibetweendates/{dates}")
@@ -131,6 +137,7 @@ public class BaseDataRest {
 		Date start = sdf.parse(s);
 		Date end = sdf.parse(e);
 		long imsi = Long.parseLong(i);
+		
 		List<Object[]> list = baseDataService.getCountSingleImsiBetweenDates(start, end, imsi);
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
@@ -202,12 +209,40 @@ public class BaseDataRest {
 		}
 		return aList;
 	}
+	
 	@GET
 	@Path("/getUniqueImsis")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getUniqueImsi() {
 		return (List ) baseDataService.getUniqueIMSI();
 
+	}
+	
+	@GET
+	@Path("/countCellFailuresByModelEventCause/{cellEventCauseId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String[]> countCellFailuresByModelEventCause(@PathParam("cellEventCauseId") String data) {
+		String decoded = "";
+		try {
+			decoded = URLDecoder.decode(data, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		String[] splitData = decoded.split("::");
+		log.info("decoded = " + decoded);
+		log.info("split 0 = " + splitData[0]);
+		
+		String marketingName = splitData[1].substring(3);
+		String description = splitData[0];
+		
+		List<Object[]> list = baseDataService.countCellFailuresByModelEventCause(description, marketingName);
+		
+		ArrayList<String[]> aList = new ArrayList<String[]>();
+		for(Object[] obj : list){
+			String[] str = {Objects.toString(obj[0]), Objects.toString(obj[1]), Objects.toString(obj[2])};
+			aList.add(str);
+		}
+		return aList;
 	}
 	
 	@GET
