@@ -3,10 +3,13 @@ package com.project.fileupload;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.FileSystem;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -26,15 +29,40 @@ import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.project.dao.BaseDataDAO;
+import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.FileDAO;
+import com.project.dao.LookUpDataDAO;
 import com.project.fileupload.UploadServlet;
+import com.project.reader.ReadBase;
+import com.project.reader.ReadLookup;
 import com.project.reader.excel.ExcelBaseDataRead;
 import com.project.reader.excel.ExcelLookupDataRead;
+import com.project.service.FileService;
 
 @RunWith(Arquillian.class)
 public class UploadServletTest extends Mockito{
 
+	private static final Logger log = LoggerFactory.getLogger(UploadServletTest.class);
+	
+	@EJB
+	private BaseDataDAO baseDataDao;
+	@EJB
+	private ErrorBaseDataDAO errorDao;
+	@EJB
+	private LookUpDataDAO lookupDao;
+	@EJB
+	private FileService fileService;
+	
+	ReadLookup lookupDataReader = new ExcelLookupDataRead();
+	ReadBase baseDataReader = new ExcelBaseDataRead();
+
+	@Inject
+	private UploadServlet servlet;
+	
 	@Deployment
 	public static WebArchive createDeployment() {
 		
@@ -45,12 +73,10 @@ public class UploadServletTest extends Mockito{
 		return ShrinkWrap.create(WebArchive.class,"test.war")
 				.addPackages(true, "com.project")
 				.addAsLibraries(libraries)
-				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+				.addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	
-	@Inject
-	private UploadServlet servlet;
 	
 	@Test
 	public void testDoPost() throws IOException, ServletException{
@@ -115,7 +141,23 @@ public class UploadServletTest extends Mockito{
 		privateGetFileExtension.setAccessible(false);
 	}
 	
-	
-	
-	
+	@Test
+	public void testUploadAndTransferSpeed() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		File f = new File("testfiles");
+		f.mkdir();
+		String filePath = f.getAbsolutePath();
+		String finalfilePath = filePath + File.separator + "Dataset 3A.xls";
+		Long start = System.currentTimeMillis();
+		
+		Class[] cArg = new Class[1];
+        cArg[0] = String.class;
+		Method privateParse = UploadServlet.class.getDeclaredMethod("parse", cArg);
+		privateParse.setAccessible(true);
+		int invalidRecords = (int) privateParse.invoke(servlet, finalfilePath);
+		
+		Long end = System.currentTimeMillis();
+		log.info("time taken = " + (end-start));
+		assert(end-start<105000); // 1 min 45 seconds, 15 second reduction to be certain less than 2 minutes every time
+		assertEquals(3, invalidRecords);
+	}
 }
