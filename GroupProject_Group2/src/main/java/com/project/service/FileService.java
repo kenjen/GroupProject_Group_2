@@ -13,4 +13,6 @@ public interface FileService {
 	boolean addUploadedFilePath(String name, String path, boolean flush);
 
 	void removeFileFromDatabase(String fileName);
+
+	void removeFile(String fileName);
 }

@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class JPAFileDAO implements FileDAO{
 	@Override
 	public Collection<FileInfo> getAllUploadedFilePaths() {
 		Query query = em.createQuery("from FileInfo");
+		@SuppressWarnings("unchecked")
 		List<FileInfo> result = query.getResultList();
 		return result;
 	}
@@ -41,9 +43,15 @@ public class JPAFileDAO implements FileDAO{
 
 	@Override
 	public void removeFileFromDatabase(String fileName) {
-		FileInfo f = new FileInfo(fileName, "");
 		Query query = em.createQuery("delete from FileInfo f where f.filename = :fileName");
 		query.setParameter("fileName", fileName);
 		query.executeUpdate();
+	}
+
+	@Override
+	public void removeFileFromServer(String fileName) {
+		FileInfo fileInfo = em.find(FileInfo.class, fileName);
+		File file = new File(fileInfo.getFilepath());
+		file.delete();
 	}
 }

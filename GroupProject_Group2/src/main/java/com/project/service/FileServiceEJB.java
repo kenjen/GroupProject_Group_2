@@ -30,4 +30,10 @@ public class FileServiceEJB implements FileService{
 	public void removeFileFromDatabase(String fileName) {
 		dao.removeFileFromDatabase(fileName);
 	}
+
+	@Override
+	public void removeFile(String fileName) {
+		dao.removeFileFromServer(fileName);
+		dao.removeFileFromDatabase(fileName);
+	}
 }

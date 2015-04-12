@@ -12,4 +12,6 @@ public interface FileDAO {
 
 	void removeFileFromDatabase(String fileName);
 
+	void removeFileFromServer(String fileName);
+
 }
