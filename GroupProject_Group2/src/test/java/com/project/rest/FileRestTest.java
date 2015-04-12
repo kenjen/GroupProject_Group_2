@@ -2,12 +2,6 @@ package com.project.rest;
 
 import java.io.File;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,12 +11,6 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -37,19 +25,14 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.response.Response;
-
 import static com.jayway.restassured.RestAssured.*;
-import static com.jayway.restassured.matcher.RestAssuredMatchers.*;
-import static org.hamcrest.Matchers.*;
-
 import com.project.entities.FileInfo;
 
 @RunWith(Arquillian.class)
 public class FileRestTest {
 	
 	private static final Logger log = LoggerFactory.getLogger(FileRestTest.class);
+	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -73,22 +56,59 @@ public class FileRestTest {
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
-		
+		clearDataFromPersistenceModule();
+		insertTestData();
+		beginTransaction();
+	}
+
+	private void clearDataFromPersistenceModule() throws Exception {
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from BaseData").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from EventCause").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from FailureClass").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from UE").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from MccMnc").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from FileInfo").executeUpdate();
+		tx.commit();
+	}
+
+	private void insertTestData() throws Exception, ParseException {
+		tx.begin();
+		em.joinTransaction();
+		em.persist(fileInfo);
+		tx.commit();
+		em.clear();
+	}
+
+	private void beginTransaction() throws Exception {
+		tx.begin();
+		em.joinTransaction();
 	}
 
 	@After
 	public void endTransaction() throws Exception {
-		
+		tx.commit();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetAllUploadedFilePaths() throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
-		FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
-		tx.begin();
-		em.joinTransaction();
-		em.persist(fileInfo);
-		tx.commit();
 		
 		/*Response response = get("http://localhost:8080/GroupProject_Group2/rest/file");
 		log.info("response = " + response.asString());*/
