@@ -29,6 +29,13 @@ public class FileRest {
 		return service.getAllUploadedFilePaths();
 	}
 	
+	@GET
+	@Path("/addFileInfo/{data}")
+	public void addUploadedFilePath(@PathParam("data") String data) {
+		String[] splitData = data.split("::");
+		service.addUploadedFilePath(splitData[0], splitData[1], false);
+	}
+	
 	@DELETE
 	@Path("/delete/{encodedFileName}")
 	public void removeFileFromDatabase(@PathParam("encodedFileName") String encodedFileName){

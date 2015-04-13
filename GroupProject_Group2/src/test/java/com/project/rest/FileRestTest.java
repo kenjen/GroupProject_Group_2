@@ -2,16 +2,15 @@ package com.project.rest;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.extension.rest.client.ArquillianResteasyResource;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -25,7 +24,6 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.jayway.restassured.RestAssured.*;
 import com.project.entities.FileInfo;
 
 @RunWith(Arquillian.class)
@@ -33,6 +31,9 @@ public class FileRestTest {
 	
 	private static final Logger log = LoggerFactory.getLogger(FileRestTest.class);
 	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
+	
+	/*@ArquillianResource
+	private URL deploymentURL;*/
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -53,6 +54,9 @@ public class FileRestTest {
 
 	@Inject
 	UserTransaction tx;
+	
+	@Inject
+	FileRest fileRest;
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
@@ -62,26 +66,6 @@ public class FileRestTest {
 	}
 
 	private void clearDataFromPersistenceModule() throws Exception {
-		tx.begin();
-		em.joinTransaction();
-		em.createQuery("delete from BaseData").executeUpdate();
-		tx.commit();
-		tx.begin();
-		em.joinTransaction();
-		em.createQuery("delete from EventCause").executeUpdate();
-		tx.commit();
-		tx.begin();
-		em.joinTransaction();
-		em.createQuery("delete from FailureClass").executeUpdate();
-		tx.commit();
-		tx.begin();
-		em.joinTransaction();
-		em.createQuery("delete from UE").executeUpdate();
-		tx.commit();
-		tx.begin();
-		em.joinTransaction();
-		em.createQuery("delete from MccMnc").executeUpdate();
-		tx.commit();
 		tx.begin();
 		em.joinTransaction();
 		em.createQuery("delete from FileInfo").executeUpdate();
@@ -106,17 +90,36 @@ public class FileRestTest {
 		tx.commit();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
-	public void testGetAllUploadedFilePaths() throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException{
+	public void testGetAllUploadedFilePaths(@ArquillianResteasyResource FileRest fileRest){
 		
-		/*Response response = get("http://localhost:8080/GroupProject_Group2/rest/file");
-		log.info("response = " + response.asString());*/
+		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
 		
-		FileInfo[] files = given().when().get("http://localhost:8080/GroupProject_Group2/rest/file").as(FileInfo[].class);
-		assert(files.length==1);
-		assert(files[0].getFilename().equals("filename.xml"));
-		assert(files[0].getFilepath().equals("filepath"));
-		assert(files[0].equals(fileInfo));
+		assert(info.size()==1);
+		assert(info.get(0).getFilename().equals("filename.xml"));
+		assert(info.get(0).getFilepath().equals("filepath"));
+		assert(info.get(0).equals(fileInfo));
+	}
+	
+	@Test
+	public void addAndRemoveUploadedFilePath(@ArquillianResteasyResource FileRest fileRest){
+		final String fileName = "/addedFileName.xls";
+		final String filePath = "addedFilePath";
+		
+		fileRest.addUploadedFilePath(fileName + "::" + filePath);
+		
+		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
+		
+		assert(info.size()==2);
+		assert(info.get(1).getFilename().equals("/addedFileName.xls"));
+		assert(info.get(1).getFilepath().equals("addedFilePath"));
+		
+		fileRest.removeFileFromDatabase(fileName);
+		
+		final List<FileInfo> info2 = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
+		
+		assert(info2.size()==1);
+		assert(!info2.get(1).getFilename().equals("addedFileName.xls"));
+		assert(!info2.get(1).getFilepath().equals("addedFilePath"));
 	}
 }
