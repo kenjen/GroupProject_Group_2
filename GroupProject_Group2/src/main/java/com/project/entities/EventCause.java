@@ -13,8 +13,8 @@ import javax.persistence.*;
 		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b) as countCombo, e.description  "
 				+ "FROM EventCause e, BaseData b, UE u where e.id = b.eventCauseFK.id and u.id = b.ueFK.id and "
 				+ "u.marketingName = :phoneModel group by b.eventCauseFK ORDER BY countCombo DESC"),
-		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, f.description from FailureClass f, BaseData "
-						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass"),
+		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, count(b) as countCombo from FailureClass f, BaseData "
+						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass group by b.imsi"),
 
 		@NamedQuery(name = "EventCause.getAllEventCause", query = "select e from EventCause e"),
 		
@@ -57,38 +57,6 @@ public class EventCause implements Serializable {
 		this.causeCode = causeCode;
 		this.eventId = eventId;
 		this.description = description;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((causeCode == null) ? 0 : causeCode.hashCode());
-		result = prime * result + ((eventId == null) ? 0 : eventId.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EventCause other = (EventCause) obj;
-		if (causeCode == null) {
-			if (other.causeCode != null)
-				return false;
-		} else if (!causeCode.equals(other.causeCode))
-			return false;
-		if (eventId == null) {
-			if (other.eventId != null)
-				return false;
-		} else if (!eventId.equals(other.eventId))
-			return false;
-		return true;
 	}
 
 	public Integer getId() {

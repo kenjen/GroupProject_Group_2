@@ -80,17 +80,6 @@ public class EventCauseEJBTest {
 		        
 	}
 
-//	@Test
-//	public void testGetCauseCodeByIMSI() {
-//		List<String[]> eventCauseCombiIds= new ArrayList<String[]>(); 
-//		// check if it requested the named query
-//		when(mockedEntityManager.createNamedQuery("getCauseCodeByIMSI")).thenReturn(mockedQuery);
-//		// check if it asked for the result list of the named query
-//	    when(mockedQuery.getResultList()).thenReturn(eventCauseCombiIds);
-//	    List<Object[]> failuresByImsi = eventCauseEjb.getCauseCodeByIMSI(344930000000011L);
-//	
-//       // check if it returned the result list of the named query
-//        assertSame(eventCauseCombiIds, failuresByImsi);
-//	}
+
 
 }
