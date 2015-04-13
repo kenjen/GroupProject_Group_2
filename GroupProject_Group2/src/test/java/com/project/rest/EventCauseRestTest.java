@@ -152,36 +152,35 @@ public class EventCauseRestTest {
 			assertEquals(info.get(0)[15], "1");
 			
 		}
-//		@Test
-//		public void countUniqueEventCauseByImsiDate(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
-//			final String code = "c00";
-//			final String imsi = "191911000023112";
-//			final String dateS = "2015-04-01T09:00:00";
-//			final String dateE = "3015-01-01T09:00:00";
-//			final String data = code + imsi + dateS + dateE;
-//						
-//			final List<String[]> info = evCauseRest.countUniqueEventCauseByImsiDate(data);
-//
-//			assertEquals(1, info.size());
-//			assertEquals(info.get(0)[7], "191911000023112");
-//			assertEquals(info.get(0)[15], "1");
-//			
-//		}
-//		@Test
-//		public void getUniqueEventCauseByImsiByCauseCode(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
-//			final String code = "c00";
-//			final String imsi = "191911000023112";
-//			final String causeCode = "55";
-//			final String data = code + imsi + causeCode;
-//						
-//			final List<String[]> info = evCauseRest.getUniqueEventCauseByImsiByCauseCode(data);
-//
-//			assertEquals(1, info.size());
-//			assertEquals(info.get(0)[7], "191911000023112");
-//			assertEquals(info.get(0)[15], "1");
-//			assertEquals(info.get(0)[21], "eventCauseDescription");
-//			
-//		}
+		@Test
+		public void countUniqueEventCauseByImsiDate(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
+			final String code = "c00";
+			final String imsi = "191911000023112";
+			final String dateS = "2015-04-01T09:00:00";
+			final String dateE = "3015-01-01T09:00:00";
+			final String data = imsi + "::"+ code + dateS + dateE;
+						
+			final List<String[]> info = evCauseRest.countUniqueEventCauseByImsiDate(data);
+
+			assertEquals(1, info.size());
+			assertEquals(info.get(0)[1], "1");
+			assertEquals(info.get(0)[2], "eventCauseDescription");
+		}
+		@Test
+		public void getUniqueEventCauseByImsiByCauseCode(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
+			final String code = "c00";
+			final String imsi = "191911000023112";
+			final String causeCode = "55";
+			final String data = causeCode + "::" + code + imsi;
+						
+			final List<String[]> info = evCauseRest.getUniqueEventCauseByImsiByCauseCode(data);
+
+			assertEquals(1, info.size());
+			assertEquals(info.get(0)[1], "1");
+			assertEquals(info.get(0)[2], "eventCauseDescription");
+			
+			
+		}
 		
 	
 
