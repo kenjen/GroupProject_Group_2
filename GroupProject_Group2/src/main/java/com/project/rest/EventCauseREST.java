@@ -66,7 +66,7 @@ public class EventCauseREST{
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){
-			String[] str = {"", "", "", "", "","", "", Objects.toString(obj[0]), "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			String[] str = {"", "", "", "", "","", "", Objects.toString(obj[0]), "", "", "", "", "", "", "",  Objects.toString(obj[1]), "", "", "", "", "", ""};
 			aList.add(str);
 		}
 		return aList;

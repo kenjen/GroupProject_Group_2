@@ -13,8 +13,8 @@ import javax.persistence.*;
 		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b) as countCombo, e.description  "
 				+ "FROM EventCause e, BaseData b, UE u where e.id = b.eventCauseFK.id and u.id = b.ueFK.id and "
 				+ "u.marketingName = :phoneModel group by b.eventCauseFK ORDER BY countCombo DESC"),
-		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, f.description from FailureClass f, BaseData "
-						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass"),
+		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, count(b) as countCombo from FailureClass f, BaseData "
+						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass group by b.imsi"),
 
 		@NamedQuery(name = "EventCause.getAllEventCause", query = "select e from EventCause e"),
 		
