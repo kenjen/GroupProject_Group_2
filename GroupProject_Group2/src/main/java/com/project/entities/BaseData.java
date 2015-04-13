@@ -24,7 +24,7 @@ import javax.persistence.Transient;
 
 		@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate AND b.imsi = :imsi"),
 
-		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi) as countImsi, b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY countImsi DESC"),
+		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi) as countImsi, b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY countImsi DESC, b.imsi"),
 
 		@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(m) as countModel, m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK.id GROUP BY m.country, m.operator, b.cellId ORDER BY countModel DESC"),
 
