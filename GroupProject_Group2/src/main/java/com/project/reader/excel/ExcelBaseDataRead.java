@@ -234,14 +234,17 @@ public class ExcelBaseDataRead implements ReadBase {
 		this.sheetNumber = sheetNumber;
 	}
 
+	@Override
 	public void setBaseDataDao(BaseDataDAO dao) {
 		this.baseDataDao = dao;
 	}
 
+	@Override
 	public void setErrorBaseDataDao(ErrorBaseDataDAO dao) {
 		this.errorBaseDataDao = dao;
 	}
 
+	@Override
 	public int getInvalidRowCount() {
 		return invalidRowCount;
 	}

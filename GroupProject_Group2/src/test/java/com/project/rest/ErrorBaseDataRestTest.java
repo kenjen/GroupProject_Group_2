@@ -95,7 +95,7 @@ public class ErrorBaseDataRestTest {
 	
 	@Test
 	public void getEventCauseCombiTest(@ArquillianResteasyResource ErrorBaseDataRest errorBaseDataRest){
-		List<ErrorBaseData> allErrorBaseData = (List<ErrorBaseData>) errorBaseDataRest.getAllErrorBaseData();
+		List<ErrorBaseData> allErrorBaseData = errorBaseDataRest.getAllErrorBaseData();
 		assertEquals(1, allErrorBaseData.size());
 		assertTrue(allErrorBaseData.get(0).getId() == 1);
 		assertTrue(allErrorBaseData.get(0).getCellId() == 1);

@@ -6,14 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +30,6 @@ public class EventCauseEJBTest {
     public void initializeDependencies() {
     	eventCauseEjb = new EventCauseEJB();
     	eventCauseEjb.setEm(mockedEntityManager);
-    	 
     }
 
 	

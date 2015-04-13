@@ -3,12 +3,9 @@ package com.project.fileupload;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.FileSystem;
-
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -22,7 +19,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
@@ -134,9 +130,9 @@ public class UploadServletTest extends Mockito{
 		Method privateGetFileExtension = UploadServlet.class.getDeclaredMethod("getFileExtension", cArg);
 		privateGetFileExtension.setAccessible(true);
 		
-		assertTrue(".xls".equals((String)privateGetFileExtension.invoke(servlet, "test.xls")));
-		assertTrue(".xls".equals((String)privateGetFileExtension.invoke(servlet, "group_project/test.xls")));
-		assertTrue(".xls".equals((String)privateGetFileExtension.invoke(servlet, "group_project\test.txt.xls")));
+		assertTrue(".xls".equals(privateGetFileExtension.invoke(servlet, "test.xls")));
+		assertTrue(".xls".equals(privateGetFileExtension.invoke(servlet, "group_project/test.xls")));
+		assertTrue(".xls".equals(privateGetFileExtension.invoke(servlet, "group_project\test.txt.xls")));
 		
 		privateGetFileExtension.setAccessible(false);
 	}

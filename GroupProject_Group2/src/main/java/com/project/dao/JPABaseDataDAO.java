@@ -10,11 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.project.entities.BaseData;
-import com.project.fileupload.DirectoryWatcher;
 
 @Stateless
 @Local
@@ -23,6 +19,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	@PersistenceContext(unitName = "GroupProject_Group2")
 	EntityManager entityManager;
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<BaseData> getAllBaseData() {
 		Query query = entityManager.createNamedQuery("BaseData.getAllBaseData");
@@ -30,6 +27,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public void addAllBaseData(Collection baseDataList) {
 		int i = 0;
@@ -94,6 +92,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return data;
 	}
 	
+	@Override
 	public List<Object> getUniqueIMSI() {
 			Query query = entityManager.createNamedQuery("BaseData.getUniqueImsi");
 			List<Object> data = query.getResultList();
@@ -109,6 +108,7 @@ public class JPABaseDataDAO implements BaseDataDAO {
 		return failureCount;
 	}
 	
+	@Override
 	public List<Object[]> countCellFailuresByModelEventCause(String description,String marketingName) {
 		Query query = entityManager.createNamedQuery("BaseData.countCellFailuresByModelEventCause");
 		query.setParameter("description", description);

@@ -19,6 +19,7 @@ public class QueryServiceEJB implements QueryService {
 	@EJB
 	private QueryDAO queryDAO;
 
+	@Override
 	public List<Query> getQueriesByUserType(int userType) {
 		return queryDAO.getQueriesByUserType(userType);
 	}

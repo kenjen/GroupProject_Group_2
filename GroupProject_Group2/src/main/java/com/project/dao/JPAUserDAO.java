@@ -18,6 +18,7 @@ public class JPAUserDAO implements UserDAO{
 	@PersistenceContext
 	private EntityManager em;
 
+	@Override
 	public Collection<User> getAllUsers() {
 		Query query = em.createQuery("from User");
 		List<User> result = query.getResultList();
@@ -25,6 +26,7 @@ public class JPAUserDAO implements UserDAO{
 	}
 
 	
+	@Override
 	public User getUser(User user) {
 		Query q = em.createQuery("from User");
 		List<User> res = q.getResultList();
@@ -44,6 +46,7 @@ public class JPAUserDAO implements UserDAO{
 		return result.get(0);
 	}
 	
+	@Override
 	public User addUser(User user){
 		Query query = em.createQuery("from User");
 		List<User> users = query.getResultList();
@@ -61,6 +64,7 @@ public class JPAUserDAO implements UserDAO{
 	}
 
 
+	@Override
 	public void updateUser(User user) {
 		/*User updatedUser = em.find(User.class, user.getId());
 		updatedUser.setPassword(user.getPassword());

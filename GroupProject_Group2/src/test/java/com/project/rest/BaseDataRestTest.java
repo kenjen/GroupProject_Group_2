@@ -200,7 +200,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetAllUploadedFilePaths(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<BaseData> baseData = (List<BaseData>) baseDataRest.getAllBaseData();
+		final List<BaseData> baseData = baseDataRest.getAllBaseData();
 		
 		assertEquals(11, baseData.size());
 		assertEquals(sdf.parse("10-10-2013 09:00:00").getTime(), baseData.get(0).getDate().getTime());
@@ -241,7 +241,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetImsiByDateRange(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<String[]> baseDataAsString = (List<String[]>) baseDataRest.getImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:10:10");
+		final List<String[]> baseDataAsString = baseDataRest.getImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:10:10");
 		
 		assertEquals(1, baseDataAsString.size());
 		assertEquals(22, baseDataAsString.get(0).length);
@@ -268,7 +268,7 @@ public class BaseDataRestTest {
 		assertEquals("", baseDataAsString.get(0)[20]);
 		assertEquals("", baseDataAsString.get(0)[21]);
 		
-		final List<String[]> baseDataAsStringEmpty = (List<String[]>) baseDataRest.getImsiByDateRange("c002014-10-10T08:50:502014-10-10T09:10:10");
+		final List<String[]> baseDataAsStringEmpty = baseDataRest.getImsiByDateRange("c002014-10-10T08:50:502014-10-10T09:10:10");
 		
 		assertEquals(0, baseDataAsStringEmpty.size());
 	}
@@ -276,7 +276,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetCountImsiByDateRange(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<String[]> baseDataAsString = (List<String[]>) baseDataRest.getCountImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:10:10");
+		final List<String[]> baseDataAsString = baseDataRest.getCountImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:10:10");
 		
 		assertEquals(1, baseDataAsString.size());
 		assertEquals(22, baseDataAsString.get(0).length);
@@ -303,7 +303,7 @@ public class BaseDataRestTest {
 		assertEquals("", baseDataAsString.get(0)[20]);
 		assertEquals("", baseDataAsString.get(0)[21]);
 		
-		final List<String[]> baseDataAsStringEmpty = (List<String[]>) baseDataRest.getImsiByDateRange("c002014-10-10T08:50:502014-10-10T09:10:10");
+		final List<String[]> baseDataAsStringEmpty = baseDataRest.getImsiByDateRange("c002014-10-10T08:50:502014-10-10T09:10:10");
 		
 		assertEquals(0, baseDataAsStringEmpty.size());
 	}
@@ -311,7 +311,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetCountSingleImsiByDateRange(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<String[]> baseDataAsString = (List<String[]>) baseDataRest.getCountSingleImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:20:101001");
+		final List<String[]> baseDataAsString = baseDataRest.getCountSingleImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:20:101001");
 		
 		assertEquals(1, baseDataAsString.size());
 		assertEquals(22, baseDataAsString.get(0).length);
@@ -338,12 +338,12 @@ public class BaseDataRestTest {
 		assertEquals("", baseDataAsString.get(0)[20]);
 		assertEquals("", baseDataAsString.get(0)[21]);
 		
-		final List<String[]> baseDataAsStringEmpty = (List<String[]>) baseDataRest.getCountSingleImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:20:101009");
+		final List<String[]> baseDataAsStringEmpty = baseDataRest.getCountSingleImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:20:101009");
 
 		assertEquals("null", baseDataAsStringEmpty.get(0)[7]);
 		assertEquals("0", baseDataAsStringEmpty.get(0)[15]);
 		
-		final List<String[]> baseDataAsStringSingle = (List<String[]>) baseDataRest.getCountSingleImsiByDateRange("c002013-10-10T08:50:002013-10-10T09:10:101001");
+		final List<String[]> baseDataAsStringSingle = baseDataRest.getCountSingleImsiByDateRange("c002013-10-10T08:50:002013-10-10T09:10:101001");
 		
 		assertEquals(1, baseDataAsStringSingle.size());
 	}
@@ -351,7 +351,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetCountTop10ImsiByDateRange(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<String[]> baseDataAsString = (List<String[]>) baseDataRest.getCountTop10ImsiByDateRange("c002013-01-10T08:50:502013-12-10T09:20:10");
+		final List<String[]> baseDataAsString = baseDataRest.getCountTop10ImsiByDateRange("c002013-01-10T08:50:502013-12-10T09:20:10");
 		
 		assertEquals(10, baseDataAsString.size());
 		assertEquals(22, baseDataAsString.get(0).length);
@@ -403,7 +403,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetCountTop10ComboBetweenDates(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<String[]> baseDataAsString = (List<String[]>) baseDataRest.getCountTop10ComboBetweenDates("c002013-01-10T08:50:502013-12-10T09:20:10");
+		final List<String[]> baseDataAsString = baseDataRest.getCountTop10ComboBetweenDates("c002013-01-10T08:50:502013-12-10T09:20:10");
 		
 		assertEquals(4, baseDataAsString.size());
 		assertEquals(22, baseDataAsString.get(0).length);
@@ -449,7 +449,7 @@ public class BaseDataRestTest {
 	@Test
 	public void testGetCauseCodeByIMSI(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
-		final List<String[]> baseDataAsString = (List<String[]>) baseDataRest.getCauseCodeByIMSI("c001001");
+		final List<String[]> baseDataAsString = baseDataRest.getCauseCodeByIMSI("c001001");
 		
 		assertEquals(1, baseDataAsString.size());
 		assertEquals(22, baseDataAsString.get(0).length);
@@ -477,10 +477,10 @@ public class BaseDataRestTest {
 		assertEquals("", baseDataAsString.get(0)[20]);
 		assertEquals("", baseDataAsString.get(0)[21]);
 		
-		final List<String[]> baseDataAsStringEmpty = (List<String[]>) baseDataRest.getCauseCodeByIMSI("c000950");
+		final List<String[]> baseDataAsStringEmpty = baseDataRest.getCauseCodeByIMSI("c000950");
 		assertEquals(0, baseDataAsStringEmpty.size());
 		
-		final List<String[]> baseDataAsStringSingle = (List<String[]>) baseDataRest.getCauseCodeByIMSI("c001000");
+		final List<String[]> baseDataAsStringSingle = baseDataRest.getCauseCodeByIMSI("c001000");
 		assertEquals(1, baseDataAsStringSingle.size());
 		assertEquals("1", baseDataAsStringSingle.get(0)[15]);
 	}

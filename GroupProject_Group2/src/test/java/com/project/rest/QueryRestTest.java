@@ -86,7 +86,7 @@ public class QueryRestTest {
 	
 	@Test
 	public void getEventCauseCombiTest(@ArquillianResteasyResource QueryREST queryRest){
-		List<Query> allqueries = (List<Query>) queryRest.getEventCauseCombi(1);
+		List<Query> allqueries = queryRest.getEventCauseCombi(1);
 		assertEquals(1, allqueries.size());
 		assertTrue(allqueries.get(0).getId() == 1);
 		assertTrue(allqueries.get(0).getPermission() == 1);

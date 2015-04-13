@@ -19,6 +19,7 @@ public class EventCauseEJB implements EventCauseDAO {
 	private EntityManager em;
 
 	
+	@Override
 	public List<Object[]> getFailuresIdsByIMSI(Long imsi) {
 		Query query = em.createNamedQuery("findEventCauseByIMSI");
 		query.setParameter("IMSI", imsi);
@@ -41,6 +42,7 @@ public class EventCauseEJB implements EventCauseDAO {
 
 
 	
+	@Override
 	public List<Object[]> countUniqueEventCauseByModel(String phoneModel) {
 		Query query = em.createNamedQuery("countUniqueEventCauseByModel");
 		query.setParameter("phoneModel", phoneModel);
