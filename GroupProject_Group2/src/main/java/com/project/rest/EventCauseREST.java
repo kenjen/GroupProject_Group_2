@@ -72,7 +72,7 @@ public class EventCauseREST{
 		return aList;
 	}
 	
-	
+		
 	@GET
 	@Path("/causeByImsiDate/{data}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -120,5 +120,6 @@ public class EventCauseREST{
 			return aList;
 
 	}
+
 	
 }

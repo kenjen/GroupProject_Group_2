@@ -78,14 +78,15 @@ public class EventCauseRestTest {
 		}
 
 		private void insertTestData() throws Exception, ParseException {
-			EventCause eventCause = new EventCause(55, 5555, "eventCauseDescription");
 			BaseData b = new BaseData();
+			EventCause eventCause = new EventCause(55, 5555, "eventCauseDescription");
 			UE ue = new UE(5500, "uemarketingName", "uemanufacturer", "ueaccessCapability");
 			FailureClass failureClass = new FailureClass(6, "test");
 			b.setEventCauseFK(eventCause);
 			b.setImsi(191911000023112L);
 			b.setUeFK(ue);
 			b.setFaliureClassFK(failureClass);
+			b.setDate(new Date());
 			tx.begin();
 			em.joinTransaction();
 			em.persist(eventCause);
@@ -148,9 +149,39 @@ public class EventCauseRestTest {
 
 			assertEquals(1, info.size());
 			assertEquals(info.get(0)[7], "191911000023112");
-			assertEquals(info.get(0)[21], "test");
+			assertEquals(info.get(0)[15], "1");
 			
 		}
+//		@Test
+//		public void countUniqueEventCauseByImsiDate(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
+//			final String code = "c00";
+//			final String imsi = "191911000023112";
+//			final String dateS = "2015-04-01T09:00:00";
+//			final String dateE = "3015-01-01T09:00:00";
+//			final String data = code + imsi + dateS + dateE;
+//						
+//			final List<String[]> info = evCauseRest.countUniqueEventCauseByImsiDate(data);
+//
+//			assertEquals(1, info.size());
+//			assertEquals(info.get(0)[7], "191911000023112");
+//			assertEquals(info.get(0)[15], "1");
+//			
+//		}
+//		@Test
+//		public void getUniqueEventCauseByImsiByCauseCode(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
+//			final String code = "c00";
+//			final String imsi = "191911000023112";
+//			final String causeCode = "55";
+//			final String data = code + imsi + causeCode;
+//						
+//			final List<String[]> info = evCauseRest.getUniqueEventCauseByImsiByCauseCode(data);
+//
+//			assertEquals(1, info.size());
+//			assertEquals(info.get(0)[7], "191911000023112");
+//			assertEquals(info.get(0)[15], "1");
+//			assertEquals(info.get(0)[21], "eventCauseDescription");
+//			
+//		}
 		
 	
 
