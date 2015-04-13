@@ -55,8 +55,8 @@ public class FileRestTest {
 	@Inject
 	UserTransaction tx;
 	
-	@Inject
-	FileRest fileRest;
+	/*@Inject
+	FileRest fileRest;*/
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
