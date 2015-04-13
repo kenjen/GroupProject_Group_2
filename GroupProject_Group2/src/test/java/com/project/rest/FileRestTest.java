@@ -18,18 +18,14 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.project.entities.FileInfo;
 
 @RunWith(Arquillian.class)
 public class FileRestTest {
 	
-	private static final Logger log = LoggerFactory.getLogger(FileRestTest.class);
 	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
 	
 	/*@ArquillianResource
@@ -58,7 +54,7 @@ public class FileRestTest {
 	/*@Inject
 	FileRest fileRest;*/
 
-	@Before
+	@BeforeClass
 	public void setUpPersistenceModuleForTest() throws Exception {
 		clearDataFromPersistenceModule();
 		insertTestData();
@@ -93,22 +89,24 @@ public class FileRestTest {
 	@Test
 	public void testGetAllUploadedFilePaths(@ArquillianResteasyResource FileRest fileRest){
 		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
+		List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
 		
 		assert(info.size()==1);
 		assert(info.get(0).getFilename().equals("filename.xml"));
 		assert(info.get(0).getFilepath().equals("filepath"));
 		assert(info.get(0).equals(fileInfo));
+		
+		info = null;
 	}
 	
 	@Test
 	public void addAndRemoveUploadedFilePath(@ArquillianResteasyResource FileRest fileRest){
-		final String fileName = "/addedFileName.xls";
-		final String filePath = "addedFilePath";
+		String fileName = "/addedFileName.xls";
+		String filePath = "addedFilePath";
 		
 		fileRest.addUploadedFilePath(fileName + "::" + filePath);
 		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
+		List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
 		
 		assert(info.size()==2);
 		assert(info.get(1).getFilename().equals("/addedFileName.xls"));
@@ -116,10 +114,13 @@ public class FileRestTest {
 		
 		fileRest.removeFileFromDatabase(fileName);
 		
-		final List<FileInfo> info2 = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
+		List<FileInfo> info2 = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
 		
 		assert(info2.size()==1);
 		assert(!info2.get(1).getFilename().equals("addedFileName.xls"));
 		assert(!info2.get(1).getFilepath().equals("addedFilePath"));
+		
+		info = null;
+		info2 = null;
 	}
 }

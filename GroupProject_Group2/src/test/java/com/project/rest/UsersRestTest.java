@@ -21,9 +21,10 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.project.entities.User;
 
 @RunWith(Arquillian.class)
@@ -55,7 +56,7 @@ public class UsersRestTest {
 	@Inject
 	UserTransaction tx;
 
-	@Before
+	@BeforeClass
 	public void setUpPersistenceModuleForTest() throws Exception {
 		clearDataFromPersistenceModule();
 		insertTestData();
@@ -95,6 +96,7 @@ public class UsersRestTest {
 		assertTrue(allUsers.get(0).getUserType() == 0);
 		assertEquals(allUsers.get(0).getUsername(), "test");
 		assertEquals(allUsers.get(0).getPassword(), "test");
+		allUsers = null;
 	}
 	
 	@Test
@@ -104,6 +106,8 @@ public class UsersRestTest {
 		assertTrue(testUser.getUserType() == 0);
 		assertEquals(testUser.getUsername(), "test");
 		assertEquals(testUser.getPassword(), "test");
+		user = null;
+		testUser = null;
 	}
 	
 	@Test
@@ -114,7 +118,9 @@ public class UsersRestTest {
 		assertTrue(testUser.getUserType() == 0);
 		assertEquals(testUser.getUsername(), "test");
 		assertEquals(testUser.getPassword(), "test");
-		
+		user = null;
+		testUserCheck = null;
+		testUser = null;
 	}
 	
 	@Test
@@ -124,7 +130,8 @@ public class UsersRestTest {
 		assertTrue(testUser.getUserType() == 0);
 		assertEquals(testUser.getUsername(), "testAdd");
 		assertEquals(testUser.getPassword(), "testAdd");
-		
+		user = null;
+		testUser = null;
 	}
 	
 	@Test
@@ -141,6 +148,9 @@ public class UsersRestTest {
 		testUserUpdated.setPassword("test");
 		testUserUpdated.setUsername("test");
 		usersRest.updateUser(testUserUpdated);
+		user = null;
+		testUser = null;
+		testUserUpdated = null;
 	}
 	
 	@Test
@@ -152,7 +162,10 @@ public class UsersRestTest {
 		usersRest.deleteUser(testUser);
 		List<User> newAllUsers = (List<User>) usersRest.getAllUsers();
 		assertTrue(originalSize-1 == newAllUsers.size());	
-
+		allUsers = null;
+		user = null;
+		testUser = null;
+		newAllUsers = null;
 	}
 	
 }

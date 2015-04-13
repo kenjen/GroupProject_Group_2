@@ -21,12 +21,9 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.project.entities.BaseData;
 import com.project.entities.FileInfo;
 import com.project.entities.UE;
@@ -34,7 +31,6 @@ import com.project.entities.UE;
 @RunWith(Arquillian.class)
 public class UeRestTest {
 	
-	private static final Logger log = LoggerFactory.getLogger(UeRestTest.class);
 	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
 	
 	/*@ArquillianResource
@@ -60,7 +56,7 @@ public class UeRestTest {
 	@Inject
 	UserTransaction tx;
 
-	@Before
+	@BeforeClass
 	public void setUpPersistenceModuleForTest() throws Exception {
 		clearDataFromPersistenceModule();
 		insertTestData();
@@ -103,13 +99,13 @@ public class UeRestTest {
 	
 	@Test
 	public void countCallFailuresDateRange(@ArquillianResteasyResource UeRest ueRest) throws ParseException{
-		final String code = "c00";
-		final String dateS = "2015-04-01T09:00:00";
-		final String dateE = "3015-01-01T09:00:00";
-		final String tac = "4231";
-		final String data = code + dateS + dateE + tac;
+		String code = "c00";
+		String dateS = "2015-04-01T09:00:00";
+		String dateE = "3015-01-01T09:00:00";
+		String tac = "4231";
+		String data = code + dateS + dateE + tac;
 		
-		final List<String[]> info = ueRest.countCallFailuresDateRange(data);
+		List<String[]> info = ueRest.countCallFailuresDateRange(data);
 
 		assertEquals(1, info.size());
 		assertEquals(info.get(0)[15], "1");
@@ -117,6 +113,6 @@ public class UeRestTest {
 		assertEquals(info.get(0)[18], "uemarketingName");
 		assertEquals(info.get(0)[19], "uemanufacturer");
 		assertEquals(info.get(0)[20], "ueaccessCapability");
-		
+		info = null;
 	}
 }
