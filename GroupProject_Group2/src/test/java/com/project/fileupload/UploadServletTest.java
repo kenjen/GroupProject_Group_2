@@ -69,7 +69,7 @@ public class UploadServletTest extends Mockito{
 		return ShrinkWrap.create(WebArchive.class,"test.war")
 				.addPackages(true, "com.project")
 				.addAsLibraries(libraries)
-				.addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
+				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 	}
 	

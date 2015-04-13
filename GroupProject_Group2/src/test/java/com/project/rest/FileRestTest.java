@@ -18,9 +18,11 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import com.project.entities.FileInfo;
 
 @RunWith(Arquillian.class)
@@ -54,7 +56,7 @@ public class FileRestTest {
 	/*@Inject
 	FileRest fileRest;*/
 
-	@BeforeClass
+	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
 		clearDataFromPersistenceModule();
 		insertTestData();
