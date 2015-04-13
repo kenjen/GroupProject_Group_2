@@ -54,21 +54,7 @@ public class EventCauseREST{
 		return aList;
 	}
 	
-	@GET
-	@Path("/causeByImsi/{IMSI}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<String[]> getCauseCodeByIMSI(@PathParam("IMSI") String input) {
-		String imsiString = input.substring(3);
-		Long imsi = Long.parseLong(imsiString);
-		List<Object[]> list = service.getFailuresIdsByIMSI(imsi);
-		
-		ArrayList<String[]> aList = new ArrayList<String[]>();
-		for(Object[] obj : list){
-			String[] str = {"", Objects.toString(obj[1]), "", "", "","", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
-			aList.add(str);
-		}
-		return aList;
-	}
+
 	
 	@GET
 	@Path("/imsiByCauseClass/{failureClass}")
@@ -85,12 +71,7 @@ public class EventCauseREST{
 		}
 		return aList;
 	}
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Collection getEventCause() {
-		Collection ids = service.getFailuresIds();
-		return ids;
-	}
+	
 	
 	@GET
 	@Path("/causeByImsiDate/{data}")

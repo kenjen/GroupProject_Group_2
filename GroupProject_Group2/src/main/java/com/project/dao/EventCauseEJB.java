@@ -25,10 +25,6 @@ public class EventCauseEJB implements EventCauseDAO {
 		return query.getResultList();
 	}
 
-	public Collection<EventCause> getFailures() {
-		Query query = em.createNamedQuery("findEventCause");
-		return query.getResultList();
-	}
 
 	@Override
 	public Collection<EventCause> getAllEventCause() {
@@ -52,13 +48,6 @@ public class EventCauseEJB implements EventCauseDAO {
 		
 	}
 
-	@Override
-	public List<Object[]> getCauseCodeByIMSI(Long imsi) {
-		Query query = em.createNamedQuery("findUniqueCauseByIMSI");
-		query.setParameter("IMSI", imsi);
-		return query.getResultList();
-	}
-	
 	public EntityManager getEm() {
 		return em;
 	}

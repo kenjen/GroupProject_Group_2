@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 import com.project.entities.BaseData;
 import com.project.entities.EventCause;
+import com.project.entities.FailureClass;
 import com.project.entities.FileInfo;
 import com.project.entities.UE;
 
@@ -80,13 +81,16 @@ public class EventCauseRestTest {
 			EventCause eventCause = new EventCause(55, 5555, "eventCauseDescription");
 			BaseData b = new BaseData();
 			UE ue = new UE(5500, "uemarketingName", "uemanufacturer", "ueaccessCapability");
+			FailureClass failureClass = new FailureClass(6, "test");
 			b.setEventCauseFK(eventCause);
 			b.setImsi(191911000023112L);
 			b.setUeFK(ue);
+			b.setFaliureClassFK(failureClass);
 			tx.begin();
 			em.joinTransaction();
 			em.persist(eventCause);
 			em.persist(ue);
+			em.persist(failureClass);
 			em.persist(b);
 			tx.commit();
 			em.clear();
@@ -133,17 +137,18 @@ public class EventCauseRestTest {
 			
 			
 		}
+		
 		@Test
-		public void getCauseCodeByIMSI(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
+		public void getImsiByCauseClass(@ArquillianResteasyResource EventCauseREST evCauseRest) throws ParseException{
 			final String code = "c00";
-			final String imsi = "191911000023112";
-			final String data = code + imsi;
+			final String causeClass = "6";
+			final String data = code + causeClass;
 			
-			final List<String[]> info = evCauseRest.getCauseCodeByIMSI(data);
+			final List<String[]> info = evCauseRest.getImsiByCauseClass(data);
 
 			assertEquals(1, info.size());
-			//assertEquals(info.get(0)[15], "1");
-			assertEquals(info.get(0)[1], "55");
+			assertEquals(info.get(0)[7], "191911000023112");
+			assertEquals(info.get(0)[21], "test");
 			
 		}
 		
