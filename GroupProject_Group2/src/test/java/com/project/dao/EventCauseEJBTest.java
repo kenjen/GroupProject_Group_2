@@ -5,8 +5,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static org.mockito.Mockito.when;
+
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -16,17 +17,17 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class EventCauseEJBTest {
 	@Mock
 	private EntityManager mockedEntityManager;
-	
+	@EJB
 	private EventCauseEJB eventCauseEjb;
 	@Mock
 	private Query mockedQuery;
 
 	
-	@Test
+	//@Test
 	public void testGetFailuresIdsByIMSI() {
 		List<String[]> eventCauseCombiIds= new ArrayList<String[]>(); 
 		// check if it requested the named query
@@ -42,7 +43,7 @@ public class EventCauseEJBTest {
 	}
 
 	
-	@Test
+	//@Test
 	public void testGetImsiByCauseClass() {
 		List<String[]> eventCauseCombiIds= new ArrayList<String[]>();
 		// check if it requested the named query
@@ -55,7 +56,7 @@ public class EventCauseEJBTest {
 		        
 	}
 
-	@Test
+	//@Test
 	public void testCountUniqueEventCauseByModel() {
 		List<String[]> eventCauseCombiIds= new ArrayList<String[]>();
 		// check if it requested the named query
