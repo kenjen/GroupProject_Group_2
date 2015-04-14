@@ -22,6 +22,6 @@ public interface BaseDataService {
 	List<Object[]> getCountTop10ComboBetweenDates(Date startDate, Date endDate);
 	List<Object[]> getfindUniqueCauseByIMSI(long imsi);
 	List<Object> getUniqueIMSI();
-	List<Object[]> getAllFailuresByDate(Date startDate, Date endDate);
+	List<Object[]> countAllFailuresByDate(Date startDate, Date endDate);
 	List<Object[]> countCellFailuresByModelEventCause(String description, String marketingName);
 }

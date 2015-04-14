@@ -242,7 +242,7 @@ public class BaseDataRestTest {
 	}
 	
 	@Test
-	public void testGetImsiByDateRange(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
+	public void testCountImsiByDateRange(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
 		
 		List<String[]> baseDataAsString = baseDataRest.getImsiByDateRange("c002013-10-10T08:50:502013-10-10T09:10:10");
 		
@@ -504,19 +504,25 @@ public class BaseDataRestTest {
 		baseDataAsStringSingle = null;
 	}
 	
+	@Test
 	public void testCountCellFailuresByModelEventCause(@ArquillianResteasyResource BaseDataRest baseDataRest){
 		String data = "TestEvent::c00marketingName";
 		List<String[]> list = baseDataRest.countCellFailuresByModelEventCause(data);
-		for(int i=0; i<list.size(); i++){
-			for(int j=0; j<list.get(i).length; j++){
-				log.info(i+"["+j+"]" + list.get(i)[j]);
-			}
-		}
-		assertEquals(11, list.size());
+		
+		assertEquals(1, list.size());
 		assertEquals(3, list.get(0).length);
 		
-		assertEquals("", list.get(0)[0]);
-		assertEquals("", list.get(0)[1]);
-		assertEquals("", list.get(0)[2]);
+		assertEquals("5", list.get(0)[0]);
+		assertEquals("11", list.get(0)[1]);
+		assertEquals("11000", list.get(0)[2]);
+	}
+	
+	@Test
+	public void testCountAllFailuresByDate(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
+		String data = "c002013-01-10T08:50:502013-12-10T09:20:10";
+		List<String[]> count = baseDataRest.countAllFailuresByDate(data);
+		
+		assertEquals(1, count.size());
+		assertEquals("11", count.get(0)[15]);
 	}
 }

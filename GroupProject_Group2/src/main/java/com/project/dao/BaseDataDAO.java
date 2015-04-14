@@ -27,7 +27,7 @@ public interface BaseDataDAO {
 	
 	List<Object> getUniqueIMSI();
 	
-	List<Object[]> getAllFailuresByDate(Date startDate, Date endDate);
+	List<Object[]> countAllFailuresByDate(Date startDate, Date endDate);
 
 	List<Object[]> countCellFailuresByModelEventCause(String description, String marketingName);
 }

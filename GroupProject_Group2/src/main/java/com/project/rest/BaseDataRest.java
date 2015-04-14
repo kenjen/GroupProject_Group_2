@@ -249,7 +249,7 @@ public class BaseDataRest {
 	@GET
 	@Path("/countallfailuresbydate/{dates}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String[]> getAllFailuresByDate(@PathParam("dates") String dates) throws ParseException{
+	public List<String[]> countAllFailuresByDate(@PathParam("dates") String dates) throws ParseException{
 		if(dates.length()==0){
 			return null;
 		}
@@ -259,7 +259,7 @@ public class BaseDataRest {
 		Date start = sdf.parse(s);
 		Date end = sdf.parse(e);
 		
-		List<Object[]> list = baseDataService.getAllFailuresByDate(start, end);
+		List<Object[]> list = baseDataService.countAllFailuresByDate(start, end);
 		
 		ArrayList<String[]> aList = new ArrayList<String[]>();
 		for(Object[] obj : list){

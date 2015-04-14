@@ -75,8 +75,8 @@ public class BaseDataServiceEJB implements BaseDataService {
 	}
 
 	@Override
-	public List<Object[]> getAllFailuresByDate(Date startDate, Date endDate) {
-		return baseDataDAO.getAllFailuresByDate(startDate, endDate);
+	public List<Object[]> countAllFailuresByDate(Date startDate, Date endDate) {
+		return baseDataDAO.countAllFailuresByDate(startDate, endDate);
 	}
 	
 	@Override
