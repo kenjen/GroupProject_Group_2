@@ -311,9 +311,13 @@
 				} else if (code == "c10") {
 					changecss('.imsi', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
-					
+					if (showGraphButton) {
+						document.getElementById('graphButton').className = 'unhidden btn btn-default';
+					}
+
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
+						resultData = data;
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -444,7 +448,7 @@
 							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage;
 						} else if (code == "c05") {
 							labelInfo = "Event Cause: " + resultData[i][21];
-						} else if (code == "c09") {
+						} else if (code == "c09" || code == "c10") {
 							labelInfo = "Imsi: " + resultData[i][7];
 						} else if (code == "c08") {
 							labelInfo = "Cause Code: " + resultData[i][1];
