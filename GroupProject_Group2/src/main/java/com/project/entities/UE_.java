@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-13T17:50:43.498+0000")
+@Generated(value="Dali", date="2015-04-14T13:20:47.244+0100")
 @StaticMetamodel(UE.class)
 public class UE_ {
 	public static volatile SingularAttribute<UE, Integer> id;
