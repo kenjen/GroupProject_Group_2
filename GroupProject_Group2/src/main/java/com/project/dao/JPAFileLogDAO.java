@@ -26,7 +26,7 @@ public class JPAFileLogDAO implements FileLogDAO{
 
 	@Override
 	public Collection<FileLog> getAllUploadedFilePaths() {
-		Query query = em.createQuery("from FileLog");
+		Query query = em.createQuery("from FileLog ORDER BY dateUploaded DESC");
 		@SuppressWarnings("unchecked")
 		List<FileLog> result = query.getResultList();
 		return result;
