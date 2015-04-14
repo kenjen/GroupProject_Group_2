@@ -18,10 +18,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.project.entities.BaseData;
 import com.project.entities.EventCause;
 import com.project.entities.MccMnc;
+import com.project.entities.UE;
 
 @RunWith(Arquillian.class)
 public class BaseDataRestTest {
@@ -31,6 +34,8 @@ public class BaseDataRestTest {
 
 	@Inject
 	UserTransaction tx;
+
+	private static final Logger log = LoggerFactory.getLogger(BaseDataRestTest.class);
 
 	private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 	private static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -76,6 +81,13 @@ public class BaseDataRestTest {
 		em.persist(eventCauseRecord);
 		tx.commit();
 		em.clear();
+		
+		tx.begin();
+		em.joinTransaction();
+		UE ueRecord = new UE(808, "marketingName", "manufacturer", "accessCapability");
+		em.persist(ueRecord);
+		tx.commit();
+		em.clear();
 
 		tx.begin();
 		em.joinTransaction();
@@ -119,6 +131,7 @@ public class BaseDataRestTest {
 		baseDataRecord.setImsi(1001L);
 		baseDataRecord.setMcc(1);
 		baseDataRecord.setMnc(10);
+		baseDataRecord.setUeFK(ueRecord);
 		baseDataRecord.setCellId(5);
 		baseDataRecord.setEventCauseFK(eventCauseRecord);
 		baseDataRecord.setMccMncFK(mccMncRecordA);
@@ -138,7 +151,7 @@ public class BaseDataRestTest {
 			}else{
 				month = i+"";
 			}
-			BaseData b = getNewBaseData(imsi, "10-"+month+"-2013 09:15:00", eventCauseRecord, current);
+			BaseData b = getNewBaseData(imsi, "10-"+month+"-2013 09:15:00", eventCauseRecord, current, ueRecord);
 			em.persist(b);
 			b = null;
 		}
@@ -155,7 +168,7 @@ public class BaseDataRestTest {
 		baseDataRecord = null;
 	}
 	
-	private BaseData getNewBaseData(Long imsi, String dateStr, EventCause eventCauseRecord, MccMnc mccMncRecord) throws ParseException{
+	private BaseData getNewBaseData(Long imsi, String dateStr, EventCause eventCauseRecord, MccMnc mccMncRecord, UE ueRecord) throws ParseException{
 		Date date = sdf.parse(dateStr);
 		BaseData baseDataRecord2 = new BaseData();
 		baseDataRecord2.setDate(date);
@@ -164,6 +177,7 @@ public class BaseDataRestTest {
 		baseDataRecord2.setMcc(1);
 		baseDataRecord2.setMnc(10);
 		baseDataRecord2.setCellId(5);
+		baseDataRecord2.setUeFK(ueRecord);
 		baseDataRecord2.setEventCauseFK(eventCauseRecord);
 		baseDataRecord2.setMccMncFK(mccMncRecord);
 		return baseDataRecord2;
@@ -488,5 +502,21 @@ public class BaseDataRestTest {
 		baseDataAsString = null;
 		baseDataAsStringEmpty = null;
 		baseDataAsStringSingle = null;
+	}
+	
+	public void testCountCellFailuresByModelEventCause(@ArquillianResteasyResource BaseDataRest baseDataRest){
+		String data = "TestEvent::c00marketingName";
+		List<String[]> list = baseDataRest.countCellFailuresByModelEventCause(data);
+		for(int i=0; i<list.size(); i++){
+			for(int j=0; j<list.get(i).length; j++){
+				log.info(i+"["+j+"]" + list.get(i)[j]);
+			}
+		}
+		assertEquals(11, list.size());
+		assertEquals(3, list.get(0).length);
+		
+		assertEquals("", list.get(0)[0]);
+		assertEquals("", list.get(0)[1]);
+		assertEquals("", list.get(0)[2]);
 	}
 }
