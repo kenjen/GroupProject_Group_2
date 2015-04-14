@@ -48,13 +48,6 @@ public class EventCauseEJB implements EventCauseDAO {
 		
 	}
 
-	public EntityManager getEm() {
-		return em;
-	}
-
-	public void setEm(EntityManager em) {
-		this.em = em;
-	}
 
 	@Override
 	public List<Object[]> countUniqueEventCauseByImsiDate(Long imsi, Date start, Date end) {
@@ -71,5 +64,12 @@ public class EventCauseEJB implements EventCauseDAO {
 		query.setParameter("imsi", imsi);
 		query.setParameter("causeCode", causeCode);
 		return query.getResultList();
+	}
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
 	}
 }

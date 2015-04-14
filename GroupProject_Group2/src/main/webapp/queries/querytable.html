@@ -237,6 +237,9 @@
 					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -270,6 +273,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -286,6 +292,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -302,6 +311,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -311,10 +323,7 @@
 				} else if (code == "c10") {
 					changecss('.imsi', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
-					if (showGraphButton) {
-						document.getElementById('graphButton').className = 'unhidden btn btn-default';
-					}
-
+				
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
@@ -448,7 +457,7 @@
 							labelInfo = "Country: " + resultData[i][16] + " Operator: " + resultData[i][17] + " Cell Id: " + resultData[i][2] + " Percentage of all Failures: "+percentage;
 						} else if (code == "c05") {
 							labelInfo = "Event Cause: " + resultData[i][21];
-						} else if (code == "c09" || code == "c10") {
+						} else if (code == "c09") {
 							labelInfo = "Imsi: " + resultData[i][7];
 						} else if (code == "c08") {
 							labelInfo = "Cause Code: " + resultData[i][1];
