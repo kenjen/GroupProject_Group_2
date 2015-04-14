@@ -2,6 +2,7 @@ package com.project.fileupload;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
+import com.project.dao.FileLogDAO;
 import com.project.dao.LookUpDataDAO;
 import com.project.reader.ReadBase;
 import com.project.reader.ReadLookup;
@@ -32,6 +34,8 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 	private ErrorBaseDataDAO errorDao;
 	@EJB
 	private LookUpDataDAO lookupDao;
+	@EJB
+	private FileLogDAO fileLogDAO;
 	
 	ReadLookup lookupDataReader = new ExcelLookupDataRead();
 	ReadBase baseDataReader = new ExcelBaseDataRead();
@@ -62,7 +66,14 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 				baseDataReader.read();
 				
 				fileService.addUploadedFilePath(fileName, filePath + fileName, true);
-				log.info("Upload completed with " + baseDataReader.getInvalidRowCount() + " invalid rows!!!!!!!!!");
+				int numberOfInvalidRows = baseDataReader.getInvalidRowCount();
+				log.info("Upload completed with " + numberOfInvalidRows + " invalid rows!!!!!!!!!");
+				
+				long timeInMili = System.currentTimeMillis();
+				Date date = new Date(timeInMili);
+				fileLogDAO.addUploadedFilePath(fileName, filePath, date, numberOfInvalidRows, false);
+				
+				
 				return true;
 			} catch (FileNotFoundException e){
 				log.error("file not found exception: " + filePath + fileName);

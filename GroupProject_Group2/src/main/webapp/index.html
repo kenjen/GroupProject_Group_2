@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html data-ng-app>
 	<head>
 
 		<meta charset="utf-8">
@@ -20,6 +19,8 @@
 
 		<!-- Custom Fonts -->
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 
 	</head>
 
@@ -162,13 +163,36 @@
                     </div>
                 </div>
                 <!-- /.row -->
-				</div>
-				<!-- /.row -->
 
-				<div class="row">
-					<div class="col-lg-12" style="height: 400px;">
+				<div class="row"  data-ng-controller="tableLoader">
+					<h2 align="center">Auto Uploaded Files</h2>
+					
+								<table id="trackTable" border=1 class="table table-bordered table-hover table-striped">
+									<thead>
+										<tr>
+											<th class="dateUploaded">Date Uploaded</th>
+											<th class="fileName">File Name</th>
+											<th class="numberOfErrors">Number of Errors</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="record in records">
+											<td class="dateUploaded">{{record[0]}}</td>
+											<td class="fileName">{{record[1]}}</td>
+											<td class="numberOfErrors">{{record[2]}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+		
+						<!--  -->
+						
+					<div class="row">
+						<div class="col-lg-12" style="height: 400px;">
 
+						</div>
 					</div>
+
 				</div><!-- /.container-fluid -->
 
 			</div>	<!-- /#page-wrapper -->
@@ -203,6 +227,29 @@
 			if (!x) {
 				window.location.replace("/GroupProject_Group2/login.html");
 			}
+			
+			function tableLoader($scope, $http) {
+								
+				$http.get('/GroupProject_Group2/rest/file_log/getlog/').success(function(data) {
+						$scope.records = data;
+				});
+
+			}
+			
+			function scrollListener(){
+				if(scrollListening){
+					var div = document.getElementById("queryTable");
+					var scrolltop = div.scrollTop;
+					var scrollheight = div.scrollHeight;
+					if(scrolltop >= scrollheight - (scrollheight/8)){
+						scrollListening = false;
+						document.getElementById("clickLink").click();
+					}
+				}
+			}	
+				
+			
+			
 
 			function createCookie(name, value, days) {
 				if (days) {
