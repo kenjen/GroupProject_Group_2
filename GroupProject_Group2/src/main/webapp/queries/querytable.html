@@ -237,6 +237,9 @@
 					$http.get('/GroupProject_Group2/rest/event_cause/countEventCauseByModel/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -270,6 +273,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10mccmnccelldid_bydate/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -286,6 +292,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/uniqueCauseByImsi/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -302,6 +311,9 @@
 					$http.get('/GroupProject_Group2/rest/base_data/counttop10imsibetweendates/' + name).success(function(data) {
 						$scope.records = data;
 						resultData = data;
+						if(resultData.length < 1){
+							document.getElementById('graphButton').className = "hidden";
+						}
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;
@@ -311,9 +323,10 @@
 				} else if (code == "c10") {
 					changecss('.imsi', 'display', 'table-cell');
 					changecss('.count', 'display', 'table-cell');
-					
+				
 					$http.get('/GroupProject_Group2/rest/event_cause/imsiByCauseClass/' + name).success(function(data) {
 						$scope.records = data;
+						resultData = data;
 						$scope.limit = 500;
 						maxLimit = data.length;
 						scrollListening = true;

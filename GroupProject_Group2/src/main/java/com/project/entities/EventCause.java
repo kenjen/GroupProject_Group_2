@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @NamedQueries({
 
-		@NamedQuery(name = "findEventCauseByIMSI", query = "SELECT b.eventId, b.causeCode, b.description, a.date from BaseData a, EventCause b"
+		@NamedQuery(name = "findEventCauseByIMSI", query = "SELECT b.eventId, b.causeCode, b.description, a.date, count(a) as countCombo from BaseData a, EventCause b"
 				+ " where a.imsi = :IMSI and b.id = a.eventCauseFK.id"),
 		@NamedQuery(name = "findEventCause", query = "select e from  EventCause e"),
 		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b) as countCombo, e.description  "

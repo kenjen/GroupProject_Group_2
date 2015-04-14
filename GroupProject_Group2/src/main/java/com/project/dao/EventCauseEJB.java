@@ -66,4 +66,11 @@ public class EventCauseEJB implements EventCauseDAO {
 		query.setParameter("causeCode", causeCode);
 		return query.getResultList();
 	}
+	public EntityManager getEm() {
+		return em;
+	}
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
 }
