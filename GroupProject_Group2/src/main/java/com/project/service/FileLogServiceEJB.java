@@ -1,6 +1,7 @@
 package com.project.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -19,6 +20,12 @@ public class FileLogServiceEJB implements FileLogService {
 	@Override
 	public Collection<FileLog> getAllUploadedFilePaths() {
 		return dao.getAllUploadedFilePaths();
+	}
+
+	@Override
+	public boolean addUploadedFilePath(String name, String path, Date date,
+			Integer errorCount, boolean flush) {
+		return dao.addUploadedFilePath(name, path, date, errorCount, flush);
 	}
 
 }
