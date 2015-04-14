@@ -1,6 +1,7 @@
 package com.project.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 @NamedQueries({
@@ -12,16 +13,16 @@ import javax.persistence.*;
 				+ "FROM EventCause e, BaseData b, UE u where e.id = b.eventCauseFK.id and u.id = b.ueFK.id and "
 				+ "u.marketingName = :phoneModel group by b.eventCauseFK ORDER BY countCombo DESC"),
 		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, count(b) as countCombo from FailureClass f, BaseData "
-						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass group by b.imsi"),
+				+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass group by b.imsi"),
 
 		@NamedQuery(name = "EventCause.getAllEventCause", query = "select e from EventCause e"),
-		
+
 		@NamedQuery(name = "EventCause.countUniqueEventCauseByImsiDate", query = "SELECT b.eventCauseFK.id, count(b) as countCombo, e.description  "
 				+ "FROM EventCause e, BaseData b where e.id = b.eventCauseFK.id and b.imsi = :imsi and b.date Between :startDate AND :endDate "
 				+ "group by b.eventCauseFK ORDER BY countCombo DESC"),
-		
+
 		@NamedQuery(name = "EventCause.getUniqueEventCauseByImsiByCauseCode", query = "SELECT b.eventCauseFK.id, count(e.eventId), e.description from EventCause e, "
-				+ "BaseData b where b.eventCauseFK = e.id and e.causeCode =:causeCode and b.imsi = :imsi group by e.eventId")})
+				+ "BaseData b where b.eventCauseFK = e.id and e.causeCode =:causeCode and b.imsi = :imsi group by e.eventId") })
 @Entity
 @Table(name = "Event_Cause")
 public class EventCause implements Serializable {
@@ -45,7 +46,7 @@ public class EventCause implements Serializable {
 
 	@Column(name = "description")
 	private String description;
-	
+
 	public EventCause() {
 
 	}
@@ -55,6 +56,38 @@ public class EventCause implements Serializable {
 		this.causeCode = causeCode;
 		this.eventId = eventId;
 		this.description = description;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((causeCode == null) ? 0 : causeCode.hashCode());
+		result = prime * result + ((eventId == null) ? 0 : eventId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EventCause other = (EventCause) obj;
+		if (causeCode == null) {
+			if (other.causeCode != null)
+				return false;
+		} else if (!causeCode.equals(other.causeCode))
+			return false;
+		if (eventId == null) {
+			if (other.eventId != null)
+				return false;
+		} else if (!eventId.equals(other.eventId))
+			return false;
+		return true;
 	}
 
 	public Integer getId() {

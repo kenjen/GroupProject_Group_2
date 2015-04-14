@@ -24,13 +24,6 @@ public class EventCauseEJBTest {
 	private EventCauseEJB eventCauseEjb;
 	@Mock
 	private Query mockedQuery;
-	  
-	//test to see if correct methods are called on EntityManager 
-    @Before
-    public void initializeDependencies() {
-    	eventCauseEjb = new EventCauseEJB();
-    	eventCauseEjb.setEm(mockedEntityManager);
-    }
 
 	
 	@Test
