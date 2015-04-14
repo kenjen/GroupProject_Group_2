@@ -19,6 +19,7 @@ public class JPAFailureClassDAO implements FailureClassDAO {
 	@PersistenceContext
 	private EntityManager em;
 
+	@Override
 	public Collection<FailureClass> getAllFailureClasses() {
 		Query query = em.createQuery("from FailureClass");
 		List<FailureClass> result = query.getResultList();

@@ -69,6 +69,7 @@ public class BaseDataServiceEJB implements BaseDataService {
 		return baseDataDAO.getfindUniqueCauseByIMSI(imsi);
 	}
 	
+	@Override
 	public List<Object> getUniqueIMSI() {
 		return baseDataDAO.getUniqueIMSI();
 	}
@@ -78,6 +79,7 @@ public class BaseDataServiceEJB implements BaseDataService {
 		return baseDataDAO.getAllFailuresByDate(startDate, endDate);
 	}
 	
+	@Override
 	public List<Object[]> countCellFailuresByModelEventCause(String description,
 			String marketingName) {
 		return baseDataDAO.countCellFailuresByModelEventCause(description, marketingName);

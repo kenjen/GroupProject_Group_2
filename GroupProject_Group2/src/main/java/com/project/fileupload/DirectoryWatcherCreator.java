@@ -19,47 +19,41 @@ public class DirectoryWatcherCreator {
     private DirectoryWatcherInterface directoryWatcher;
 	
 	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcherCreator.class);
-	
-	private static boolean started = false;
+	//TODO
+	private static boolean started = true;
 	private static String fileSystemPath;
 	private static boolean directoryAvailable = true;
 
 	@PostConstruct
     public void initialise() throws IOException {
-		started = true;
-		//fileSystemPath = "";
-		File directory;
-		/*if((System.getProperty("os.name").substring(0, 7).toLowerCase()).equals("windows")){
-			fileSystemPath = "c:/upload/";
-			log.info("windows detected");
-			directory = new File(fileSystemPath);
-		}else{
-			fileSystemPath = "/upload/";
-			log.info("windows not detected, assumming linux");
-			directory = new File(fileSystemPath);
-		}*/
-		try{
-			if((System.getProperty("os.name").substring(0, 7).toLowerCase()).equals("windows")){
-				fileSystemPath = "c:/upload/";
-				log.info("windows detected");
-				directory = new File(fileSystemPath);
-			}else{
+		if(!started){
+			started = true;
+			File directory;
+			try{
+				if((System.getProperty("os.name").substring(0, 7).toLowerCase()).equals("windows")){
+					fileSystemPath = "c:/upload/";
+					log.info("windows detected");
+					directory = new File(fileSystemPath);
+				}else{
+					fileSystemPath = "/upload/";
+					log.info("windows not detected, assumming linux");
+					directory = new File(fileSystemPath);
+				}
+			}catch(Exception e){
 				fileSystemPath = "/upload/";
 				log.info("windows not detected, assumming linux");
 				directory = new File(fileSystemPath);
 			}
-		}catch(Exception e){
-			fileSystemPath = "/upload/";
-			log.info("windows not detected, assumming linux");
-			directory = new File(fileSystemPath);
-		}
-		
-		if(directory.exists()){
-	        directoryWatcher.poll(fileSystemPath);
-	        log.info("directory watcher initialised");
+			
+			if(directory.exists()){
+		        directoryWatcher.poll(fileSystemPath);
+		        log.info("directory watcher initialised");
+			}else{
+				log.info("directory does not exist");
+				directoryAvailable = false;
+			}
 		}else{
-			log.info("directory does not exist");
-			directoryAvailable = false;
+			log.info("Directory watcher is already running");
 		}
 	}
 	

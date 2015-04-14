@@ -22,6 +22,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -86,11 +87,12 @@ public class QueryRestTest {
 	
 	@Test
 	public void getEventCauseCombiTest(@ArquillianResteasyResource QueryREST queryRest){
-		List<Query> allqueries = (List<Query>) queryRest.getEventCauseCombi(1);
+		List<Query> allqueries = queryRest.getEventCauseCombi(1);
 		assertEquals(1, allqueries.size());
 		assertTrue(allqueries.get(0).getId() == 1);
 		assertTrue(allqueries.get(0).getPermission() == 1);
 		assertEquals(allqueries.get(0).getDisplayName(), "test");
+		allqueries = null;
 	}
 
 	

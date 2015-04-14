@@ -23,6 +23,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -95,10 +96,9 @@ public class ErrorBaseDataRestTest {
 	
 	@Test
 	public void getEventCauseCombiTest(@ArquillianResteasyResource ErrorBaseDataRest errorBaseDataRest){
-		List<ErrorBaseData> allErrorBaseData = (List<ErrorBaseData>) errorBaseDataRest.getAllErrorBaseData();
+		List<ErrorBaseData> allErrorBaseData = errorBaseDataRest.getAllErrorBaseData();
 		assertEquals(1, allErrorBaseData.size());
-		assertTrue(allErrorBaseData.get(0).getId() == 1);
-		assertTrue(allErrorBaseData.get(0).getCellId() == 1);
+		assertTrue(allErrorBaseData.get(0).getCellId().equals(1));
 		assertEquals(allErrorBaseData.get(0).getHier321Id(), "errorTest");
 		assertEquals(allErrorBaseData.get(0).getHier32Id(), "errorTest");
 		assertEquals(allErrorBaseData.get(0).getHier3Id(), "errorTest");

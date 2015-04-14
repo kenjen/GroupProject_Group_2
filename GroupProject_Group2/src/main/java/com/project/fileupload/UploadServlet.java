@@ -13,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.project.dao.BaseDataDAO;
 import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.FileDAO;
@@ -61,6 +58,7 @@ public class UploadServlet extends HttpServlet {
 	/**
 	 * handles file upload
 	 */
+	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// gets absolute path of the web application
@@ -95,6 +93,7 @@ public class UploadServlet extends HttpServlet {
 	}
 	
 	
+	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		

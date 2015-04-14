@@ -23,6 +23,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -91,6 +92,10 @@ public class FailureClassRestTest {
 		em.persist(b);
 		tx.commit();
 		em.clear();
+		
+		failureClass = null;
+		mccMnc = null;
+		b = null;
 	}
 
 	private void beginTransaction() throws Exception {
@@ -110,30 +115,34 @@ public class FailureClassRestTest {
 		assertEquals(1, failureClasses.size());
 		assertTrue(failureClasses.get(0).getFailureClass() == 1);
 		assertEquals(failureClasses.get(0).getDescription(), "test");
+		
+		failureClasses = null;
 	}
 	
 	@Test
 	public void specificFailuresForTopTenCombiTest(@ArquillianResteasyResource FailureClassRest failureClassRest) throws ParseException{
-		final String code = "c00";
-		final String country = "testCountry,";
-		final String operator = "testOperator,";
-		final String cellId = "1,";
-		final String startDate = "2015-04-01T09:00:00";
-		final String endDate = "2025-01-01T09:00:00";
-		final String data = country+ operator + cellId + code+startDate + endDate;
+		String code = "c00";
+		String country = "testCountry,";
+		String operator = "testOperator,";
+		String cellId = "1,";
+		String startDate = "2015-04-01T09:00:00";
+		String endDate = "2025-01-01T09:00:00";
+		String data = country+ operator + cellId + code+startDate + endDate;
 		
-		final List<String[]> info = failureClassRest.specificFailuresForTopTenCombi(data);
+		List<String[]> info = failureClassRest.specificFailuresForTopTenCombi(data);
 
 		assertEquals(1, info.size());
 		assertEquals(info.get(0)[0], "1");
 		assertEquals(info.get(0)[1], "test");
 		assertEquals(info.get(0)[2], "1");
+		
+		info = null;
 	}
 	
 	@Test
 	public void specificFailuresForTopTenCombiErrorTest(@ArquillianResteasyResource FailureClassRest failureClassRest) throws ParseException{
-		final List<String[]> info = failureClassRest.specificFailuresForTopTenCombi("***,****,1,**************************************");
+		List<String[]> info = failureClassRest.specificFailuresForTopTenCombi("***,****,1,**************************************");
 		assertEquals(null, info);
-
+		info = null;
 	}
 }

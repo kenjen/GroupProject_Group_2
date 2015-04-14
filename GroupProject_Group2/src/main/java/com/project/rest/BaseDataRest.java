@@ -214,7 +214,7 @@ public class BaseDataRest {
 	@Path("/getUniqueImsis")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Object> getUniqueImsi() {
-		return (List ) baseDataService.getUniqueIMSI();
+		return baseDataService.getUniqueIMSI();
 
 	}
 	

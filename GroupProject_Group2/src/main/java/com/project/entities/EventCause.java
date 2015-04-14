@@ -1,7 +1,6 @@
 package com.project.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -13,17 +12,17 @@ import javax.persistence.*;
 		@NamedQuery(name = "countUniqueEventCauseByModel", query = "SELECT e.eventId, e.causeCode, count(b) as countCombo, e.description  "
 				+ "FROM EventCause e, BaseData b, UE u where e.id = b.eventCauseFK.id and u.id = b.ueFK.id and "
 				+ "u.marketingName = :phoneModel group by b.eventCauseFK ORDER BY countCombo DESC"),
-		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, f.description from FailureClass f, BaseData "
-						+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass"),
+		@NamedQuery(name = "FailureClass.getImsiByCauseClass", query = "select b.imsi, count(b) as countCombo from FailureClass f, BaseData "
+				+ "b where f.id = b.failureClassFK.id and f.failureClass =:failureClass group by b.imsi"),
 
 		@NamedQuery(name = "EventCause.getAllEventCause", query = "select e from EventCause e"),
-		
+
 		@NamedQuery(name = "EventCause.countUniqueEventCauseByImsiDate", query = "SELECT b.eventCauseFK.id, count(b) as countCombo, e.description  "
 				+ "FROM EventCause e, BaseData b where e.id = b.eventCauseFK.id and b.imsi = :imsi and b.date Between :startDate AND :endDate "
 				+ "group by b.eventCauseFK ORDER BY countCombo DESC"),
-		
+
 		@NamedQuery(name = "EventCause.getUniqueEventCauseByImsiByCauseCode", query = "SELECT b.eventCauseFK.id, count(e.eventId), e.description from EventCause e, "
-				+ "BaseData b where b.eventCauseFK = e.id and e.causeCode =:causeCode and b.imsi = :imsi group by e.eventId")})
+				+ "BaseData b where b.eventCauseFK = e.id and e.causeCode =:causeCode and b.imsi = :imsi group by e.eventId") })
 @Entity
 @Table(name = "Event_Cause")
 public class EventCause implements Serializable {
@@ -47,7 +46,7 @@ public class EventCause implements Serializable {
 
 	@Column(name = "description")
 	private String description;
-	
+
 	public EventCause() {
 
 	}

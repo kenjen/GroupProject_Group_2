@@ -1,17 +1,11 @@
 package com.project.service;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.jws.WebService;
-
 import com.project.dao.EventCauseDAO;
-import com.project.entities.EventCause;
 
 @Local
 @Stateless
@@ -23,20 +17,14 @@ public class EventCauseServiceEJB implements EventCauseService {
 	public void setDao(EventCauseDAO dao) {
 		this.dao = dao;
 	}
-	public Collection getFailuresIds(){
-		return	dao.getFailures();
-	}
-	
+	@Override
 	public List<Object[]> getFailuresIdsByIMSI(Long imsi) {
 		return dao.getFailuresIdsByIMSI(imsi);
 	}
 	
+	@Override
 	public List<Object[]> countUniqueEventCauseByModel(String phoneModel) {
 		return dao.countUniqueEventCauseByModel(phoneModel);
-	}
-	@Override
-	public List<Object[]> getCauseCodeByIMSI(Long imsi) {
-		return dao.getCauseCodeByIMSI(imsi);
 	}
 	@Override
 	public List<Object[]> getImsiByCauseClass(int failureClass) {

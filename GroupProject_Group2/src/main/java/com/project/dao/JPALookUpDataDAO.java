@@ -54,7 +54,7 @@ public class JPALookUpDataDAO implements LookUpDataDAO {
 
 	@Override
 	public void addAllUe(Collection<UE> ueList) {
-		List<UE> ueDbList = (List<UE>) ueDao.getAllModels();
+		List<UE> ueDbList = ueDao.getAllModels();
 		for (UE o : ueList) {
 			if (!ueDbList.contains(o))
 				entityManager.persist(o);

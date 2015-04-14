@@ -18,6 +18,7 @@ public class JPAErrorBaseDataDAO implements ErrorBaseDataDAO {
 	@PersistenceContext(unitName = "GroupProject_Group2")
 	private EntityManager entityManager;
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public Collection<ErrorBaseData> getAllErrorBaseData() {
 		Query query = entityManager
@@ -26,6 +27,7 @@ public class JPAErrorBaseDataDAO implements ErrorBaseDataDAO {
 		return data;
 	}
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public void addAllErrorBaseData(Collection errorBaseDataList) {
 		for (Object o : errorBaseDataList) {

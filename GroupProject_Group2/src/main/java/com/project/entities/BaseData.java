@@ -19,12 +19,14 @@ import javax.persistence.Transient;
 		@NamedQuery(name = "BaseData.getAllBaseData", query = "select b from BaseData b"),
 
 		@NamedQuery(name = "BaseData.getImsiBetweenDates", query = "select b.date, b.imsi from BaseData b where b.date Between :startDate AND :endDate"),
+		
+		@NamedQuery(name = "BaseData.getCountAllFailuresBetweenDates", query = "select count(b.imsi) as countImsi, sum(b.duration) from BaseData b WHERE b.date Between :startDate AND :endDate"),
 
 		@NamedQuery(name = "BaseData.getCountImsiBetweenDates", query = "select count(b.imsi) as countImsi, sum(b.duration), b.imsi from BaseData b where b.date Between :startDate AND :endDate group by b.imsi ORDER BY countImsi DESC"),
 
 		@NamedQuery(name = "BaseData.getCountSingleImsiBetweenDates", query = "select count(b.imsi), b.imsi from BaseData b where b.date Between :startDate AND :endDate AND b.imsi = :imsi"),
 
-		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi) as countImsi, b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY countImsi DESC"),
+		@NamedQuery(name = "BaseData.getCountTop10ImsiBetweenDates", query = "select count(b.imsi) as countImsi, b.imsi from BaseData b where b.date Between :startDate AND :endDate GROUP BY b.imsi ORDER BY countImsi DESC, b.imsi"),
 
 		@NamedQuery(name = "BaseData.getCountTop10ComboBetweenDates", query = "select count(m) as countModel, m.country, m.operator, b.cellId from MccMnc m, BaseData b where b.date Between :startDate AND :endDate AND m.id = b.mccMncFK.id GROUP BY m.country, m.operator, b.cellId ORDER BY countModel DESC"),
 
