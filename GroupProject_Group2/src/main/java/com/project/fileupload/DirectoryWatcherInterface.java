@@ -7,4 +7,6 @@ public interface DirectoryWatcherInterface {
 
 	@Asynchronous
 	void poll(String fileSystemPath) throws IOException;
+
+	int getUploadsThisSession();
 }

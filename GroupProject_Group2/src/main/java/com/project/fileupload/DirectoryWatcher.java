@@ -30,6 +30,8 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 	
 	private static String systemFilePath = "";
 	
+	private static int uploadsThisSession = 0;
+	
 	@Override
 	@Asynchronous
 	public void poll(String fileSystemPath) throws IOException {
@@ -59,6 +61,7 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 						Thread.sleep(1000); //wait 1 second to ensure file transfer completed
 						log.info("attempting upload of " + systemFilePath + fileNameS);
 						dirWatchTransaction.addFilePath(systemFilePath, fileNameS);	//in separate class to allow requirement of separate transaction
+						uploadsThisSession++;
 					}else if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
 						Path filePath = (Path) event.context();
 						Path fileNameP = filePath.getFileName();
@@ -86,5 +89,10 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 				}
 			}
 		}
+	}
+	
+	
+	public int getUploadsThisSession(){
+		return uploadsThisSession;
 	}
 }
