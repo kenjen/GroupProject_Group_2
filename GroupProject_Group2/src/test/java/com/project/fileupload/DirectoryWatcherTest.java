@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@RunWith(Arquillian.class)
+//@RunWith(Arquillian.class)
 public class DirectoryWatcherTest {
 	
 	@EJB
@@ -22,7 +22,7 @@ public class DirectoryWatcherTest {
 	
 	private static final Logger log = LoggerFactory.getLogger(DirectoryWatcherTest.class);
 	
-	@Test
+	//@Test
 	public void testDirectoryListener(){
 		File directory;
 		if((System.getProperty("os.name").substring(0, 7).toLowerCase()).equals("windows")){
@@ -53,6 +53,7 @@ public class DirectoryWatcherTest {
 			e.printStackTrace();
 		}
 		log.info("test finished");
+		destFile.renameTo(sourceFile);
 		assertEquals(1, directoryWatcher.getUploadsThisSession());
 	}
 }

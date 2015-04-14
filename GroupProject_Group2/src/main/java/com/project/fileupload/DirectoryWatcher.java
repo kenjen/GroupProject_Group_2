@@ -59,9 +59,9 @@ public class DirectoryWatcher implements DirectoryWatcherInterface{
 						Path fileNameP = fullFilePath.getFileName();
 						fileNameS = fileNameP.toFile().toString();
 						Thread.sleep(1000); //wait 1 second to ensure file transfer completed
-						log.info("attempting upload of " + systemFilePath + fileNameS);
-						dirWatchTransaction.addFilePath(systemFilePath, fileNameS);	//in separate class to allow requirement of separate transaction
+						log.info("attempting upload of " + systemFilePath + fileNameS);						
 						uploadsThisSession++;
+						dirWatchTransaction.addFilePath(systemFilePath, fileNameS);	//in separate class to allow requirement of separate transaction
 					}else if (event.kind() == StandardWatchEventKinds.ENTRY_DELETE) {
 						Path filePath = (Path) event.context();
 						Path fileNameP = filePath.getFileName();

@@ -3,6 +3,7 @@ package com.project.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -95,7 +96,7 @@ public class BaseData implements Serializable {
 	private FailureClass failureClassFK;
 
 	@JoinColumn(name = "event_cause", referencedColumnName = "id", nullable = true)
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private EventCause eventCauseFK;
 
 	@JoinColumn(name = "ue", referencedColumnName = "id", nullable = true)
