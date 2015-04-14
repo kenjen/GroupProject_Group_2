@@ -1,7 +1,6 @@
 package com.project.fileupload;
 
 import java.io.IOException;
-
 import javax.ejb.Asynchronous;
 
 public interface DirectoryWatcherInterface {

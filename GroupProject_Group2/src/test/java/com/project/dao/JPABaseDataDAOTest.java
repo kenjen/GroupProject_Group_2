@@ -36,20 +36,6 @@ import com.project.entities.MccMnc;
 @RunWith(Arquillian.class)
 public class JPABaseDataDAOTest {
 
-	@Deployment
-	public static WebArchive createDeployment() {
-		
-		PomEquippedResolveStage pom = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeAndTestDependencies();
-		
-		File[] libraries = pom.resolve("org.apache.poi:poi").withTransitivity().asFile();
-		
-		return ShrinkWrap.create(WebArchive.class,"test.war")
-				.addPackages(true, "com.project")
-				.addAsLibraries(libraries)
-				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-	}
-
 	@EJB
 	private BaseDataDAO baseDataDao;
 

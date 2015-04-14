@@ -2,7 +2,6 @@ package com.project.reader;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,14 +26,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.logging.Logger;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.jboss.shrinkwrap.resolver.api.maven.Maven;
-import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -58,20 +51,6 @@ import com.project.reader.excel.ExcellValidator;
 
 @RunWith(Arquillian.class)
 public class ExcelBaseDataReadTest {
-
-	@Deployment
-	public static WebArchive createDeployment() {
-		
-		PomEquippedResolveStage pom = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeAndTestDependencies();
-		
-		File[] libraries = pom.resolve("org.apache.poi:poi").withTransitivity().asFile();
-		
-		return ShrinkWrap.create(WebArchive.class,"test.war")
-				.addPackages(true, "com.project")
-				.addAsLibraries(libraries)
-				.addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-	}
 
 	private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(
