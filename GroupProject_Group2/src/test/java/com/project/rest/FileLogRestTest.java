@@ -87,8 +87,8 @@ public class FileLogRestTest {
 		
 		List<String[]> info = fileRest.getAllUploadedFilePaths();
 
-		assertEquals(info.get(1)[1], "test.xml");
-		assertEquals(info.get(1)[2], "5");
+		assertEquals(info.get(0)[1], "test.xml");
+		assertEquals(info.get(0)[2], "5");
 	}
 	
 }
