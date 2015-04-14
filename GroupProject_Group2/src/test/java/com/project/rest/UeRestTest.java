@@ -1,7 +1,10 @@
 package com.project.rest;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,12 +27,14 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.project.entities.BaseData;
 import com.project.entities.FileInfo;
+import com.project.entities.UE;
 
 @RunWith(Arquillian.class)
-public class FileRestTest {
+public class UeRestTest {
 	
-	private static final Logger log = LoggerFactory.getLogger(FileRestTest.class);
+	private static final Logger log = LoggerFactory.getLogger(UeRestTest.class);
 	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
 	
 	/*@ArquillianResource
@@ -54,9 +59,6 @@ public class FileRestTest {
 
 	@Inject
 	UserTransaction tx;
-	
-	/*@Inject
-	FileRest fileRest;*/
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
@@ -68,14 +70,23 @@ public class FileRestTest {
 	private void clearDataFromPersistenceModule() throws Exception {
 		tx.begin();
 		em.joinTransaction();
-		em.createQuery("delete from FileInfo").executeUpdate();
+		em.createQuery("delete from BaseData").executeUpdate();
+		tx.commit();
+		tx.begin();
+		em.joinTransaction();
+		em.createQuery("delete from UE").executeUpdate();
 		tx.commit();
 	}
 
 	private void insertTestData() throws Exception, ParseException {
+		UE ue = new UE(4231, "uemarketingName", "uemanufacturer", "ueaccessCapability");
+		BaseData b = new BaseData();
+		b.setUeFK(ue);
+		b.setDate(new Date());
 		tx.begin();
 		em.joinTransaction();
-		em.persist(fileInfo);
+		em.persist(ue);
+		em.persist(b);
 		tx.commit();
 		em.clear();
 	}
@@ -91,35 +102,21 @@ public class FileRestTest {
 	}
 	
 	@Test
-	public void testGetAllUploadedFilePaths(@ArquillianResteasyResource FileRest fileRest){
+	public void countCallFailuresDateRange(@ArquillianResteasyResource UeRest ueRest) throws ParseException{
+		final String code = "c00";
+		final String dateS = "2015-04-01T09:00:00";
+		final String dateE = "3015-01-01T09:00:00";
+		final String tac = "4231";
+		final String data = code + dateS + dateE + tac;
 		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
+		final List<String[]> info = ueRest.countCallFailuresDateRange(data);
+
+		assertEquals(1, info.size());
+		assertEquals(info.get(0)[15], "1");
+		assertEquals(info.get(0)[11], "4231");
+		assertEquals(info.get(0)[18], "uemarketingName");
+		assertEquals(info.get(0)[19], "uemanufacturer");
+		assertEquals(info.get(0)[20], "ueaccessCapability");
 		
-		assert(info.size()==1);
-		assert(info.get(0).getFilename().equals("filename.xml"));
-		assert(info.get(0).getFilepath().equals("filepath"));
-		assert(info.get(0).equals(fileInfo));
-	}
-	
-	@Test
-	public void addAndRemoveUploadedFilePath(@ArquillianResteasyResource FileRest fileRest){
-		final String fileName = "/addedFileName.xls";
-		final String filePath = "addedFilePath";
-		
-		fileRest.addUploadedFilePath(fileName + "::" + filePath);
-		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info.size()==2);
-		assert(info.get(1).getFilename().equals("/addedFileName.xls"));
-		assert(info.get(1).getFilepath().equals("addedFilePath"));
-		
-		fileRest.removeFileFromDatabase(fileName);
-		
-		final List<FileInfo> info2 = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info2.size()==1);
-		assert(!info2.get(1).getFilename().equals("addedFileName.xls"));
-		assert(!info2.get(1).getFilepath().equals("addedFilePath"));
 	}
 }

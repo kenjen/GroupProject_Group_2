@@ -1,5 +1,8 @@
 package com.project.rest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.text.ParseException;
 import java.util.List;
@@ -21,19 +24,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.project.entities.FileInfo;
+import com.project.entities.Query;
 
 @RunWith(Arquillian.class)
-public class FileRestTest {
-	
-	private static final Logger log = LoggerFactory.getLogger(FileRestTest.class);
-	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
-	
-	/*@ArquillianResource
-	private URL deploymentURL;*/
+public class QueryRestTest {
+
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -54,9 +50,6 @@ public class FileRestTest {
 
 	@Inject
 	UserTransaction tx;
-	
-	/*@Inject
-	FileRest fileRest;*/
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
@@ -68,14 +61,15 @@ public class FileRestTest {
 	private void clearDataFromPersistenceModule() throws Exception {
 		tx.begin();
 		em.joinTransaction();
-		em.createQuery("delete from FileInfo").executeUpdate();
+		em.createQuery("delete from Query").executeUpdate();
 		tx.commit();
 	}
 
 	private void insertTestData() throws Exception, ParseException {
+		Query query = new Query(1,1,"test");
 		tx.begin();
 		em.joinTransaction();
-		em.persist(fileInfo);
+		em.persist(query);
 		tx.commit();
 		em.clear();
 	}
@@ -91,35 +85,13 @@ public class FileRestTest {
 	}
 	
 	@Test
-	public void testGetAllUploadedFilePaths(@ArquillianResteasyResource FileRest fileRest){
-		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info.size()==1);
-		assert(info.get(0).getFilename().equals("filename.xml"));
-		assert(info.get(0).getFilepath().equals("filepath"));
-		assert(info.get(0).equals(fileInfo));
+	public void getEventCauseCombiTest(@ArquillianResteasyResource QueryREST queryRest){
+		List<Query> allqueries = (List<Query>) queryRest.getEventCauseCombi(1);
+		assertEquals(1, allqueries.size());
+		assertTrue(allqueries.get(0).getId() == 1);
+		assertTrue(allqueries.get(0).getPermission() == 1);
+		assertEquals(allqueries.get(0).getDisplayName(), "test");
 	}
+
 	
-	@Test
-	public void addAndRemoveUploadedFilePath(@ArquillianResteasyResource FileRest fileRest){
-		final String fileName = "/addedFileName.xls";
-		final String filePath = "addedFilePath";
-		
-		fileRest.addUploadedFilePath(fileName + "::" + filePath);
-		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info.size()==2);
-		assert(info.get(1).getFilename().equals("/addedFileName.xls"));
-		assert(info.get(1).getFilepath().equals("addedFilePath"));
-		
-		fileRest.removeFileFromDatabase(fileName);
-		
-		final List<FileInfo> info2 = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info2.size()==1);
-		assert(!info2.get(1).getFilename().equals("addedFileName.xls"));
-		assert(!info2.get(1).getFilepath().equals("addedFilePath"));
-	}
 }

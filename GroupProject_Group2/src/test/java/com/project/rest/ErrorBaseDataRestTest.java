@@ -1,7 +1,11 @@
 package com.project.rest;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,19 +25,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.project.entities.FileInfo;
+import com.project.entities.ErrorBaseData;
 
 @RunWith(Arquillian.class)
-public class FileRestTest {
-	
-	private static final Logger log = LoggerFactory.getLogger(FileRestTest.class);
-	FileInfo fileInfo = new FileInfo("filename.xml", "filepath");
-	
-	/*@ArquillianResource
-	private URL deploymentURL;*/
+public class ErrorBaseDataRestTest {
+
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -54,9 +51,6 @@ public class FileRestTest {
 
 	@Inject
 	UserTransaction tx;
-	
-	/*@Inject
-	FileRest fileRest;*/
 
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
@@ -68,14 +62,23 @@ public class FileRestTest {
 	private void clearDataFromPersistenceModule() throws Exception {
 		tx.begin();
 		em.joinTransaction();
-		em.createQuery("delete from FileInfo").executeUpdate();
+		em.createQuery("delete from ErrorBaseData").executeUpdate();
 		tx.commit();
 	}
 
 	private void insertTestData() throws Exception, ParseException {
+		ErrorBaseData b = new ErrorBaseData();
 		tx.begin();
+		b.setCellId(1);
+		b.setDate(new Date());
+		b.setDuration(1);
+		b.setHier321Id("errorTest");
+		b.setHier32Id("errorTest");
+		b.setHier3Id("errorTest");
+		Long l = System.currentTimeMillis();
+		b.setImsi(l);
 		em.joinTransaction();
-		em.persist(fileInfo);
+		em.persist(b);
 		tx.commit();
 		em.clear();
 	}
@@ -91,35 +94,15 @@ public class FileRestTest {
 	}
 	
 	@Test
-	public void testGetAllUploadedFilePaths(@ArquillianResteasyResource FileRest fileRest){
-		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info.size()==1);
-		assert(info.get(0).getFilename().equals("filename.xml"));
-		assert(info.get(0).getFilepath().equals("filepath"));
-		assert(info.get(0).equals(fileInfo));
+	public void getEventCauseCombiTest(@ArquillianResteasyResource ErrorBaseDataRest errorBaseDataRest){
+		List<ErrorBaseData> allErrorBaseData = (List<ErrorBaseData>) errorBaseDataRest.getAllErrorBaseData();
+		assertEquals(1, allErrorBaseData.size());
+		assertTrue(allErrorBaseData.get(0).getId() == 1);
+		assertTrue(allErrorBaseData.get(0).getCellId() == 1);
+		assertEquals(allErrorBaseData.get(0).getHier321Id(), "errorTest");
+		assertEquals(allErrorBaseData.get(0).getHier32Id(), "errorTest");
+		assertEquals(allErrorBaseData.get(0).getHier3Id(), "errorTest");
 	}
+
 	
-	@Test
-	public void addAndRemoveUploadedFilePath(@ArquillianResteasyResource FileRest fileRest){
-		final String fileName = "/addedFileName.xls";
-		final String filePath = "addedFilePath";
-		
-		fileRest.addUploadedFilePath(fileName + "::" + filePath);
-		
-		final List<FileInfo> info = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info.size()==2);
-		assert(info.get(1).getFilename().equals("/addedFileName.xls"));
-		assert(info.get(1).getFilepath().equals("addedFilePath"));
-		
-		fileRest.removeFileFromDatabase(fileName);
-		
-		final List<FileInfo> info2 = (List<FileInfo>) fileRest.getAllUploadedFilePaths();
-		
-		assert(info2.size()==1);
-		assert(!info2.get(1).getFilename().equals("addedFileName.xls"));
-		assert(!info2.get(1).getFilepath().equals("addedFilePath"));
-	}
 }
