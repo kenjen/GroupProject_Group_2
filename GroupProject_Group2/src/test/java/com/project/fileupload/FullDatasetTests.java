@@ -82,7 +82,7 @@ public class FullDatasetTests {
 		File f = new File("testfiles");
 		f.mkdir();
 		String filePath = f.getAbsolutePath();
-		String finalfilePath = filePath + File.separator + "Dataset 3B.xls";
+		String finalfilePath = filePath + File.separator + "Dataset3B.xls";
 		Long start = System.currentTimeMillis();
 
 		Class[] cArg = new Class[1];
@@ -199,7 +199,7 @@ public class FullDatasetTests {
 		String watcherfinalfilePath = watcherfilePath + File.separator + "SampleDataset.xls";
 		File sourceFile = new File(watcherfinalfilePath);
 		
-		File destFile = new File(directory + File.separator + "SampleDataset.xls");
+		File destFile = new File(directory + File.separator + "Dataset3B.xls");
 		log.info("srcFile = " + sourceFile.getAbsolutePath());
 		log.info("destFile = " + destFile.getAbsolutePath());
 		sourceFile.renameTo(destFile);
@@ -209,10 +209,8 @@ public class FullDatasetTests {
 			//Files.copy(sourceFile, destFile);
 			Thread.sleep(20000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		log.info("test finished");
 		destFile.renameTo(sourceFile);
 		assertEquals(1, directoryWatcher.getUploadsThisSession());
 	}

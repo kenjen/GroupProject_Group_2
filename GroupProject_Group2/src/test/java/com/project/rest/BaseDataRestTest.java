@@ -525,4 +525,13 @@ public class BaseDataRestTest {
 		assertEquals(1, count.size());
 		assertEquals("11", count.get(0)[15]);
 	}
+	
+	@Test
+	public void testGetUniqueImsi(@ArquillianResteasyResource BaseDataRest baseDataRest) throws ParseException{
+		List<Object> imsi = baseDataRest.getUniqueImsi();
+		
+		assertEquals(10, imsi.size());
+		assertTrue(imsi.contains(993L));
+		assertTrue(imsi.contains(1001L));
+	}
 }

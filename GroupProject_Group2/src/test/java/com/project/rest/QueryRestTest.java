@@ -1,9 +1,6 @@
 package com.project.rest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.text.ParseException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,7 +29,6 @@ public class QueryRestTest {
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
 		clearDataFromPersistenceModule();
-		insertTestData();
 		beginTransaction();
 	}
 
@@ -41,15 +37,6 @@ public class QueryRestTest {
 		em.joinTransaction();
 		em.createQuery("delete from Query").executeUpdate();
 		tx.commit();
-	}
-
-	private void insertTestData() throws Exception, ParseException {
-		Query query = new Query(1,1,"test");
-		tx.begin();
-		em.joinTransaction();
-		em.persist(query);
-		tx.commit();
-		em.clear();
 	}
 
 	private void beginTransaction() throws Exception {
@@ -63,13 +50,27 @@ public class QueryRestTest {
 	}
 	
 	@Test
-	public void getEventCauseCombiTest(@ArquillianResteasyResource QueryREST queryRest){
-		List<Query> allqueries = queryRest.getEventCauseCombi(1);
-		assertEquals(1, allqueries.size());
-		assertTrue(allqueries.get(0).getId() == 1);
-		assertTrue(allqueries.get(0).getPermission() == 1);
-		assertEquals(allqueries.get(0).getDisplayName(), "test");
+	public void getQueriesByUserTypeTest(@ArquillianResteasyResource QueryREST queryRest){
+		List<Query> allqueries = queryRest.getQueriesByUserType(1);
+		assertEquals(10, allqueries.size());
+		assertEquals(4, (int)allqueries.get(3).getId());
+		assertEquals(1, (int)allqueries.get(3).getPermission());
+		assertEquals("Count failures and duration for each IMSI by Date", allqueries.get(3).getDisplayName());
 		allqueries = null;
+		
+		List<Query> suppqueries = queryRest.getQueriesByUserType(2);
+		assertEquals(6, suppqueries.size());
+		assertEquals(2, (int)suppqueries.get(1).getId());
+		assertEquals(2, (int)suppqueries.get(1).getPermission());
+		assertEquals("List IMSI by Date Range", suppqueries.get(1).getDisplayName());
+		suppqueries = null;
+		
+		List<Query> repqueries = queryRest.getQueriesByUserType(3);
+		assertEquals(3, repqueries.size());
+		assertEquals(1, (int)repqueries.get(0).getId());
+		assertEquals(3, (int)repqueries.get(0).getPermission());
+		assertEquals("EventId, CauseCode for IMSI", repqueries.get(0).getDisplayName());
+		repqueries = null;
 	}
 
 	

@@ -4,9 +4,7 @@ import java.util.Collection;
 
 import com.project.entities.MccMnc;
 
-public interface MccMncDAO {
-	
-	void addAllMccMnc(Collection mccMncList);
+public interface  MccMncDAO{
 	
 	Collection<MccMnc> getAllMccMnc();
 

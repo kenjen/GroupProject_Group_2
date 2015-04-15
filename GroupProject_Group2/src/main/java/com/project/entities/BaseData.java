@@ -283,14 +283,39 @@ public class BaseData implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "id: " + getId() + "\ndate: " + getDate() + "\neventId: "
-				+ getEventId() + "\nfailureClass: " + getFailureClass()
-				+ "\ntac: " + getTac() + "\nmnc: " + getMnc() + "\nmcc: "
-				+ getMcc() + "\ncellId: " + getCellId() + "\nduration: "
-				+ getDuration() + "\ncauseCode: " + getCauseCode()
-				+ "\nneVersion: " + getNeVersion() + "\nimsi: " + getImsi()
-				+ "\nhier3Id: " + getHier3Id() + "\nhier32Id: " + getHier32Id()
-				+ "\nhier321Id: " + getHier321Id() + "\n";
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cellId == null) ? 0 : cellId.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((imsi == null) ? 0 : imsi.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BaseData other = (BaseData) obj;
+		if (cellId == null) {
+			if (other.cellId != null)
+				return false;
+		} else if (!cellId.equals(other.cellId))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (imsi == null) {
+			if (other.imsi != null)
+				return false;
+		} else if (!imsi.equals(other.imsi))
+			return false;
+		return true;
 	}
 }

@@ -21,7 +21,7 @@ public class QueryREST{
 	@GET
 	@Path("/{userType}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Query> getEventCauseCombi(@PathParam("userType") int userType) {
+	public List<Query> getQueriesByUserType(@PathParam("userType") int userType) {
 		return service.getQueriesByUserType(userType);
 	}
 }

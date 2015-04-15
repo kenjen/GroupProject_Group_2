@@ -11,6 +11,11 @@ import javax.persistence.Table;
 @Table(name="files")
 public class FileInfo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="file_name")
 	private String filename;

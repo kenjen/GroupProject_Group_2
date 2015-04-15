@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
@@ -10,7 +10,7 @@
 		<link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	</head>
-	<body ng-controller="phoneModelLoader" onload="loadField()">
+	<body data-ng-controller="phoneModelLoader" onload="loadField()">
 		<div id="wrapper">
 			<div id="page-wrapper">
 
@@ -25,7 +25,7 @@
 									<div class="form-group">
 										<h4>Select phone model to count unique EventID/Cause Code by:</h4>
 										<select id="phoneModelSelection" class="form-control" autofocus required>
-											<option id="phone" ng-repeat="model in models" value={{model.marketingName}}>{{model.marketingName}}</option>
+											<option id="phone" data-ng-repeat="model in models" value={{model.marketingName}}>{{model.marketingName}}</option>
 										</select>
 									</div>
 									<div class="form-group">

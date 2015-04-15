@@ -30,7 +30,6 @@ public class JPABaseDataDAO implements BaseDataDAO {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public void addAllBaseData(Collection baseDataList) {
-		int i = 0;
 		for (Object o : baseDataList) {
 			entityManager.persist(o);
 		}

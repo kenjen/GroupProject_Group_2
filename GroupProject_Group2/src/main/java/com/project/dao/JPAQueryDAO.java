@@ -13,6 +13,7 @@ import com.project.entities.Query;
 
 @Stateless
 @Local
+@SuppressWarnings("unchecked")
 public class JPAQueryDAO implements QueryDAO{
 	
 	@PersistenceContext

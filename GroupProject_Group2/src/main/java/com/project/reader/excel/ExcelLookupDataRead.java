@@ -57,10 +57,6 @@ public class ExcelLookupDataRead implements ReadLookup {
 		this.inputFile = inputFile;
 	}
 
-	@Override
-	public void setSheetNumber(int sheetNumber) {
-	}
-
 	public static EventCause getEventCause(Integer causeCode, Integer eventId) {
 		for (EventCause ec : dbEventCauseList) {
 			if (ec.getCauseCode().equals(causeCode)

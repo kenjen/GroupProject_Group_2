@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-data-ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Insert title here</title>
@@ -15,7 +15,7 @@
 			body {overflow-y:hidden }
 		</style>
 	</head>
-	<body ng-controller="phoneModelLoader" onload="loadField()">
+	<body data-ng-controller="phoneModelLoader" onload="loadField()">
 		<div id="wrapper">
 			<div id="page-wrapper">
 
@@ -32,7 +32,7 @@
 									<div class="form-group">
 										<label>Choose Phone Model:</label>
 										<select id="phoneModelSelection" class="form-control" autofocus required>
-											<option id="phone" ng-repeat="model in models"
+											<option id="phone" data-ng-repeat="model in models"
 											value={{model.tac}}>{{model.marketingName}}</option>
 										</select>
 									</div>

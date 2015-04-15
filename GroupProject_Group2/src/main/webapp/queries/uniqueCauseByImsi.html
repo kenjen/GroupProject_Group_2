@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
@@ -12,8 +12,8 @@
 	</head>
 	<body onload="loadField()">
 		
-		<datalist id="datalist"  ng-controller="phoneImsiLoader">
-			<option id="phone" ng-repeat="model in models" value="{{model}}" >
+		<datalist id="datalist"  data-ng-controller="phoneImsiLoader">
+			<option id="phone" data-ng-repeat="model in models" value="{{model}}" >
 		</datalist>
 		
 		

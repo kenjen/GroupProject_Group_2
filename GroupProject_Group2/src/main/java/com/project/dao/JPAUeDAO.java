@@ -14,6 +14,7 @@ import com.project.entities.UE;
 
 @Stateless
 @Local
+@SuppressWarnings("unchecked")
 public class JPAUeDAO implements UeDAO {
 	
 	@PersistenceContext

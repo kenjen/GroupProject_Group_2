@@ -114,11 +114,4 @@ public class MccMnc implements Serializable {
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}
-
-	@Override
-	public String toString() {
-		return "id: " + getId() + "\nmcc: " + getMcc() + "\nmnc: " + getMnc()
-				+ "\ncountry: " + getCountry() + "\noperator: " + getOperator()
-				+ "\n";
-	}
 }

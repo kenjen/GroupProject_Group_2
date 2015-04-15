@@ -7,8 +7,6 @@ import com.project.dao.LookUpDataDAO;
 public interface ReadLookup {
 
 	void setInputFile(String inputFile);
-	
-	void setSheetNumber(int sheetNumber);
 
 	void read() throws IOException;
 

@@ -8,8 +8,5 @@ import com.project.entities.ErrorBaseData;
 @Local
 public interface ErrorBaseDataService {
 	Collection<ErrorBaseData> getAllTestTableData();
-	
-	@SuppressWarnings("rawtypes")
-	void addAllErrorBaseData(Collection errorBaseDataList);
 
 }

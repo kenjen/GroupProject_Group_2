@@ -43,7 +43,6 @@ public class FileRest {
 			String fileDecoded = URLDecoder.decode(encodedFileName, "UTF-8");
 			service.removeFile(fileDecoded);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

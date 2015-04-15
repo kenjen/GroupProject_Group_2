@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -16,8 +16,8 @@
 </head>
 <body onload="loadField()">
 
-	<datalist id="datalist" ng-controller="phoneImsiLoader">
-		<option id="phone" ng-repeat="model in models" value="{{model}}">
+	<datalist id="datalist" data-ng-controller="phoneImsiLoader">
+		<option id="phone" data-ng-repeat="model in models" value="{{model}}">
 	</datalist>
 
 

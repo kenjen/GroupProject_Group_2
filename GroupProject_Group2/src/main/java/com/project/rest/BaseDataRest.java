@@ -229,9 +229,6 @@ public class BaseDataRest {
 			e.printStackTrace();
 		}
 		String[] splitData = decoded.split("::");
-		log.info("decoded = " + decoded);
-		log.info("split 0 = " + splitData[0]);
-		log.info("split 0 = " + splitData[1]);
 		
 		String marketingName = splitData[1].substring(3);
 		String description = splitData[0];

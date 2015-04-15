@@ -24,10 +24,4 @@ public class ErrorBaseDataServiceEJB implements ErrorBaseDataService {
 		return errorBaseDataDAO.getAllErrorBaseData();
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void addAllErrorBaseData(Collection errorBaseDataList) {
-		errorBaseDataDAO.addAllErrorBaseData(errorBaseDataList);
-	}
-
 }

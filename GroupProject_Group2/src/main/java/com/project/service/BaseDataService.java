@@ -13,7 +13,6 @@ import com.project.entities.BaseData;
 public interface BaseDataService {
 	
 	@SuppressWarnings("rawtypes")
-	void addAllBaseData(Collection baseDataList);
 	Collection<BaseData> getAllBaseData();
 	List<Object[]> getImsiByDateRange(Date startDate, Date endDate);
 	List<Object[]> getCountImsiBetweenDates(Date startDate, Date endDate);

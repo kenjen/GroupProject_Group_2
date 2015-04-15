@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 
 	<head>
 
@@ -51,7 +51,7 @@
 
 	</head>
 
-	<body ng-controller="queryReferenceLoader">
+	<body data-ng-controller="queryReferenceLoader">
 
 		<div id="wrapper">
 
@@ -112,7 +112,7 @@
 										<div class="form-group">
 											<label>Select Query</label>
 											<select id="querySelection" class="form-control">
-												<option ng-repeat="query in queries" value={{query.id}}>{{query.displayName}}</option>
+												<option data-ng-repeat="query in queries" value={{query.id}}>{{query.displayName}}</option>
 											</select>
 										</div>
 										<div class="form-group">

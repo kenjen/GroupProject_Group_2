@@ -45,8 +45,6 @@ public class DirectoryWatcherTransaction implements DirectoryWatcherTransactionI
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public boolean addFilePath(String filePath, String fileName) throws IOException{
-		log.info(fileName);
-		log.info(UploadServlet.getFileExtension(fileName));
 		if(UploadServlet.getFileExtension(fileName).equals(".xls")){
 			try {
 				log.info("starting transfer to database with file " + filePath + fileName);

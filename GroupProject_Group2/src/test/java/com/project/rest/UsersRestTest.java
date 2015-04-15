@@ -32,7 +32,7 @@ public class UsersRestTest {
 	@Before
 	public void setUpPersistenceModuleForTest() throws Exception {
 		clearDataFromPersistenceModule();
-		insertTestData();
+		//insertTestData();
 		beginTransaction();
 	}
 
@@ -44,7 +44,7 @@ public class UsersRestTest {
 	}
 
 	private void insertTestData() throws Exception, ParseException {
-		User user = new User("test", "test", 0);
+		User user = new User("admin", "admin", 0);
 		tx.begin();
 		em.joinTransaction();
 		em.persist(user);
@@ -64,33 +64,34 @@ public class UsersRestTest {
 	
 	@Test
 	public void getAllUsersTest(@ArquillianResteasyResource UsersRest usersRest){
+		usersRest.getUser(new User("name", "password"));
 		List<User> allUsers = (List<User>) usersRest.getAllUsers();
 		assertEquals(1, allUsers.size());
 		assertTrue(allUsers.get(0).getUserType() == 0);
-		assertEquals(allUsers.get(0).getUsername(), "test");
-		assertEquals(allUsers.get(0).getPassword(), "test");
+		assertEquals(allUsers.get(0).getUsername(), "admin");
+		assertEquals(allUsers.get(0).getPassword(), "admin");
 		allUsers = null;
 	}
 	
 	@Test
 	public void getUserTest(@ArquillianResteasyResource UsersRest usersRest){
-		User user = new User("test", "test", 0);
+		User user = new User("admin", "admin", 0);
 		User testUser = usersRest.getUser(user);
 		assertTrue(testUser.getUserType() == 0);
-		assertEquals(testUser.getUsername(), "test");
-		assertEquals(testUser.getPassword(), "test");
+		assertEquals(testUser.getUsername(), "admin");
+		assertEquals(testUser.getPassword(), "admin");
 		user = null;
 		testUser = null;
 	}
 	
 	@Test
 	public void getUserByIdTest(@ArquillianResteasyResource UsersRest usersRest){
-		User user = new User("test", "test", 0);
+		User user = new User("admin", "admin", 0);
 		User testUserCheck = usersRest.getUser(user);
 		User testUser = usersRest.getUserById(testUserCheck);
 		assertTrue(testUser.getUserType() == 0);
-		assertEquals(testUser.getUsername(), "test");
-		assertEquals(testUser.getPassword(), "test");
+		assertEquals(testUser.getUsername(), "admin");
+		assertEquals(testUser.getPassword(), "admin");
 		user = null;
 		testUserCheck = null;
 		testUser = null;
@@ -109,7 +110,7 @@ public class UsersRestTest {
 	
 	@Test
 	public void updateUserTest(@ArquillianResteasyResource UsersRest usersRest){
-		User user = new User("test", "test", 0);
+		User user = new User("admin", "admin", 0);
 		User testUser = usersRest.getUser(user);
 		testUser.setPassword("testUpdate");
 		testUser.setUsername("testUpdate");
@@ -118,8 +119,8 @@ public class UsersRestTest {
 		assertTrue(testUserUpdated.getUserType() == 0);
 		assertEquals(testUserUpdated.getUsername(), "testUpdate");
 		assertEquals(testUserUpdated.getPassword(), "testUpdate");
-		testUserUpdated.setPassword("test");
-		testUserUpdated.setUsername("test");
+		testUserUpdated.setPassword("admin");
+		testUserUpdated.setUsername("admin");
 		usersRest.updateUser(testUserUpdated);
 		user = null;
 		testUser = null;
@@ -128,9 +129,10 @@ public class UsersRestTest {
 	
 	@Test
 	public void deleteUserTest(@ArquillianResteasyResource UsersRest usersRest){
+		usersRest.getUser(new User("name", "password"));
 		List<User> allUsers = (List<User>) usersRest.getAllUsers();
 		int originalSize = allUsers.size();
-		User user = new User("test", "test", 0);
+		User user = new User("admin", "admin", 0);
 		User testUser = usersRest.getUser(user);
 		usersRest.deleteUser(testUser);
 		List<User> newAllUsers = (List<User>) usersRest.getAllUsers();

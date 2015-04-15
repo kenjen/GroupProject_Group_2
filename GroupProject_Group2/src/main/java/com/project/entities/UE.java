@@ -12,7 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @NamedQueries({ 
-	@NamedQuery(name = "Ue.getCallFailuresDateRange", query = "select COUNT(u.tac), u.tac, u.marketingName, u.manufacturer, u.accessCapability from BaseData b, UE u where u.tac = :tac and b.date Between :startDate AND :endDate and b.ueFK = u.id"),
+	@NamedQuery(name = "Ue.getCallFailuresDateRange", query = "select COUNT(u.tac), u.tac, u.marketingName, u.manufacturer, u.accessCapability from BaseData b, UE u where u.tac = :tac and b.date Between :startDate AND :endDate and b.ueFK.id = u.id"),
 	
 	@NamedQuery(name = "Ue.getAllModels", query = "select u from UE u")
 })

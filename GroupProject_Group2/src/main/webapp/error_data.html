@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
@@ -14,7 +14,7 @@
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	</head>
 
-	<body ng-controller="errorLoader">
+	<body data-ng-controller="errorLoader">
 		
 			<div id="page-wrapper">
 				
@@ -44,7 +44,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr ng-repeat="error in errors">
+										<tr data-ng-repeat="error in errors">
 											<td>{{error.id}}</td>
 											<td>{{error.causeCode}}</td>
 											<td>{{error.cellId}}</td>

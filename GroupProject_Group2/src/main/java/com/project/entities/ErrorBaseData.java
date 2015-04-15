@@ -2,6 +2,7 @@ package com.project.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -199,19 +200,40 @@ public class ErrorBaseData implements Serializable {
 		this.hier321Id = hier321Id;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cellId == null) ? 0 : cellId.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((imsi == null) ? 0 : imsi.hashCode());
+		return result;
 	}
 
 	@Override
-	public String toString() {
-		return "id: " + getId() + "\ndate: " + getDate() + "\neventId: "
-				+ getEventId() + "\nfailureClass: " + getFailureClass()
-				+ "\ntac: " + getTac() + "\nmnc: " + getMnc() + "\nmcc: "
-				+ getMcc() + "\ncellId: " + getCellId() + "\nduration: "
-				+ getDuration() + "\ncauseCode: " + getCauseCode()
-				+ "\nneVersion: " + getNeVersion() + "\nimsi: " + getImsi()
-				+ "\nhier3Id: " + getHier3Id() + "\nhier32Id: " + getHier32Id()
-				+ "\nhier321Id: " + getHier321Id() + "\n";
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ErrorBaseData other = (ErrorBaseData) obj;
+		if (cellId == null) {
+			if (other.cellId != null)
+				return false;
+		} else if (!cellId.equals(other.cellId))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (imsi == null) {
+			if (other.imsi != null)
+				return false;
+		} else if (!imsi.equals(other.imsi))
+			return false;
+		return true;
 	}
 }

@@ -29,12 +29,6 @@ public class BaseDataServiceEJB implements BaseDataService {
 		return baseDataDAO.getAllBaseData();
 	}
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void addAllBaseData(Collection baseDataList) {
-		baseDataDAO.addAllBaseData(baseDataList);
-	}
-
 	@Override
 	public List<Object[]> getImsiByDateRange(Date startDate, Date endDate) {
 		return baseDataDAO.getImsiByDateRange(startDate, endDate);

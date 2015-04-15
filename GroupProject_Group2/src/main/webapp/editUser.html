@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html data-ng-app>
 	<head>
 		<meta charset="ISO-8859-1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,7 +44,7 @@
 		</script>
 
 	</head>
-	<body ng-controller="userLoader">
+	<body data-ng-controller="userLoader">
 
 		<div id="wrapper">
 
@@ -124,7 +124,7 @@
 								<div class="form-group">
 									<label>Select User</label>
 									<select id="userId" class="form-control" autofocus required>
-										<option ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
+										<option data-ng-repeat="user in users" value={{user.id}}>{{user.username}}</option>
 									</select>
 								</div>
 								<div class="form-group">

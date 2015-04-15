@@ -11,12 +11,8 @@ import com.project.dao.EventCauseDAO;
 @Stateless
 public class EventCauseServiceEJB implements EventCauseService {
 	@EJB
-	// or @Inject
 	private EventCauseDAO dao;
 	
-	public void setDao(EventCauseDAO dao) {
-		this.dao = dao;
-	}
 	@Override
 	public List<Object[]> getFailuresIdsByIMSI(Long imsi) {
 		return dao.getFailuresIdsByIMSI(imsi);

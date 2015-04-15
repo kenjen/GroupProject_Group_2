@@ -13,6 +13,7 @@ import com.project.entities.User;
 
 @Stateless
 @Local
+@SuppressWarnings("unchecked")
 public class JPAUserDAO implements UserDAO{
 	
 	@PersistenceContext
@@ -66,10 +67,6 @@ public class JPAUserDAO implements UserDAO{
 
 	@Override
 	public void updateUser(User user) {
-		/*User updatedUser = em.find(User.class, user.getId());
-		updatedUser.setPassword(user.getPassword());
-		updatedUser.setUsername(user.getUsername());
-		updatedUser.setUserType(user.getUserType());*/
 		Query query = em.createQuery("from User");
 		List<User> users = query.getResultList();
 		for(User u : users){

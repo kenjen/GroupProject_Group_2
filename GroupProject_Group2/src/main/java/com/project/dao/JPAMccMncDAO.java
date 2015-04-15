@@ -19,13 +19,6 @@ public class JPAMccMncDAO implements MccMncDAO {
 	private EntityManager entityManager;
 
 	@Override
-	public void addAllMccMnc(Collection mccMncList) {
-		for (Object o : mccMncList) {
-			entityManager.persist(o);
-		}
-	}
-
-	@Override
 	public Collection<MccMnc> getAllMccMnc() {
 		Query query = entityManager.createNamedQuery("MccMnc.getAllMccMnc");
 		List<MccMnc> result = query.getResultList();

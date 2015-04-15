@@ -24,21 +24,17 @@ public class DirectoryWatcherCreator {
 	@PostConstruct
     public void initialise() throws IOException {
 		File directory;
+		fileSystemPath = "/upload/";
 		try{
 			if((System.getProperty("os.name").substring(0, 7).toLowerCase()).equals("windows")){
 				fileSystemPath = "c:/upload/";
 				log.info("windows detected");
-				directory = new File(fileSystemPath);
-			}else{
-				fileSystemPath = "/upload/";
-				log.info("windows not detected, assumming linux");
-				directory = new File(fileSystemPath);
 			}
 		}catch(Exception e){
-			fileSystemPath = "/upload/";
-			log.info("windows not detected, assumming linux");
-			directory = new File(fileSystemPath);
+			log.info("error detecting file system");
 		}
+
+		directory = new File(fileSystemPath);
 		
 		if(directory.exists()){
 	        directoryWatcher.poll(fileSystemPath);
