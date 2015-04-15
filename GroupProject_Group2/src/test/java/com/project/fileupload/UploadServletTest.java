@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,16 +26,12 @@ import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.project.dao.BaseDataDAO;
-import com.project.dao.ErrorBaseDataDAO;
 import com.project.dao.FileDAO;
-import com.project.dao.LookUpDataDAO;
 import com.project.fileupload.UploadServlet;
 import com.project.reader.ReadBase;
 import com.project.reader.ReadLookup;
 import com.project.reader.excel.ExcelBaseDataRead;
 import com.project.reader.excel.ExcelLookupDataRead;
-import com.project.service.FileService;
 
 @RunWith(Arquillian.class)
 public class UploadServletTest extends Mockito {
@@ -44,48 +39,39 @@ public class UploadServletTest extends Mockito {
 	private static final Logger log = LoggerFactory
 			.getLogger(UploadServletTest.class);
 
-	@EJB
-	private BaseDataDAO baseDataDao;
-	@EJB
-	private ErrorBaseDataDAO errorDao;
-	@EJB
-	private LookUpDataDAO lookupDao;
-	@EJB
-	private FileService fileService;
-
 	ReadLookup lookupDataReader = new ExcelLookupDataRead();
 	ReadBase baseDataReader = new ExcelBaseDataRead();
 
-	@Inject
-	private UploadServlet servlet;
-	
+	//@Inject
+	private UploadServlet servlet = new UploadServlet();
+	/*
 	@PersistenceContext
 	EntityManager em;
 
 	@Inject
-	UserTransaction tx;
+	UserTransaction tx;*/
 	
-	@Before
+	/*@Before
 	public void clearDataFromDatabase() throws Exception {
 		tx.begin();
 		em.joinTransaction();
 		em.createNativeQuery("SET FOREIGN_KEY_CHECKS=0");
 		em.createQuery("delete from BaseData").executeUpdate();
 		em.createQuery("delete from ErrorBaseData").executeUpdate();
-		/*tx.commit();
-		tx.begin();*/
+		tx.commit();
+		tx.begin();
 		//em.joinTransaction();
 		em.createQuery("delete from EventCause").executeUpdate();
-		/*tx.commit();
-		tx.begin();*/
+		tx.commit();
+		tx.begin();
 		//em.joinTransaction();
 		em.createQuery("delete from FailureClass").executeUpdate();
-		/*tx.commit();
-		tx.begin();*/
+		tx.commit();
+		tx.begin();
 		//em.joinTransaction();
 		em.createQuery("delete from UE").executeUpdate();
-		/*tx.commit();
-		tx.begin();*/
+		tx.commit();
+		tx.begin();
 		//em.joinTransaction();
 		em.createQuery("delete from MccMnc").executeUpdate();
 		tx.commit();
@@ -102,7 +88,7 @@ public class UploadServletTest extends Mockito {
 	@After
 	public void endTransaction() throws Exception {
 		tx.commit();
-	}
+	}*/
 
 	@Test
 	public void testDoPost() throws IOException, ServletException {
@@ -158,7 +144,6 @@ public class UploadServletTest extends Mockito {
 	public void testGetFileExtension() throws NoSuchMethodException,
 			SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		// assertNotNull(servlet);
 		Class[] cArg = new Class[1];
 		cArg[0] = String.class;
 		Method privateGetFileExtension = UploadServlet.class.getDeclaredMethod(
